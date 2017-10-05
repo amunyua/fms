@@ -1,0 +1,191 @@
+﻿@model StationLinerMVC.Models.RecieveFuelWizardModels
+@{
+    ViewBag.Title = "Recieve Fuel Wizard";
+    Layout = "~/Views/Shared/wizard_layout_station.cshtml";
+}
+
+<div class="box  box-info ">
+    <div class="box-header">
+        <h2 class=""><strong>RECIEVE FUEL</strong></h2>
+    </div>
+    <!-- /.box-header -->
+    <div class="box-body">
+        <form id="recieve-fuel-form" method="post" action="" class="form-horizontal has-feedback">
+            <div id="bootstrap-wizard-2" class="col-sm-12">
+                <div class="form-bootstrapWizard" style="margin-bottom: 20px">
+                    <div class="row">
+                        <div class="">
+                            <ul class="bootstrapWizard form-wizard">
+                                <li class="active" data-target="#step1">
+                                    <a href="#tab1" data-toggle="tab" class="active"> <span class="step">1</span> </a>
+                                </li>
+                                <li data-target="#step2" class="">
+                                    <a href="#tab2" data-toggle="tab"> <span class="step">2</span></a>
+                                </li>
+                                <li data-target="#step3">
+                                    <a href="#tab4" data-toggle="tab"> <span class="step">3</span> </a>
+                                </li>
+                                <li data-target="#step4">
+                                    <a href="#tab5" data-toggle="tab"> <span class="step">4</span> </a>
+                                </li>
+                            </ul>
+                            
+                        </div>
+                    </div>
+                    <input type="hidden" name="InvPurchaseId"/>
+                    <input type="hidden" name="FuelReceiptId"/>
+                    <input type="hidden" id="edit-id" value="@ViewBag.fId "/>
+
+                </div>
+                <div class="row">
+                    <div class="col-md-12">
+                        <div class="alert alert-warning alert-dismissible " id="warning-div" style="display: none">
+                            <button type="button" class="close" data-dismiss="alert" aria-hidden="true">×</button>
+                            <strong><i class="icon fa fa-check"></i> Warning!</strong> <span class="message"></span>
+                            
+                        </div>
+                        <div class="alert alert-success alert-dismissible" id="success-div" style="display: none">
+                            <button type="button" class="close" data-dismiss="alert" aria-hidden="true">×</button>
+                            <strong><i class="icon fa fa-check"></i> Warning!</strong><span class="message"></span>
+
+                        </div>
+                    </div>
+                </div>
+                <div class="tab-content">
+                    <div class="tab-pane active" id="tab1">
+                        
+                        <h3>
+                            <strong>Step 1 </strong> - Tank Details Before Offload
+                        </h3>
+                        <hr />
+                        <div class="row">
+                            <div class="col-sm-12">
+                                <div class="col-sm-12">
+                                    @{Html.RenderPartial("_tank_details");}
+                                </div>
+                               
+                            </div>
+                        </div>
+                        <hr/>
+                        <div class="row">
+                            <div class="col-md-12">
+@*                                <div class="clearfix"></div>*@
+                                <ul class="pager wizard no-margin">
+                                    <li class="previous disabled">
+                                        <a href="#" class="btn btn-lg btn-default  tovuti-blue" style="background-color: #0091d9; color: white; border: 0px; font-size: 14px"> Previous </a>
+                                    </li>
+
+                                    <li class="next">
+                                        <a href="#" class="btn btn-lg txt-color-darken" style="background-color: #0091d9; color: white; border: 0px; font-size: 14px"> Next </a>
+                                    </li>
+                                </ul>
+                            </div>
+                        </div>
+                        
+                    </div>
+                    <div class="tab-pane" id="tab2">
+                       
+                        <h3>
+                            <strong>Step 2</strong> - Supplier & Driver details
+                        </h3>
+                        <hr />
+                        <div class="row">
+                            <div class="col-sm-12">
+                                <div class="col-sm-12">
+                                    @{Html.RenderPartial("supplier_details");}
+                                </div>
+                            </div>
+                        </div>
+                        <hr/>
+                        <div class="row">
+                            <div class="col-md-12">
+                                @*                                <div class="clearfix"></div>*@
+                                <ul class="pager wizard no-margin">
+                                    <li class="previous disabled">
+                                        <a href="#" class="btn btn-lg btn-default  tovuti-blue" style="background-color: #0091d9; color: white; border: 0px; font-size: 14px"> Previous </a>
+                                    </li>
+
+                                    <li class="next">
+                                        <a href="#" class="btn btn-lg txt-color-darken" style="background-color: #0091d9; color: white; border: 0px; font-size: 14px"> Next </a>
+                                    </li>
+                                </ul>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="tab-pane" id="tab4">
+                       
+                        <h3>
+                            <strong>Step 3</strong> - Sample Data
+                        </h3>
+                        <hr />
+                        <div class="row">
+                            <div class="col-sm-12">
+                                <div class="col-sm-12">
+                                    @{Html.RenderPartial("offload_sample_data");}
+                                </div>
+                            </div>
+                        </div>
+                        <hr/>
+                        <div class="row">
+                            <div class="col-md-12">
+                                @*                                <div class="clearfix"></div>*@
+                                <ul class="pager wizard no-margin">
+                                    <li class="previous disabled">
+                                        <a href="#" class="btn btn-lg btn-default  tovuti-blue" style="background-color: #0091d9; color: white; border: 0px; font-size: 14px"> Previous </a>
+                                    </li>
+
+                                    <li class="next">
+                                        <a href="#" class="btn btn-lg txt-color-darken" style="background-color: #0091d9; color: white; border: 0px; font-size: 14px"> Next </a>
+                                    </li>
+                                </ul>
+                            </div>
+                        </div>
+                    </div>
+                    
+                    <div class="tab-pane" id="tab5">
+
+                        <h3>
+                            <strong>Step 4</strong> - Details After Offload
+                        </h3>
+                        <hr />
+                        <div class="row">
+                            <div class="col-sm-12">
+                                <div class="col-sm-12">
+                                    @{Html.RenderPartial("_details_after_offload");}
+                                </div>
+                            </div>
+                        </div>
+                        <hr />
+                        <div class="row">
+                            <div class="col-md-12">
+                                @*                                <div class="clearfix"></div>*@
+                                <ul class="pager wizard no-margin">
+                                    <li class="previous disabled">
+                                        <a href="#" class="btn btn-lg btn-default  tovuti-blue" style="background-color: #0091d9; color: white; border: 0px; font-size: 14px"> Previous </a>
+                                    </li>
+
+                                    <li class="next">
+                                        <a href="#" class="btn btn-lg txt-color-darken" style="background-color: #0091d9; color: white; border: 0px; font-size: 14px"> Next </a>
+                                    </li>
+                                </ul>
+                            </div>
+                        </div>
+                    </div>
+
+
+                </div>
+       
+            </div>
+        </form>
+    </div>
+    <div class="overlay" id="fuel-overlay" style="display: none">
+        <i class="fa fa-spinner fa-spin"></i>
+    </div>
+</div>
+@section Scripts{
+    <script src="@Url.Content("~/Scripts/fuel/fuel-reciept-wizard.js")"></script>
+}
+
+
+
+

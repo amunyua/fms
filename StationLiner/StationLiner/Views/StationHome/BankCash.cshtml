@@ -1,0 +1,184 @@
+﻿@using StationLinerMVC.Models
+@model IEnumerable<StationLinerMVC.Models.BankDeposit>
+
+@{
+    ViewBag.Title = "Bank Cash";
+    Layout = "~/Views/Shared/_StationHomePageL.cshtml";
+ 
+}
+
+        @section PageTitle{Bank Cash}
+@section BreadCrumbs{
+
+    }
+
+<div class="nav-tabs-custom">
+    <div class="tab-content">
+        <ul class="list-unstyled">
+            <li><a href="#bank-cash-modal" data-toggle="modal" class="btn btn-primary pull-right btn-sm">Bank Cash</a></li>
+        </ul>
+        <br/>
+        <br/>
+        <div class="box box-solid box-primary">
+            <div class="box-header">
+                <h3 class="box-title">Bank Cash</h3>
+            </div>
+            <!-- /.box-header -->
+            <div class="box-body">
+                @{Html.RenderPartial("partials/_message");}
+
+                <table id="example2" class="table table-bordered table-hover">
+                    <thead>
+                    <tr>
+                        <th>
+                            @Html.DisplayNameFor(model => model.Id)
+                        </th>
+                        <th>
+                            Deposited By
+                        </th>
+
+                        <th>
+                            Bank Account
+                        </th>
+                        <th>
+                            @Html.DisplayNameFor(model => model.Amount)
+                        </th>
+                        <th>
+                            @Html.DisplayNameFor(model => model.Reference)
+                        </th>
+                        <th>
+                            Recieved By
+                        </th>
+                        <th>
+                            @Html.DisplayNameFor(model => model.Notes)
+                        </th>
+                        <th>Bank Slip</th>
+
+                    </tr>
+                    </thead>
+                    <tbody>
+                    @foreach (var item in Model)
+                    {
+
+                        <tr>
+                            <td>
+                                @Html.DisplayFor(modelItem => item.Id)
+                            </td>
+                            <td>
+                                @Html.DisplayFor(modelItem => item.Staff.FullName)
+                            </td>
+
+
+                            <td>
+                                @{
+                                    using (var db = new IMSDataEntities())
+                                    {
+                                        db.Configuration.LazyLoadingEnabled = false;
+                                        var acc = db.BankDetails.Find(item.BankAccountId);
+                                        @acc.AccountName
+                                        @acc.Bank
+                                    }
+                                }
+                            </td>
+
+                            <td>
+                                @Html.DisplayFor(modelItem => item.Amount)
+                            </td>
+
+                            <td>
+                                @Html.DisplayFor(modelItem => item.Reference)
+                            </td>
+
+                            <td>
+                                @Html.DisplayFor(modelItem => item.DepositedBy)
+                            </td>
+
+                            <td>
+                                @Html.DisplayFor(modelItem => item.Notes)
+                            </td>
+                            <td>
+
+                                @if (item.SlipPath != null)
+                                {
+                                    <a href="@item.SlipPath">Download</a>
+@*                    <img src="@Url.Content(item.SlipPath)" />*@
+                                }
+                            </td>
+
+                        </tr>
+
+                    }
+                    </tbody>
+                </table>
+            </div>
+
+            @*bank cash modal*@
+            <div class="modal fade" id="bank-cash-modal" role="dialog">
+                <form id="" action="@Url.Action("BankCashDetails")" method="post" enctype="multipart/form-data">
+                    @Html.AntiForgeryToken()
+                    <div class="modal-dialog">
+                        <div class="modal-content">
+                            <div class="modal-header">
+                                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                                    <span aria-hidden="true">&times;</span>
+                                </button>
+                                <h4 class="modal-title">Bank Cash</h4>
+                            </div>
+                            <div class="modal-body">
+                                <div class="form-group">
+                                    <label>Amount</label>
+                                    <input type="number" name="Amount" class="form-control"/>
+                                </div>
+
+                                <div class="form-group">
+                                    <label>Bank Account</label>
+                                    <select name="BankAccountId" class="form-control" required="required" style="margin-bottom: 10px">
+                                        <option value="">Select Bank Account</option>
+                                        @{
+                                            using (var db = new IMSDataEntities())
+                                            {
+                                                var accounts = db.BankDetails.ToList();
+                                                if (accounts.Any())
+                                                {
+                                                    foreach (var account in accounts)
+                                                    {
+                                                        <option value="@account.Id">@account.AccountName -- @account.Bank</option>
+                                                    }
+                                                }
+
+                                            }
+                                        }
+                                    </select>
+                                    <div class="form-group">
+                                        <label> Reference</label>
+                                        <input type="text" class="form-control" name="Reference" required="required"/>
+                                    </div>
+                                    <div class="form-group">
+                                        <label> Received By</label>
+                                        <input type="text" class="form-control" name="DepositedBy" required="required"/>
+                                    </div>
+                                    <div class="form-group">
+                                        <label> Notes</label>
+                                        <input type="text" class="form-control" name="Notes" required="required"/>
+                                    </div>
+
+                                    <div class="form-group">
+                                        <input type="file" name="BankSlip" id="bank-slip">
+                                    </div>
+                                </div>
+
+                            </div>
+                            <div class="modal-footer">
+                                <button type="button" class="btn btn-default pull-left" data-dismiss="modal">Cancel</button>
+                                <button type="submit" class="btn btn-primary">Save</button>
+                            </div>
+                        </div>
+                        <!-- /.modal-content -->
+                    </div>
+                    <!-- /.modal-dialog -->
+                </form>
+            </div>
+
+        </div>
+    </div>
+</div>

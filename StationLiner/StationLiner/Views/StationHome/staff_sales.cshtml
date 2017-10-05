@@ -1,0 +1,151 @@
+﻿@using System.Data.Entity
+@using Microsoft.Ajax.Utilities
+@using StationLinerMVC.Models
+<div class="row">
+    <div class="col-md-12">
+        <div class="col-md-2 no-padding">
+            <h5><strong>ATTENDANT</strong></h5>
+        </div>
+        <div class="col-md-1 no-padding">
+            <h5><strong>PUMP</strong></h5>
+        </div>
+        <div class="col-md-1">
+            <h5><strong>PREVIOUS DROPS</strong></h5>
+        </div>
+        <div class="col-md-4 ">
+            <h5 class="text-center"><strong>CASH AT HAND</strong></h5>
+        </div>
+        <div class="col-md-4 no-padding">
+            <div class="col-md-3">
+                <h5><strong>TOTAL AT HAND</strong></h5>
+            </div>
+            
+            <div class="col-md-3">
+                <h5><strong>EXPECTED</strong></h5>
+            </div>
+            <div class="col-md-3">
+                <h5><strong>TOTAL COLLECTED</strong></h5>
+            </div>
+            <div class="col-md-3">
+                <h5><strong>SHORT</strong></h5>
+            </div>
+                                
+        </div>
+                         
+    </div>
+</div>
+<hr/>
+@{
+    using (IMSDataEntities db = new IMSDataEntities())
+    {
+        //first we get the active shift
+        var shift = db.Shifts.FirstOrDefault(x => x.IsActive && x.StationId == Library.ChannelId);
+        
+        if (shift != null)
+        {
+            //if there is an active shift get the opening details
+            //here get all the records associated with the current shift and hold them at runtime to avoid many calls to the database
+            var allShiftRecords = db.NozzleReadings.Where(x => x.ShiftId == shift.Id && x.Shift.IsActive && x.Shift.StationId == Library.ChannelId);
+            var staffs = allShiftRecords.Select(x=>x.StaffId).Distinct();
+            if (staffs.Any())
+            {
+                foreach (var stuff in staffs)
+                {
+                    
+                    <div class="row cash-drop-div">
+                        <div class="col-md-12">
+                            <div class="col-md-2 no-padding">
+                                @{
+                                    <input type="hidden" value="@stuff" class="staff-id"/>
+                                    var staff = db.Users.Find(stuff);
+                                    <label class="control-label">@staff.FullName</label>
+                                    
+                                }
+                            </div>
+                            <div class="col-md-1 no-padding">
+                                @{
+                                    //get the pumps that were assigned to this user when the shift was started
+                                    //all records related to each attendant
+                                    var attendantRecords = allShiftRecords.Where(x => x.StaffId == stuff);
+                                    var pumpDetails = attendantRecords.Select(x => x.PumpId).Distinct();
+                                    if (pumpDetails.Any())
+                                    {
+                                        <ul class="list-unstyled">
+                                            @foreach (var nozzle in pumpDetails)
+                                            {
+                                                var name = db.StationPumps.Find(nozzle);
+                                                
+                                                <li>
+                                                @name.Name
+                                                </li>
+                                                    }
+                                        </ul>
+                                    }
+                                }
+                            </div>
+                            <div class="col-md-1">
+                                @{
+                                    double total = 0;
+                                    var cashdrops = db.CashDrops.Where(x => x.ShiftId == shift.Id && x.StaffId == stuff).Select(x => x.Amount);
+                                    if (cashdrops.Any())
+                                    {
+                                        foreach (var cash in cashdrops)
+                                        {
+                                            if (cash != default(double))
+                                            {
+                                                total = total + cash;
+                                            }
+                                        }
+                                    }
+                                    <input type="hidden" class="total-drops" value="@total"/>
+                                    <strong>Sh @string.Format("{0:n0}", total) </strong>
+                                }
+                            </div>
+                            <div class="col-md-4 no-padding">
+                                        @{
+                                            var paymentModes = db.PaymentModes;
+                                            if (paymentModes.Any())
+                                            {
+                                                foreach (var mode in paymentModes)
+                                                {
+                                                    <div class="col-md-4">
+                                                        <div class="form-group has-success">
+                                                            <input type="number" payment-mode="@mode.Id" placeholder="@mode.PaymentModeName" class="form-control mode-of-payment p-mode" name="Amount"/>
+                                                        </div>    
+                                                    </div>
+                                                }
+                                            }
+                                        }
+                            </div>
+                            <div class="col-md-4 no-padding">
+                                <div class="col-md-3">
+                                    <strong><span class="total-at-hand"></span></strong>
+                                </div>
+                               
+                                <div class="col-md-3">
+                                  
+                                      @{ string staffId = "staff" + staff.Id;}
+                                    <input type="hidden" class="total-expected" id="@staffId" />
+@*                                        <label class="total-cash-expected">@string.Format("{0:n0}", totalExpected)</label>*@
+                                        <label class="total-cash-expected"></label>
+                                    
+                                </div>
+                                <div class="col-md-3">
+                                    <strong><span class="total-cash-collected"></span></strong>
+                                </div>
+                                <div class="col-md-3">
+                                   <strong><span class="short"></span></strong> 
+                                </div>
+                                
+                            </div>
+                         
+                        </div>
+                    </div> 
+                    <hr style="margin-bottom: 10px;margin-top:10px"/>
+                        
+                }
+            }
+            
+        }
+    }
+}

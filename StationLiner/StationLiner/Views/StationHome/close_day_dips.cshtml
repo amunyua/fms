@@ -1,0 +1,55 @@
+﻿@using StationLinerMVC.Models
+<div class="row">
+    <div class="col-md-12">
+        <div class="col-md-2">
+            <h4>Pump</h4>
+        </div>
+        <div class="col-md-4">
+            <h4>Product</h4>
+        </div>
+        
+        <div class="col-md-4">
+            <h4>Height</h4>
+        </div>
+    </div>
+</div> 
+<hr/>
+
+@{
+    using (IMSDataEntities db = new IMSDataEntities())
+    {
+        var tanks = db.StationTanks.Where(x => x.StationId == Library.ChannelId && x.IsDeleted != true);
+        if (tanks.Any())
+        {
+            foreach (var tank in tanks)
+            {
+            <div class="row tank-row-div">
+                <div class="col-md-12">
+                    <div class="col-md-2">
+                        <input type="hidden" value="@tank.Id" class="tank-id"/>
+                        @tank.TankName
+                    </div>
+                    <div class="col-md-4">
+                        @{
+                            var product = db.Products.Find(tank.ProductId);
+                            @product.ProductName;
+                        }
+                    </div>
+                    
+                    <div class="col-md-4">
+                        <div class="col-md-12">
+                            <div class="form-group">
+                                <input type="number" placeholder="Height" class="form-control height" name="Height">
+                            </div>
+                        </div>
+                    </div>
+
+                </div>
+            </div>
+                
+            }
+        }
+    }
+}
+
+<hr />

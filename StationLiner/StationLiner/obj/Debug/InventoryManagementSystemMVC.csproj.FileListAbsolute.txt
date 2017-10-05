@@ -1,0 +1,115 @@
+c:\users\alx\documents\visual studio 2013\Projects\InventoryManagementSystemMVC\InventoryManagementSystemMVC\bin\InventoryManagementSystemMVC.dll.config
+c:\users\alx\documents\visual studio 2013\Projects\InventoryManagementSystemMVC\InventoryManagementSystemMVC\bin\InventoryManagementSystemMVC.dll
+c:\users\alx\documents\visual studio 2013\Projects\InventoryManagementSystemMVC\InventoryManagementSystemMVC\bin\InventoryManagementSystemMVC.pdb
+c:\users\alx\documents\visual studio 2013\Projects\InventoryManagementSystemMVC\InventoryManagementSystemMVC\bin\Antlr3.Runtime.dll
+c:\users\alx\documents\visual studio 2013\Projects\InventoryManagementSystemMVC\InventoryManagementSystemMVC\bin\EntityFramework.dll
+c:\users\alx\documents\visual studio 2013\Projects\InventoryManagementSystemMVC\InventoryManagementSystemMVC\bin\EntityFramework.SqlServer.dll
+c:\users\alx\documents\visual studio 2013\Projects\InventoryManagementSystemMVC\InventoryManagementSystemMVC\bin\Microsoft.AspNet.Identity.Core.dll
+c:\users\alx\documents\visual studio 2013\Projects\InventoryManagementSystemMVC\InventoryManagementSystemMVC\bin\Microsoft.AspNet.Identity.EntityFramework.dll
+c:\users\alx\documents\visual studio 2013\Projects\InventoryManagementSystemMVC\InventoryManagementSystemMVC\bin\Microsoft.AspNet.Identity.Owin.dll
+c:\users\alx\documents\visual studio 2013\Projects\InventoryManagementSystemMVC\InventoryManagementSystemMVC\bin\Microsoft.Owin.dll
+c:\users\alx\documents\visual studio 2013\Projects\InventoryManagementSystemMVC\InventoryManagementSystemMVC\bin\Microsoft.Owin.Host.SystemWeb.dll
+c:\users\alx\documents\visual studio 2013\Projects\InventoryManagementSystemMVC\InventoryManagementSystemMVC\bin\Microsoft.Owin.Security.Cookies.dll
+c:\users\alx\documents\visual studio 2013\Projects\InventoryManagementSystemMVC\InventoryManagementSystemMVC\bin\Microsoft.Owin.Security.dll
+c:\users\alx\documents\visual studio 2013\Projects\InventoryManagementSystemMVC\InventoryManagementSystemMVC\bin\Microsoft.Owin.Security.Facebook.dll
+c:\users\alx\documents\visual studio 2013\Projects\InventoryManagementSystemMVC\InventoryManagementSystemMVC\bin\Microsoft.Owin.Security.Google.dll
+c:\users\alx\documents\visual studio 2013\Projects\InventoryManagementSystemMVC\InventoryManagementSystemMVC\bin\Microsoft.Owin.Security.MicrosoftAccount.dll
+c:\users\alx\documents\visual studio 2013\Projects\InventoryManagementSystemMVC\InventoryManagementSystemMVC\bin\Microsoft.Owin.Security.OAuth.dll
+c:\users\alx\documents\visual studio 2013\Projects\InventoryManagementSystemMVC\InventoryManagementSystemMVC\bin\Microsoft.Owin.Security.Twitter.dll
+c:\users\alx\documents\visual studio 2013\Projects\InventoryManagementSystemMVC\InventoryManagementSystemMVC\bin\Microsoft.Web.Infrastructure.dll
+c:\users\alx\documents\visual studio 2013\Projects\InventoryManagementSystemMVC\InventoryManagementSystemMVC\bin\Newtonsoft.Json.dll
+c:\users\alx\documents\visual studio 2013\Projects\InventoryManagementSystemMVC\InventoryManagementSystemMVC\bin\Owin.dll
+c:\users\alx\documents\visual studio 2013\Projects\InventoryManagementSystemMVC\InventoryManagementSystemMVC\bin\System.Web.Helpers.dll
+c:\users\alx\documents\visual studio 2013\Projects\InventoryManagementSystemMVC\InventoryManagementSystemMVC\bin\System.Web.Mvc.dll
+c:\users\alx\documents\visual studio 2013\Projects\InventoryManagementSystemMVC\InventoryManagementSystemMVC\bin\System.Web.Optimization.dll
+c:\users\alx\documents\visual studio 2013\Projects\InventoryManagementSystemMVC\InventoryManagementSystemMVC\bin\System.Web.Razor.dll
+c:\users\alx\documents\visual studio 2013\Projects\InventoryManagementSystemMVC\InventoryManagementSystemMVC\bin\System.Web.WebPages.Deployment.dll
+c:\users\alx\documents\visual studio 2013\Projects\InventoryManagementSystemMVC\InventoryManagementSystemMVC\bin\System.Web.WebPages.dll
+c:\users\alx\documents\visual studio 2013\Projects\InventoryManagementSystemMVC\InventoryManagementSystemMVC\bin\System.Web.WebPages.Razor.dll
+c:\users\alx\documents\visual studio 2013\Projects\InventoryManagementSystemMVC\InventoryManagementSystemMVC\bin\WebGrease.dll
+c:\users\alx\documents\visual studio 2013\Projects\InventoryManagementSystemMVC\InventoryManagementSystemMVC\bin\System.Web.Helpers.xml
+c:\users\alx\documents\visual studio 2013\Projects\InventoryManagementSystemMVC\InventoryManagementSystemMVC\bin\System.Web.Mvc.xml
+c:\users\alx\documents\visual studio 2013\Projects\InventoryManagementSystemMVC\InventoryManagementSystemMVC\bin\System.Web.Optimization.xml
+c:\users\alx\documents\visual studio 2013\Projects\InventoryManagementSystemMVC\InventoryManagementSystemMVC\bin\System.Web.Razor.xml
+c:\users\alx\documents\visual studio 2013\Projects\InventoryManagementSystemMVC\InventoryManagementSystemMVC\bin\System.Web.WebPages.xml
+c:\users\alx\documents\visual studio 2013\Projects\InventoryManagementSystemMVC\InventoryManagementSystemMVC\bin\System.Web.WebPages.Deployment.xml
+c:\users\alx\documents\visual studio 2013\Projects\InventoryManagementSystemMVC\InventoryManagementSystemMVC\bin\System.Web.WebPages.Razor.xml
+c:\users\alx\documents\visual studio 2013\Projects\InventoryManagementSystemMVC\InventoryManagementSystemMVC\bin\Antlr3.Runtime.pdb
+c:\users\alx\documents\visual studio 2013\Projects\InventoryManagementSystemMVC\InventoryManagementSystemMVC\bin\Newtonsoft.Json.xml
+c:\users\alx\documents\visual studio 2013\Projects\InventoryManagementSystemMVC\InventoryManagementSystemMVC\bin\EntityFramework.xml
+c:\users\alx\documents\visual studio 2013\Projects\InventoryManagementSystemMVC\InventoryManagementSystemMVC\bin\EntityFramework.SqlServer.xml
+c:\users\alx\documents\visual studio 2013\Projects\InventoryManagementSystemMVC\InventoryManagementSystemMVC\bin\Microsoft.AspNet.Identity.Core.xml
+c:\users\alx\documents\visual studio 2013\Projects\InventoryManagementSystemMVC\InventoryManagementSystemMVC\bin\Microsoft.AspNet.Identity.Owin.xml
+c:\users\alx\documents\visual studio 2013\Projects\InventoryManagementSystemMVC\InventoryManagementSystemMVC\bin\Microsoft.AspNet.Identity.EntityFramework.xml
+c:\users\alx\documents\visual studio 2013\Projects\InventoryManagementSystemMVC\InventoryManagementSystemMVC\bin\Microsoft.Owin.xml
+c:\users\alx\documents\visual studio 2013\Projects\InventoryManagementSystemMVC\InventoryManagementSystemMVC\bin\Microsoft.Owin.Host.SystemWeb.xml
+c:\users\alx\documents\visual studio 2013\Projects\InventoryManagementSystemMVC\InventoryManagementSystemMVC\bin\Microsoft.Owin.Security.xml
+c:\users\alx\documents\visual studio 2013\Projects\InventoryManagementSystemMVC\InventoryManagementSystemMVC\bin\Microsoft.Owin.Security.Facebook.xml
+c:\users\alx\documents\visual studio 2013\Projects\InventoryManagementSystemMVC\InventoryManagementSystemMVC\bin\Microsoft.Owin.Security.Cookies.xml
+c:\users\alx\documents\visual studio 2013\Projects\InventoryManagementSystemMVC\InventoryManagementSystemMVC\bin\Microsoft.Owin.Security.OAuth.xml
+c:\users\alx\documents\visual studio 2013\Projects\InventoryManagementSystemMVC\InventoryManagementSystemMVC\bin\Microsoft.Owin.Security.Google.xml
+c:\users\alx\documents\visual studio 2013\Projects\InventoryManagementSystemMVC\InventoryManagementSystemMVC\bin\Microsoft.Owin.Security.Twitter.xml
+c:\users\alx\documents\visual studio 2013\Projects\InventoryManagementSystemMVC\InventoryManagementSystemMVC\bin\Microsoft.Owin.Security.MicrosoftAccount.xml
+c:\users\alx\documents\visual studio 2013\Projects\InventoryManagementSystemMVC\InventoryManagementSystemMVC\obj\Debug\InventoryManagementSystemMVC.csprojResolveAssemblyReference.cache
+c:\users\alx\documents\visual studio 2013\Projects\InventoryManagementSystemMVC\InventoryManagementSystemMVC\obj\Debug\InventoryManagementSystemMVC.dll
+c:\users\alx\documents\visual studio 2013\Projects\InventoryManagementSystemMVC\InventoryManagementSystemMVC\obj\Debug\InventoryManagementSystemMVC.pdb
+C:\inventory-system\InventoryManagementSystemMVC\InventoryManagementSystemMVC\bin\InventoryManagementSystemMVC.dll.config
+C:\inventory-system\InventoryManagementSystemMVC\InventoryManagementSystemMVC\bin\InventoryManagementSystemMVC.dll
+C:\inventory-system\InventoryManagementSystemMVC\InventoryManagementSystemMVC\bin\InventoryManagementSystemMVC.pdb
+C:\inventory-system\InventoryManagementSystemMVC\InventoryManagementSystemMVC\bin\Antlr3.Runtime.dll
+C:\inventory-system\InventoryManagementSystemMVC\InventoryManagementSystemMVC\bin\EntityFramework.dll
+C:\inventory-system\InventoryManagementSystemMVC\InventoryManagementSystemMVC\bin\EntityFramework.SqlServer.dll
+C:\inventory-system\InventoryManagementSystemMVC\InventoryManagementSystemMVC\bin\Microsoft.AspNet.Identity.Core.dll
+C:\inventory-system\InventoryManagementSystemMVC\InventoryManagementSystemMVC\bin\Microsoft.AspNet.Identity.EntityFramework.dll
+C:\inventory-system\InventoryManagementSystemMVC\InventoryManagementSystemMVC\bin\Microsoft.AspNet.Identity.Owin.dll
+C:\inventory-system\InventoryManagementSystemMVC\InventoryManagementSystemMVC\bin\Microsoft.Owin.dll
+C:\inventory-system\InventoryManagementSystemMVC\InventoryManagementSystemMVC\bin\Microsoft.Owin.Host.SystemWeb.dll
+C:\inventory-system\InventoryManagementSystemMVC\InventoryManagementSystemMVC\bin\Microsoft.Owin.Security.Cookies.dll
+C:\inventory-system\InventoryManagementSystemMVC\InventoryManagementSystemMVC\bin\Microsoft.Owin.Security.dll
+C:\inventory-system\InventoryManagementSystemMVC\InventoryManagementSystemMVC\bin\Microsoft.Owin.Security.Facebook.dll
+C:\inventory-system\InventoryManagementSystemMVC\InventoryManagementSystemMVC\bin\Microsoft.Owin.Security.Google.dll
+C:\inventory-system\InventoryManagementSystemMVC\InventoryManagementSystemMVC\bin\Microsoft.Owin.Security.MicrosoftAccount.dll
+C:\inventory-system\InventoryManagementSystemMVC\InventoryManagementSystemMVC\bin\Microsoft.Owin.Security.OAuth.dll
+C:\inventory-system\InventoryManagementSystemMVC\InventoryManagementSystemMVC\bin\Microsoft.Owin.Security.Twitter.dll
+C:\inventory-system\InventoryManagementSystemMVC\InventoryManagementSystemMVC\bin\Microsoft.Web.Infrastructure.dll
+C:\inventory-system\InventoryManagementSystemMVC\InventoryManagementSystemMVC\bin\Newtonsoft.Json.dll
+C:\inventory-system\InventoryManagementSystemMVC\InventoryManagementSystemMVC\bin\Owin.dll
+C:\inventory-system\InventoryManagementSystemMVC\InventoryManagementSystemMVC\bin\System.Web.Helpers.dll
+C:\inventory-system\InventoryManagementSystemMVC\InventoryManagementSystemMVC\bin\System.Web.Mvc.dll
+C:\inventory-system\InventoryManagementSystemMVC\InventoryManagementSystemMVC\bin\System.Web.Optimization.dll
+C:\inventory-system\InventoryManagementSystemMVC\InventoryManagementSystemMVC\bin\System.Web.Razor.dll
+C:\inventory-system\InventoryManagementSystemMVC\InventoryManagementSystemMVC\bin\System.Web.WebPages.Deployment.dll
+C:\inventory-system\InventoryManagementSystemMVC\InventoryManagementSystemMVC\bin\System.Web.WebPages.dll
+C:\inventory-system\InventoryManagementSystemMVC\InventoryManagementSystemMVC\bin\System.Web.WebPages.Razor.dll
+C:\inventory-system\InventoryManagementSystemMVC\InventoryManagementSystemMVC\bin\WebGrease.dll
+C:\inventory-system\InventoryManagementSystemMVC\InventoryManagementSystemMVC\bin\System.Web.Helpers.xml
+C:\inventory-system\InventoryManagementSystemMVC\InventoryManagementSystemMVC\bin\System.Web.Mvc.xml
+C:\inventory-system\InventoryManagementSystemMVC\InventoryManagementSystemMVC\bin\System.Web.Optimization.xml
+C:\inventory-system\InventoryManagementSystemMVC\InventoryManagementSystemMVC\bin\System.Web.Razor.xml
+C:\inventory-system\InventoryManagementSystemMVC\InventoryManagementSystemMVC\bin\System.Web.WebPages.xml
+C:\inventory-system\InventoryManagementSystemMVC\InventoryManagementSystemMVC\bin\System.Web.WebPages.Deployment.xml
+C:\inventory-system\InventoryManagementSystemMVC\InventoryManagementSystemMVC\bin\System.Web.WebPages.Razor.xml
+C:\inventory-system\InventoryManagementSystemMVC\InventoryManagementSystemMVC\bin\Antlr3.Runtime.pdb
+C:\inventory-system\InventoryManagementSystemMVC\InventoryManagementSystemMVC\bin\Newtonsoft.Json.xml
+C:\inventory-system\InventoryManagementSystemMVC\InventoryManagementSystemMVC\bin\EntityFramework.xml
+C:\inventory-system\InventoryManagementSystemMVC\InventoryManagementSystemMVC\bin\EntityFramework.SqlServer.xml
+C:\inventory-system\InventoryManagementSystemMVC\InventoryManagementSystemMVC\bin\Microsoft.AspNet.Identity.Core.xml
+C:\inventory-system\InventoryManagementSystemMVC\InventoryManagementSystemMVC\bin\Microsoft.AspNet.Identity.Owin.xml
+C:\inventory-system\InventoryManagementSystemMVC\InventoryManagementSystemMVC\bin\Microsoft.AspNet.Identity.EntityFramework.xml
+C:\inventory-system\InventoryManagementSystemMVC\InventoryManagementSystemMVC\bin\Microsoft.Owin.xml
+C:\inventory-system\InventoryManagementSystemMVC\InventoryManagementSystemMVC\bin\Microsoft.Owin.Host.SystemWeb.xml
+C:\inventory-system\InventoryManagementSystemMVC\InventoryManagementSystemMVC\bin\Microsoft.Owin.Security.xml
+C:\inventory-system\InventoryManagementSystemMVC\InventoryManagementSystemMVC\bin\Microsoft.Owin.Security.Facebook.xml
+C:\inventory-system\InventoryManagementSystemMVC\InventoryManagementSystemMVC\bin\Microsoft.Owin.Security.Cookies.xml
+C:\inventory-system\InventoryManagementSystemMVC\InventoryManagementSystemMVC\bin\Microsoft.Owin.Security.OAuth.xml
+C:\inventory-system\InventoryManagementSystemMVC\InventoryManagementSystemMVC\bin\Microsoft.Owin.Security.Google.xml
+C:\inventory-system\InventoryManagementSystemMVC\InventoryManagementSystemMVC\bin\Microsoft.Owin.Security.Twitter.xml
+C:\inventory-system\InventoryManagementSystemMVC\InventoryManagementSystemMVC\bin\Microsoft.Owin.Security.MicrosoftAccount.xml
+C:\inventory-system\InventoryManagementSystemMVC\InventoryManagementSystemMVC\obj\Debug\InventoryManagementSystemMVC.csprojResolveAssemblyReference.cache
+C:\inventory-system\InventoryManagementSystemMVC\InventoryManagementSystemMVC\obj\Debug\InventoryManagementSystemMVC.dll
+C:\inventory-system\InventoryManagementSystemMVC\InventoryManagementSystemMVC\obj\Debug\InventoryManagementSystemMVC.pdb
+C:\inventory-system\InventoryManagementSystemMVC\InventoryManagementSystemMVC\bin\InventoryDataEntities.dll
+C:\inventory-system\InventoryManagementSystemMVC\InventoryManagementSystemMVC\bin\InventoryDataEntities.pdb
+C:\StationLiner\InventoryManagementSystemMVC\StationLiner\obj\Debug\InventoryManagementSystemMVC.csprojResolveAssemblyReference.cache
+C:\StationLiner\InventoryManagementSystemMVC\StationLiner\obj\Debug\InventoryManagementSystemMVC.dll
+C:\StationLiner\InventoryManagementSystemMVC\StationLiner\obj\Debug\InventoryManagementSystemMVC.pdb

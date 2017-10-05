@@ -1,0 +1,81 @@
+﻿
+@{
+    ViewBag.Title = "Index";
+    Layout = "~/Views/Shared/_tablayout.cshtml";
+ 
+}
+
+@*        @section PageTitle{General Settings}*@
+@*@section BreadCrumbs{*@
+@*    <li>System Settings</li>*@
+@*    <li class="active">Manage Settings</li>*@
+@*    }*@
+@*@section Actions{ <li><a href="@Url.Action("Create")" class="btn btn-sm btn-primary">Create New</a></li>}*@
+@*@section TableHeader{General Settinngs}*@
+
+@{
+    var tab1 = "";
+    var tab2 = "";
+    <div class="nav-tabs-custom">
+        <ul class="nav nav-tabs">
+
+            @if (Session["tab2"] != null)
+            {
+                 tab2 = "active";
+                 tab1 = "";
+                Session["tab2"] = null;
+            }
+            else
+            {
+                 tab1 = "active";
+                tab2 = "";
+            }
+
+            <li class="@tab1"><a href="#activity" data-toggle="tab">General Settings</a></li>
+            <li class="@tab2"><a href="#timeline" data-toggle="tab">Bank Details</a></li>
+            @*    <li><a href="#settings" data-toggle="tab">Settings</a></li>*@
+        </ul>
+        <div class="tab-content">
+            <div class="@tab1 tab-pane" id="activity">
+                @{ Html.RenderPartial("general_settings"); }
+
+            </div>
+            <!-- /.tab-pane -->
+            <div class="@tab2 tab-pane" id="timeline">
+                @{ Html.RenderPartial("bank_details"); }
+            </div>
+            <!-- /.tab-pane -->
+
+            <!-- /.tab-pane -->
+        </div>
+        <!-- /.tab-content -->
+    </div>
+}
+
+@section Scripts{
+    <script src="@Url.Content("~/Scripts/generalsettings/bank_details.js")"></script>
+}
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+

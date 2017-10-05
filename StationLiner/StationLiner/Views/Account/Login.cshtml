@@ -1,0 +1,78 @@
+﻿@*@using SuperAdminFCS.Models*@
+@model StationLinerMVC.Models.LoginViewModel
+@{
+    Layout = "~/Views/Shared/_login_layout.cshtml";
+    ViewBag.Title = "Log in";
+}
+@*            @using (Html.BeginForm("Login", "Account", new { ReturnUrl = ViewBag.ReturnUrl }, FormMethod.Post, new { @class = "form-horizontal", role = "form" }))*@
+@*            {*@
+@*                @Html.AntiForgeryToken()*@
+@*                @Html.ValidationSummary(true, "", new { @class = "text-danger" })*@
+@*                <div class="form-group">*@
+@*                       $1$ @Html.TextBoxFor(m => m.Email, new { @class = "form-control"  })#1#*@
+@*                    <input type="email" id="Email" class="form-control" placeholder="Email" name="email"><span class="glyphicon glyphicon-envelope form-control-feedback"></span>*@
+@*                       @#1#Html.ValidationMessageFor(m => m.Email, "", new { @class = "text-danger" })#1# *@
+@*                </div>*@
+@*                <div class="form-group">*@
+@*                    <input type="password" name="Password" id="password" class="form-control" placeholder="password" ><span class="glyphicon glyphicon-lock form-control-feedback"></span>*@
+@*                        @#1#Html.PasswordFor(m => m.Password, new { @class = "form-control" })#1# *@
+@*                        @Html.ValidationMessageFor(m => m.Password, "", new { @class = "text-danger" })*@
+@*                </div>*@
+@*               *@
+               
+@**@
+@*                @* Enable this once you have account confirmation enabled for password reset functionality*@
+@*                    <p>*@
+@*                        @Html.ActionLink("Forgot your password?", "ForgotPassword")*@
+@*                    </p>*@
+@*            }*@
+
+    @using (Html.BeginForm("Login", "Account", new { ReturnUrl = ViewBag.ReturnUrl }, FormMethod.Post))
+            {
+        @Html.AntiForgeryToken()
+        @Html.ValidationSummary(true, "", new { @class = "text-danger" })
+    <div class="form-group has-feedback">
+@*        @Html.LabelFor(m => m.Email, new { @class = "col-md-2 control-label" })*@
+@*        <div class="col-md-10">*@
+            @Html.TextBoxFor(m => m.Email, new { @class = "form-control has-feedback", placeholder= "User Name",autocomplete = false })
+        <span class="glyphicon glyphicon-envelope form-control-feedback"></span>
+        
+        @Html.ValidationMessageFor(m => m.Email, "", new { @class = "text-danger" })
+@*        </div>*@
+    </div>
+        <div class="form-group has-feedback">
+@*            @Html.LabelFor(m => m.Password, new { @class = "col-md-2 control-label" })*@
+            @*            <div class="col-md-10">*@
+            <input type="password" name="Password" class="form-control has-feedback" placeholder="Password">
+            <span class="glyphicon glyphicon-lock form-control-feedback"></span>
+
+@*                @Html.PasswordFor(m => m.Password, new { @class = "form-control has-feedback", placeholder = "Password", autocomplete = false })*@
+
+                
+                @Html.ValidationMessageFor(m => m.Password, "", new { @class = "text-danger" })
+@*            </div>*@
+        </div>
+    <div class="row">
+        <div class="col-xs-8">
+@*            <div class="checkbox icheck">*@
+@*                @Html.CheckBoxFor(m => m.RememberMe)*@
+@*                @Html.LabelFor(m => m.RememberMe)*@
+@*            </div>*@
+        </div>
+        <!-- /.col -->
+        <div class="col-xs-4">
+            <button type="submit" class="btn btn-primary btn-block btn-flat">Sign In</button>
+        </div>
+        <!-- /.col -->
+    </div>
+@*        <p>*@
+@*            @Html.ActionLink("Register as a new user", "Register")*@
+@*        </p>*@
+@*        @* Enable this once you have account confirmation enabled for password reset functionality*@
+            <p>
+                @Html.ActionLink("Forgot your password?", "ForgotPassword","Staffs")
+            </p>
+            }
+
+
+

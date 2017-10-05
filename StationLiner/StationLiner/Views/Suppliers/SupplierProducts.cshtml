@@ -1,0 +1,231 @@
+﻿@using StationLinerMVC.Models
+@model IEnumerable<StationLinerMVC.Models.SupplierProductPrice>
+
+@{
+    ViewBag.Title = "SupplierProducts";
+    Layout = "~/Views/Shared/_DtLayout.cshtml";
+
+}
+
+        @section PageTitle{Manage Supplier Products}
+@section BreadCrumbs{
+    <li>Suppliers</li>
+    <li>@Html.ActionLink("Manage Suppliers", "Index")</li>
+    <li class="active">Supplier Products</li>
+    }
+@section Actions{<li><a href="#add-product-modal" data-toggle="modal" class="btn btn-sm btn-primary">Add Product</a></li>}
+@section TableHeader{All Supplier Items}
+
+  @{Html.RenderPartial("partials/_message");}
+<table id="example2" class="table table-bordered table-hover">
+    <thead>
+    <tr>
+        <th>
+            @Html.DisplayNameFor(model => model.SupplierProduct.Id)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.SupplierProduct.Supplier.Name)
+        </th>
+
+        <th>
+            @Html.DisplayNameFor(model => model.Price)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.MinQuantity)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.StartDate)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.EndDate)
+        </th>
+        @{
+//            if (Flag.Status("EDIT"))
+//            {
+                <th>Edit</th>
+//            }
+
+//            if (Flag.Status("DELETE"))
+//            {
+                <th>Delete</th>
+//            }
+        }
+    </tr>
+    </thead>
+    <tbody>
+@foreach (var item in Model) {
+
+    <tr>
+        <td>
+            @Html.DisplayFor(modelItem => item.SupplierProduct.Id)
+        </td>
+
+        <td>
+            @Html.DisplayFor(modelItem => item.SupplierProduct.Supplier.Name)
+        </td>
+
+        <td>
+            @Html.DisplayFor(modelItem => item.Price)
+        </td>
+
+        <td>
+            @Html.DisplayFor(modelItem => item.MinQuantity)
+        </td>
+
+        <td>
+            @Html.DisplayFor(modelItem => item.StartDate)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.EndDate)
+        </td>
+        @{
+//            if (Flag.Status("EDIT"))
+//            {
+                <td>
+                    <a href="#edit-modal" data-toggle="modal" item-id="@item.SupplierProduct.Id" class="btn btn-xs btn-primary edit-warehouse-item"><i class="fa fa-edit"> </i> Edit</a>
+                </td>
+//            }
+//            if (Flag.Status("DELETE"))
+//            {
+                <td>
+                    <a data-toggle="modal" data-target="#delete-modal" action="@Url.Action("RemoveSupplierProduct", new { id = item.SupplierProduct.Id })" class="btn btn-xs btn-danger delete-btn"><i class="fa fa-recycle"> </i> Remove Item</a>
+                </td>
+//            }
+        }
+    </tr>
+    
+}
+    </tbody>
+</table>
+
+@*modal*@
+<div class="modal fade" id="delete-modal" role="dialog">
+    <form id="delete-modal-form" action="" method="post">
+        @Html.AntiForgeryToken()
+        <div class="modal-dialog">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                        <span aria-hidden="true">&times;</span>
+                    </button>
+                    <h4 class="modal-title">Detach Item</h4>
+                </div>
+                <div class="modal-body">
+                    <p>Are you sure you want to detach this item from this Supplier?</p>
+                </div>
+                <div class="modal-footer">
+
+                    <button type="button" class="btn btn-default pull-left" data-dismiss="modal">No</button>
+                    <button type="submit" class="btn btn-danger">Detach</button>
+                </div>
+            </div>
+            <!-- /.modal-content -->
+        </div>
+        <!-- /.modal-dialog -->
+    </form>
+</div>
+
+<div class="modal fade" id="add-product-modal" role="dialog">
+    <form id="" action="@Url.Action("AddProduct")" method="post">
+        @Html.AntiForgeryToken()
+        <div class="modal-dialog">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                        <span aria-hidden="true">&times;</span>
+                    </button>
+                    <h4 class="modal-title">Attach Product to Supplier</h4>
+                </div>
+                <div class="modal-body">
+                    <label for="product">Product:</label>
+                    <div class="form-group">
+                        <select name="ProductId" id="product" class="form-control select2" style="width: 100%" required="required">
+                            <option value=""> --Please select a product-- </option>
+                            @{
+                                var db = new IMSDataEntities();
+                                var products = db.Products;
+                                foreach (var product in products)
+                                {
+                                    <option value="@product.Id">@product.ProductName</option>
+                                }
+                            }
+                        </select>
+                    </div>
+
+                    <div class="form-group">
+                        <label for="recipient-name" class="">Price:</label>
+                        <input type="text" class="form-control" id="recipient-name" name="Price" required="required">
+                    </div>
+
+                    <div class="form-group">
+                        <label for="recipient-name" class="">Start Date:</label>
+                        <input type="text" class="form-control" id="" name="StartDate" placeholder="e.g three days" required="required">
+                    </div>
+                    <div class="form-group">
+                        <label for="recipient-name" class="">End Date:</label>
+                        <input type="text" class="form-control" id="" name="EndDate" placeholder="e.g three days" required="required">
+                    </div>
+                    <div class="form-group">
+                        <label for="recipient-name" class="">MOQ:</label>
+                        <input type="text" class="form-control" id="" name="MOQ" placeholder="Minimum order quantity" required="required">
+                    </div>
+                    <div class="form-group">
+                        <label for="recipient-name" class="">UOM:</label>
+                        <input type="text" class="form-control" id="" name="UOM" placeholder="Unit of measurement" required="required">
+                    </div>
+                    @{
+                        var supplierId = Request.Url.Segments.LastOrDefault();
+                    }
+                    <input type="hidden" name="SupplierId" value="@supplierId" />
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-default pull-left" data-dismiss="modal">Cancel</button>
+                    <button type="submit" class="btn btn-primary">Attach</button>
+                </div>
+            </div>
+            <!-- /.modal-content -->
+        </div>
+        <!-- /.modal-dialog -->
+    </form>
+</div>
+
+@*modal for edit*@
+@*modal*@
+<div class="modal fade" id="edit-modal" role="dialog">
+    <form id="" action="@Url.Action("EditSupplierItem")" method="post">
+        @Html.AntiForgeryToken()
+        <div class="modal-dialog">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                        <span aria-hidden="true">&times;</span>
+                    </button>
+                    <h4 class="modal-title">Edit Product</h4>
+                </div>
+                <div class="modal-body">
+                    <div class="form-group">
+                        <label for="recipient-name" class="">Price:</label>
+                        <input type="text" class="form-control" name="Price">
+                    </div>
+                </div>
+                <div class="modal-footer">
+                    <input type="hidden" name="ProductId" id="p-id" />
+                    <button type="button" class="btn btn-default pull-left" data-dismiss="modal">No</button>
+                    <button type="submit" class="btn btn-primary">Update</button>
+                </div>
+            </div>
+            <!-- /.modal-content -->
+        </div>
+        <!-- /.modal-dialog -->
+    </form>
+</div>
+
+@section Scripts{
+    <script>
+        $('.edit-warehouse-item').on('click',
+            function() {
+                var id = $(this).attr('item-id');
+                $('#p-id').val('').val(id);
+            });
+    </script>
+}

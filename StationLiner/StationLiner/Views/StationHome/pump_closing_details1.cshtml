@@ -1,0 +1,157 @@
+﻿@using StationLinerMVC.Models
+<div class="row">
+    <div class="col-md-12">
+        <div class="col-md-1 no-padding">
+            <h5><strong>PUMP NAME</strong></h5>
+        </div>
+        <div class="col-md-11 no-padding">
+            <div class="col-md-12">
+                <div class="row">
+                    <div class="col-md-12 no-padding">
+                        <div class="col-md-1 no-padding">
+                            <h5><strong>PRODUCT</strong></h5>
+                        </div>
+                        <div class="col-md-4 no-padding">
+                            <div class="col-md-12"><h5 class="text-center"><strong>MANUAL READINGS</strong></h5></div>
+                            <div class="col-md-12">
+                                <div class="col-md-4"><small>Starting</small></div>
+                                <div class="col-md-4"><small>Ending</small></div>
+                                <div class="col-md-4"><small>Sold</small></div>
+                            </div>
+                        </div>
+                        <div class="col-md-1"></div>
+                        <div class="col-md-4 no-padding">
+                            <div class="col-md-12"><h5 class="text-center"><strong>ELECTRONIC READINGS</strong></h5></div>
+                            <div class="col-md-12">
+                                <div class="col-md-4"><small>Starting</small></div>
+                                <div class="col-md-4"><small>Ending</small></div>
+                                <div class="col-md-4"><small>Sold</small></div>
+                            </div>
+                        </div>
+                        <div class="col-md-2">
+                            <div class="col-md-12">
+                                <h5><strong>TEST</strong></h5>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+<div class="row">
+    <div class="col-md-12">
+        @{
+            IMSDataEntities db= new IMSDataEntities();
+            var shift = db.Shifts.FirstOrDefault(x => x.IsActive == true && x.StationId == Library.ChannelId);
+            if (shift != null)
+            {
+                //if there is an active shift get the opening details
+                //start with the pump
+                var pumps = db.NozzleReadings.Where(x => x.ShiftId == shift.Id).Select(x => x.PumpId).Distinct();
+                if (pumps.Any())
+                {
+                    foreach (var pump in pumps)
+                    {
+                        var details = db.NozzleReadings.Where(x => x.ShiftId == shift.Id && x.PumpId == pump);
+                    
+                        <div class="row">
+                            <div class="col-md-12">
+                                <div class="col-md-1 no-padding">
+                                    @{
+                                        var name = db.StationPumps.Find(pump);
+                                        <label class="control-label pull-left no-padding">@name.Name</label>
+                                        
+                                    }
+                                </div>
+                                <div class="col-md-11">
+                                    @{
+                                        var nozzles = details.Select(x => x.NozzleId);
+                                        var electronicReadings = details.Select(x => x.StartElectronicReading).ToArray();
+                                        var manualcReadings = details.Select(x => x.StartManualReading).ToArray();
+                                        var readingIds = details.Select(x => x.Id).ToArray();
+                                        if (nozzles.Any())
+                                        {
+                                            var count = 0;
+                                            foreach (var nozzle in nozzles)
+                                            {
+//                                            var name = db.PumpNozzles.Find(nozzle).
+                                                var nozzleId = db.PumpNozzles.Find(nozzle);
+                                                var nozzleName = db.Products.Find(nozzleId.ProductId);
+                                          
+                                                <div class="row">
+                                                    <div class="col-md-12 readings-div no-padding">
+                                                        <div class="col-md-1 no-padding">
+                                                            <label class="control-label">@nozzleName.ProductName</label>
+                                                            <input type="hidden" class="reading-id" value="@readingIds[count]"/>
+                                                            <input type="hidden" class="nozzle-id" value="@nozzle"/>
+                                                        </div>
+                                                        <div class="col-md-4 no-padding">
+                                                            <div class="col-md-4 custom">
+                                                                <div class="form-group">
+                                                                    <input type="text" value="@manualcReadings[count]" class="form-control  opening-manual-reading" readonly="readonly"/>
+                                                                </div>
+                                                            </div>
+                                                            <div class="col-md-4 custom">
+                                                                <div class="form-group has-success">
+                                                                    <input type="number" class="form-control manual-reading " min="@manualcReadings[count]" placeholder='Side @nozzleId.Side' name="manual" required />
+                                                                </div>
+                                                            </div>
+                                                            <div class="col-md-4 custom">
+                                                                <div class="form-group has-success">
+                                                                    <input type="number" class="form-control manual-sold" name="sold" readonly="readonly" />
+                                                                </div>
+                                                            </div>
+                                                                
+                                                        </div>
+                                                        <div class="col-md-1 no-padding">
+
+
+                                                        </div>
+                                                        <div class="col-md-4 no-padding">
+                                                            <div class="col-md-4 custom">
+                                                                <div class="form-group has-feedback">
+                                                                    <input type="text" value="@electronicReadings[count]" class="form-control opening-electronic-reading" readonly="readonly" />
+                                                                </div>
+                                                            </div>
+                                                            <div class="col-md-4 custom">
+                                                                <div class="form-group has-success">
+                                                                    <input type="number" class="form-control electronic-reading end-electronic-reading" min="@electronicReadings[count]" name="electronic" placeholder='Side @nozzleId.Side' />
+                                                                </div>
+                                                            </div>
+
+                                                            <div class="col-md-4 custom">
+                                                                <div class="form-group has-success">
+                                                                    <input type="number" class="form-control electronic-sold" readonly="readonly" name="sold" />
+                                                                </div>
+                                                            </div>
+                                                        </div>
+                                                        
+                                                            <div class="col-md-2">
+                                                                <div class="col-md-12">
+                                                                    <div class="form-group has-success">
+                                                                        <input type="number" value="0" min="0" class="form-control test-data" name="testdata" placeholder="Liters" required="required"/>
+                                                                    </div>
+                                                                </div>
+                                                            </div>
+                                                    </div>
+                                              
+                                                </div>
+                                  
+                                                count++;
+                                            }
+                                        }
+                                    }
+                                </div>
+
+                            </div>
+                        </div> 
+                        <hr style="margin-bottom: 10px;margin-top:10px"/>
+                        
+                    }
+                }
+            
+            }
+        } 
+    </div>
+</div>

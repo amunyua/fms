@@ -1,0 +1,59 @@
+﻿<div class="row">
+    <div class="col-md-12">
+        <ul class="list-inline list-unstyled  pull-right">
+            @*            <li><a href="#"><i class="fa fa-dashboard"></i> Home</a></li>*@
+            @*            <li>Home</li>*@
+            @*            <li>Active Shift Drops</li>*@
+            @*            <li class="active">General Settings</li>*@
+        </ul>
+    </div>
+   
+</div>
+<br />
+
+
+<br /><br />
+
+<div class="box box-solid box-info">
+    <div class="box-header">
+        <h3 class="box-title">All Cash Drops</h3>
+    </div>
+    <!-- /.box-header -->
+    <div class="box-body">
+        @{Html.RenderPartial("partials/_message");}
+        <table class="table live-table table-bordered table-hover ">
+            <thead>
+            <tr>
+                <th>Attendant</th>
+                <th>Time</th>
+                <th>Mode</th>
+                <th>Amount</th>
+            </tr>
+            </thead>
+            <tbody>
+            @foreach (var item in ViewBag.allDrops)
+            {
+                <tr>
+                    <td>
+                        @item.UserId.FullName
+                    </td>
+                    <td>
+                        @item.DateCreated.ToString("h:mm tt  M/d/yyyy")
+                    </td>
+                    <td>
+                        @item.PaymentMode.PaymentModeName
+                    </td>
+                    <td>
+                        @String.Format("{0:N0}", item.Amount)
+                    </td>
+
+                </tr>
+            }
+
+            </tbody>
+        </table>
+  
+ 
+    </div>
+
+</div>

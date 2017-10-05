@@ -1,0 +1,130 @@
+﻿@using StationLinerMVC.Models
+@model IEnumerable<StationLinerMVC.Models.CashDrop>
+<div class="row">
+    <div class="col-md-12">
+        <ul class="list-inline list-unstyled  pull-right">
+            @*            <li><a href="#"><i class="fa fa-dashboard"></i> Home</a></li>*@
+@*            <li>Home</li>*@
+@*            <li>Active Shift Drops</li>*@
+@*            <li class="active">General Settings</li>*@
+        </ul>
+    </div>
+   
+</div>
+<br />
+@{
+    if (ViewBag.shift != 0)
+    {
+        <ul class="list-unstyled pull-right">
+            <li><a href="#cashdrop-modal" data-toggle="modal" class="btn btn-sm btn-primary">Make Cashdrop</a></li>
+        </ul>
+        <br /><br />
+    }
+    else
+    {
+
+
+        <div class="alert alert-warning">
+            <p>
+                Please start a shift in oder to make a cash drop.
+            </p>
+        </div>
+    }
+}
+
+<div class="box box-solid box-info">
+<div class="box-header">
+    <h3 class="box-title">Cash Drops</h3>
+</div>
+<!-- /.box-header -->
+<div class="box-body">
+    @{Html.RenderPartial("partials/_message");}
+    <table class="table live-table table-bordered table-hover ">
+        <thead>
+            <tr>
+                <th>Attendant</th>
+                <th>Time</th>
+                <th>Mode</th>
+                <th>Amount</th>
+            </tr>
+        </thead>
+        <tbody>
+            @foreach (var item in Model)
+            {
+                <tr>
+                    <td>
+                        @Html.DisplayFor(modelItem => item.UserId.FullName)
+                    </td>
+                    <td>
+                        @item.DateCreated.ToString("h:mm tt  M/d/yyyy")
+                    </td>
+                    <td>
+                        @Html.DisplayFor(modelItem => item.PaymentMode.PaymentModeName)
+                    </td>
+                    <td>
+                        @String.Format("{0:N0}", item.Amount)
+                    </td>
+
+                </tr>
+            }
+
+        </tbody>
+    </table>
+  
+ 
+</div>
+
+</div>
+
+@*cash drops modal*@
+<div class="modal fade" id="cashdrop-modal" role="dialog">
+    <form id="" action="@Url.Action("MakeCashDrop")" method="post">
+        @Html.AntiForgeryToken()
+        <div class="modal-dialog">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                        <span aria-hidden="true">&times;</span>
+                    </button>
+                    <h4 class="modal-title">Make a cash drop</h4>
+                </div>
+                <div class="modal-body">
+
+                    <div class="form-group">
+                        <label>Staff</label>
+                        <select class="form-control" name="StaffId" required="required">
+                            <option value="">Select Stuff</option>
+                            @{
+                                using (var db = new IMSDataEntities())
+                                {
+                                    var staffs = db.Users;
+                                    if (staffs.Any())
+                                    {
+                                        foreach (var staff in staffs)
+                                        {
+                                            <option value="@staff.Id">@staff.FullName</option>
+                                        }
+                                    }
+                                }
+                            }
+                        </select>
+                    </div>
+
+                    <div class="form-group">
+                        <label>Amount</label>
+                        <input type="number" name="Amount" class="form-control" required="required" />
+                    </div>
+
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-default pull-left" data-dismiss="modal">Cancel</button>
+                    <button type="submit" class="btn btn-primary">Proceed</button>
+                </div>
+            </div>
+            <!-- /.modal-content -->
+        </div>
+        <!-- /.modal-dialog -->
+    </form>
+</div>
+
+

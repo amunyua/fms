@@ -1,0 +1,24 @@
+Thu, 05 Oct 2017 10:24:29 Sequence contains more than one element    at System.Linq.Enumerable.SingleOrDefault[TSource](IEnumerable`1 source)
+   at System.Data.Entity.Migrations.DbSetMigrationsExtensions.AddOrUpdate[TEntity](DbSet`1 set, IEnumerable`1 identifyingProperties, InternalSet`1 internalSet, TEntity[] entities)
+   at System.Data.Entity.Migrations.DbSetMigrationsExtensions.AddOrUpdate[TEntity](IDbSet`1 set, Expression`1 identifierExpression, TEntity[] entities)
+   at StationLinerMVC.Controllers.StationHomeController.CompleteFuelReceiptStore2(RecieveFuelWizardModels wizard) in c:\ForeCourt\StationLiner\StationLiner\Controllers\StationHomeController.cs:line 991
+Thu, 05 Oct 2017 10:24:32 Sequence contains more than one element    at System.Linq.Enumerable.SingleOrDefault[TSource](IEnumerable`1 source)
+   at System.Data.Entity.Migrations.DbSetMigrationsExtensions.AddOrUpdate[TEntity](DbSet`1 set, IEnumerable`1 identifyingProperties, InternalSet`1 internalSet, TEntity[] entities)
+   at System.Data.Entity.Migrations.DbSetMigrationsExtensions.AddOrUpdate[TEntity](IDbSet`1 set, Expression`1 identifierExpression, TEntity[] entities)
+   at StationLinerMVC.Controllers.StationHomeController.CompleteFuelReceiptStore2(RecieveFuelWizardModels wizard) in c:\ForeCourt\StationLiner\StationLiner\Controllers\StationHomeController.cs:line 991
+Thu, 05 Oct 2017 10:24:33 Sequence contains more than one element    at System.Linq.Enumerable.SingleOrDefault[TSource](IEnumerable`1 source)
+   at System.Data.Entity.Migrations.DbSetMigrationsExtensions.AddOrUpdate[TEntity](DbSet`1 set, IEnumerable`1 identifyingProperties, InternalSet`1 internalSet, TEntity[] entities)
+   at System.Data.Entity.Migrations.DbSetMigrationsExtensions.AddOrUpdate[TEntity](IDbSet`1 set, Expression`1 identifierExpression, TEntity[] entities)
+   at StationLinerMVC.Controllers.StationHomeController.CompleteFuelReceiptStore2(RecieveFuelWizardModels wizard) in c:\ForeCourt\StationLiner\StationLiner\Controllers\StationHomeController.cs:line 991
+Thu, 05 Oct 2017 10:24:35 Sequence contains more than one element    at System.Linq.Enumerable.SingleOrDefault[TSource](IEnumerable`1 source)
+   at System.Data.Entity.Migrations.DbSetMigrationsExtensions.AddOrUpdate[TEntity](DbSet`1 set, IEnumerable`1 identifyingProperties, InternalSet`1 internalSet, TEntity[] entities)
+   at System.Data.Entity.Migrations.DbSetMigrationsExtensions.AddOrUpdate[TEntity](IDbSet`1 set, Expression`1 identifierExpression, TEntity[] entities)
+   at StationLinerMVC.Controllers.StationHomeController.CompleteFuelReceiptStore2(RecieveFuelWizardModels wizard) in c:\ForeCourt\StationLiner\StationLiner\Controllers\StationHomeController.cs:line 991
+Thu, 05 Oct 2017 10:24:36 Sequence contains more than one element    at System.Linq.Enumerable.SingleOrDefault[TSource](IEnumerable`1 source)
+   at System.Data.Entity.Migrations.DbSetMigrationsExtensions.AddOrUpdate[TEntity](DbSet`1 set, IEnumerable`1 identifyingProperties, InternalSet`1 internalSet, TEntity[] entities)
+   at System.Data.Entity.Migrations.DbSetMigrationsExtensions.AddOrUpdate[TEntity](IDbSet`1 set, Expression`1 identifierExpression, TEntity[] entities)
+   at StationLinerMVC.Controllers.StationHomeController.CompleteFuelReceiptStore2(RecieveFuelWizardModels wizard) in c:\ForeCourt\StationLiner\StationLiner\Controllers\StationHomeController.cs:line 991
+Thu, 05 Oct 2017 10:24:37 Sequence contains more than one element    at System.Linq.Enumerable.SingleOrDefault[TSource](IEnumerable`1 source)
+   at System.Data.Entity.Migrations.DbSetMigrationsExtensions.AddOrUpdate[TEntity](DbSet`1 set, IEnumerable`1 identifyingProperties, InternalSet`1 internalSet, TEntity[] entities)
+   at System.Data.Entity.Migrations.DbSetMigrationsExtensions.AddOrUpdate[TEntity](IDbSet`1 set, Expression`1 identifierExpression, TEntity[] entities)
+   at StationLinerMVC.Controllers.StationHomeController.CompleteFuelReceiptStore2(RecieveFuelWizardModels wizard) in c:\ForeCourt\StationLiner\StationLiner\Controllers\StationHomeController.cs:line 991

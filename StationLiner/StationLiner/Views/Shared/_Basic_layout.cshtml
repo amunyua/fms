@@ -1,0 +1,107 @@
+﻿<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <title>Tovuti FMS | @ViewBag.Title</title>
+    <!-- Tell the browser to be responsive to screen width -->
+    <meta content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no" name="viewport">
+    @*@Scripts.Render("~/bundles/modernizr")*@
+    <!-- Bootstrap 3.3.6 -->
+    <link rel="stylesheet" href="@Url.Content("~/Content/bootstrap/css/bootstrap.min.css")">
+    <!-- Font Awesome -->
+    <link rel="stylesheet" href="@Url.Content("~/Content/fontawesome/font-awesome.css")">
+    <link rel="stylesheet" href="@Url.Content("~/Content/fontawesome/ions.css")">
+    <!-- Ionicons -->
+    <!-- DataTables -->
+    <link rel="stylesheet" href="@Url.Content("~/Content/plugins/datatables/dataTables.bootstrap.css")">
+    <!-- iCheck for checkboxes and radio inputs -->
+    <link rel="stylesheet" href="@Url.Content("~/Content/plugins/iCheck/all.css")">
+    <!-- Theme style -->
+    <link rel="stylesheet" href="@Url.Content("~/Content/dist/css/AdminLTE.min.css")">
+    <!-- AdminLTE Skins. Choose a skin from the css/skins
+    folder instead of downloading all of them to reduce the load. -->
+    <link rel="stylesheet" href="@Url.Content("~/Content/dist/css/skins/_all-skins.min.css")">
+    <link rel="stylesheet" href="@Url.Content("~/Content/plugins/select2/select2.min.css")">
+    <link rel="stylesheet" href="@Url.Content("~/Content/css/animate.css")">
+    <link rel="stylesheet" href="@Url.Content("~/Content/plugins/datatables/dataTables.checkboxes.css")">
+
+
+    @RenderSection("Styles",false)
+
+    <!-- HTML5 Shim and Respond.js IE8 support of HTML5 elements and media queries -->
+    <!-- WARNING: Respond.js doesn't work if you view the page via file:// -->
+    <!--[if lt IE 9]>
+        <script src="https://oss.maxcdn.com/html5shiv/3.7.3/html5shiv.min.js"></script>
+        <script src="https://oss.maxcdn.com/respond/1.4.2/respond.min.js"></script>
+    <![endif]-->
+</head>
+<body class="hold-transition skin-blue sidebar-mini">
+<div class="wrapper">
+
+    @{Html.RenderPartial("partials/_Header"); }
+    <!-- Left side column. contains the logo and sidebar -->
+    @{Html.RenderPartial("partials/_SideMenu"); }
+    <!-- Content Wrapper. Contains page content -->
+    <div class="content-wrapper">
+        <!-- Content Header (Page header) -->
+        <section class="content-header">
+            <h1>
+                @RenderSection("PageTitle", false)
+                <small>@RenderSection("Description", false)</small>
+            </h1>
+            <ol class="breadcrumb">
+                @RenderSection("BreadCrumbs", false)
+            </ol>
+        </section>
+        <!-- Main content -->
+        @RenderBody()
+        <!-- /.content -->
+
+    </div>
+    <!-- /.content-wrapper -->
+    @{Html.RenderPartial("partials/_Footer"); }
+
+    <!-- Add the sidebar's background. This div must be placed
+    immediately after the control sidebar -->
+    <div class="control-sidebar-bg"></div>
+
+</div>
+<!-- ./wrapper -->
+<!-- jQuery 2.2.3 -->
+@*@Scripts.Render("~/bundles/jquery")
+        @Scripts.Render("~/bundles/plugins")*@
+<script src="@Url.Content("~/Content/plugins/jQuery/jquery-2.2.3.min.js")"></script>
+<!-- Bootstrap 3.3.6 -->
+<script src="@Url.Content("~/Content/bootstrap/js/bootstrap.min.js")"></script>
+<!--Validate jquery-->
+<script src="@Url.Content("~/Scripts/jquery.validate.js")"></script>
+<script src="@Url.Content("~/Content/dist/js/CommonJS.js")"></script> <!--Not being detected why??-->
+<!-- FastClick -->
+<!-- AdminLTE App -->
+<script src="@Url.Content("~/Content/dist/js/app.min.js")"></script>
+<!-- Sparkline -->
+<script src="@Url.Content("~/Content/plugins/sparkline/jquery.sparkline.min.js")"></script>
+<!-- jvectormap -->
+<script src="@Url.Content("~/Content/plugins/jvectormap/jquery-jvectormap-1.2.2.min.js")"></script>
+<script src="@Url.Content("~/Content/plugins/jvectormap/jquery-jvectormap-world-mill-en.js")"></script>
+<!-- SlimScroll 1.3.0 -->
+<script src="@Url.Content("~/Content/plugins/slimScroll/jquery.slimscroll.min.js")"></script>
+<!-- ChartJS 1.0.1 -->
+<script src="@Url.Content("~/Content/plugins/chartjs/Chart.min.js")"></script>
+<!-- AdminLTE dashboard demo (This is only for demo purposes) -->
+@*    <script src="@Url.Content("~/Content/dist/js/pages/dashboard2.js")"></script>*@
+<!-- AdminLTE for demo purposes -->
+<script src="@Url.Content("~/Content/dist/js/demo.js")"></script>
+<script>
+    $('body').find('select.form-control').addClass('select2').attr('style', "width:100%");
+
+    $(document).ready(function () {
+        $('body').find('.set-parent-open').parents('li').addClass('active');
+
+    });
+</script>
+@RenderSection("Scripts", false);
+
+</body>
+</html>

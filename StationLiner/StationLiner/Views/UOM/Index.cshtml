@@ -1,0 +1,201 @@
+﻿@model IEnumerable<StationLinerMVC.Models.UOM>
+
+@{
+    ViewBag.Title = "Index";
+    Layout = "~/Views/Shared/_DtLayout.cshtml";
+ 
+}
+
+        @section PageTitle{Manage Unit Of Measure}
+@section BreadCrumbs{
+    <li>Products</li>
+    <li class="active">Manage UOM</li>
+    }
+@section Actions{ @{
+    if (Flag.Status("ADD"))
+    {
+        <li><a href="#create-modal" data-toggle="modal" class="btn btn-sm btn-primary">Create New</a></li>
+    }
+}}
+@section TableHeader{Unit of measure}
+
+  @{Html.RenderPartial("partials/_message");}
+<table id="example2" class="table table-bordered table-hover">
+    <thead>
+    <tr>
+        
+        @* <th>
+            @Html.DisplayNameFor(model => model.Id)
+        </th>*@
+        <th>
+            @Html.DisplayNameFor(model => model.UOMName)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.UOMDesc)
+        </th>
+        @{
+            if (Flag.Status("EDIT"))
+            {
+                <th>Edit</th>
+            }
+
+            if (Flag.Status("DELETE"))
+            {
+                <th>Delete</th>
+            }
+        }
+    </tr>
+    </thead>
+    <tbody>
+@foreach (var item in Model) {
+
+    <tr>
+
+       @* <td>
+            @Html.DisplayFor(modelItem => item.Id)
+        </td>*@
+
+        <td>
+            @Html.DisplayFor(modelItem => item.UOMName)
+        </td>
+
+        <td>
+            @Html.DisplayFor(modelItem => item.UOMDesc)
+        </td>
+        @{
+            if (Flag.Status("EDIT"))
+            {
+                <td>
+                     <a href="#edit-modal" data-toggle="modal" edit-id="@item.Id"class="btn btn-xs btn-primary edit-btn"><i class="fa fa-edit"> </i> Edit</a>
+                    
+                </td>
+            }
+            if (Flag.Status("DELETE"))
+            {
+                <td>
+        	       <a data-toggle="modal" data-target="#delete-modal" action="@Url.Action("Delete", new { id=item.Id })" class="btn btn-xs btn-danger delete-btn"><i class="fa fa-recycle"> </i> Delete</a>
+                </td>
+            }
+        }      
+    </tr>
+   
+}
+    </tbody>
+</table>
+
+@*modal*@
+<div class="modal fade" id="delete-modal" role="dialog">
+    <form id="delete-modal-form" action="" method="post">
+        @Html.AntiForgeryToken()
+        <div class="modal-dialog">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                        <span aria-hidden="true">&times;</span>
+                    </button>
+                    <h4 class="modal-title">Delete Uom</h4>
+                </div>
+                <div class="modal-body">
+                    <p>Are you sure you want to delete this unit of measure<p>
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-default pull-left" data-dismiss="modal">No</button>
+                    <button type="submit" class="btn btn-danger">Delete</button>
+                </div>
+            </div>
+            <!-- /.modal-content -->
+        </div>
+        <!-- /.modal-dialog -->
+    </form>
+</div>
+
+<div class="modal fade" id="create-modal" role="dialog">
+    <form id="" action="@Url.Action("Create")" method="post">
+        @Html.AntiForgeryToken()
+        <div class="modal-dialog">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                        <span aria-hidden="true">&times;</span>
+                    </button>
+                    <h4 class="modal-title">Create Uom</h4>
+                </div>
+                <div class="modal-body">
+                    <div class="form-group">
+                        <label>Name</label>
+                        <input name="UOMName" type="text" required class="form-control" />
+                    </div>
+                    <div class="form-group">
+                        <label>Description</label>
+                        <input type="text" name="UOMDesc" class="form-control" required />
+                    </div>
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-default pull-left" data-dismiss="modal">Cancel</button>
+                    <button type="submit" class="btn btn-primary">Save</button>
+                </div>
+            </div>
+            <!-- /.modal-content -->
+        </div>
+        <!-- /.modal-dialog -->
+    </form>
+</div>
+
+<div class="modal fade" id="edit-modal" role="dialog">
+    <form id="" action="@Url.Action("Edit")" method="post">
+        @Html.AntiForgeryToken()
+        <div class="modal-dialog">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                        <span aria-hidden="true">&times;</span>
+                    </button>
+                    <h4 class="modal-title">Create Uom</h4>
+                </div>
+                <div class="modal-body">
+                    <div class="form-group">
+                        <label>Name</label>
+                        <input name="UOMName" id="u-name" type="text" required class="form-control" />
+                    </div>
+                    <div class="form-group">
+                        <label>Description</label>
+                        <input type="text" name="UOMDesc" id="u-desc"class="form-control" required />
+                    </div>
+                </div>
+                <div class="modal-footer">
+                    <input type="hidden" name="Id" id="edit-uom-id"/>
+                    <button type="button" class="btn btn-default pull-left" data-dismiss="modal">Cancel</button>
+                    <button type="submit" class="btn btn-primary">Save</button>
+                </div>
+            </div>
+            <!-- /.modal-content -->
+        </div>
+        <!-- /.modal-dialog -->
+    </form>
+</div>
+@section Scripts
+{
+    <script>
+        $(".edit-btn").on("click",function() {
+            var id = $(this).attr('edit-id');
+//            alert(id);
+            $("#edit-uom-id").val(id);
+            var data = {
+                "id": id
+            }
+
+            $.ajax({
+                url: "/UOM/GetUomDetails",
+                type: "POST",
+                dataType: "json",
+                data: data,
+                success: function(data) {
+                    if (data) {
+                        $("#u-name").val(data["UOMName"]);
+                        $('#u-desc').val(data["UOMDesc"]);
+                    }
+                }
+            });
+        })
+    </script>
+}

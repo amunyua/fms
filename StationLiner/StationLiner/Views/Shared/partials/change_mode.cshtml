@@ -1,0 +1,81 @@
+﻿@using StationLinerMVC.Models
+<li class="dropdown messages-menu">
+    @{
+        IMSDataEntities dbase = new IMSDataEntities();
+        var Layout = dbase.UserLayout.Where(x => x.UserId == Library.UserId);
+        if (Layout.Any())
+        {
+
+
+            var useL = (Layout.First() != null) ? Layout.First().Mode : null;
+            //if the layout is set to station mode, get the actual station details and display station name
+            string channelName = "";
+
+            if (Layout.First().ChannelId != null)
+            {
+                var channelName1 = dbase.Stations.Find(Layout.First().ChannelId);
+                channelName = channelName1.StationName;
+                Library.ChannelId = channelName1.Id;
+
+            }
+
+            var actualValue = (useL != null && useL == Constants.AdminMode) ? "Admin Mode" : "Station:   " + channelName;
+            <a href="#" class="dropdown-toggle" data-toggle="dropdown"><strong>@actualValue</strong>
+                @*                        <i class="fa fa-bell-o"></i>*@
+                @*                        <span class="label label-warning">10</span>*@
+            </a>
+        }
+    }
+    
+    <div class="dropdown-menu animated bounceIn" style="background: #1e282c;">
+        @*                        <section class="sidebar" style="height: auto;">*@
+        <ul class="sidebar-menu sidebar">
+
+            @{
+                var chan = default(long?);
+                IMSDataEntities db = new IMSDataEntities();
+                var user = db.UserLayout.Where(x => x.UserId == Library.UserId);
+                var action = (user.Any()) ? user.First().Mode : null;
+                string admin = (action == Constants.AdminMode) ? "checked" : "";
+                string shift = (action == Constants.ChannelMode) ? "checked" : "";
+                if (action == Constants.ChannelMode)
+                {
+                    chan = user.First().ChannelId;
+                }
+                <li class=""><a class="">ADMIN MODE</a></li>
+
+                <li><a href="@Url.Action("ChangeMode", "Dashboard", new {mode = Constants.AdminMode})"><i class="fa fa-circle-o text-red"></i> <span>@HttpContext.Current.User.Identity.Name</span><span class="pull-right"><input type="radio" class="pull-right minimal" disabled @admin></span></a> </li>
+                <li class=""><a>STATION MODE</a></li>
+                <li>
+                    <form action="#" method="get" class="sidebar-form">
+                        <div class="input-group">
+                            <input type="text" name="q" class="form-control" placeholder="Search...">
+                            <span class="input-group-btn">
+                                <button type="submit" name="search" id="search-btn" class="btn btn-flat">
+                                    <i class="fa fa-search"></i>
+                                </button>
+                            </span>
+                        </div>
+                    </form>
+                </li>
+
+                var allocatedChannels = db.UserAllocatedChannels.Where(x => x.UserId == Library.UserId && x.Station.IsDeleted != true);
+                if (allocatedChannels.Any())
+                {
+
+                    foreach (var channel in allocatedChannels)
+                    {
+                        var channelDetails = db.Stations.Find(channel.StationId);
+                        var status = (chan == channelDetails.Id) ? "checked" : null;
+                        <li><a href="@Url.Action("ChangeMode", "Dashboard", new {mode = Constants.ChannelMode, channelId = channelDetails.Id})"><i class="fa fa-circle-o text-aqua"></i> <span>@channelDetails.StationName</span><span class="pull-right"><input type="radio" disabled class="pull-right minimal" @status></span></a></li>
+
+                    }
+                }
+
+
+            }
+        </ul>
+        @*                        </section>*@
+    </div>
+
+</li>

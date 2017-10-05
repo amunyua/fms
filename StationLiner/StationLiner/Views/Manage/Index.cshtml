@@ -1,0 +1,120 @@
+﻿@using StationLinerMVC.Migrations
+@using StationLinerMVC.Models
+@model IEnumerable<StationLinerMVC.Models.User>
+
+@{
+    ViewBag.Title = "Index";
+    Layout = "~/Views/Shared/_DtLayout.cshtml";
+
+}
+
+        @section PageTitle{Manage Users}
+@section BreadCrumbs{
+    <li>User Manager</li>
+    <li class="active">Manage Users </li>
+    }
+@section Actions{ <li><a href="@Url.Action("Register")" class="btn btn-sm btn-primary">Create New</a></li>}
+@section TableHeader{All System Users}
+
+  @{Html.RenderPartial("partials/_message");}
+<table id="example2" class="table table-bordered table-hover">
+    <thead>
+    <tr>
+
+        <th>Id</th>
+        <th>Username</th>
+        <th>User Role</th>
+        <th>Allocate Stations</th>
+@*        <th>Action</th>*@
+
+        @*        @{*@
+        @*            if (Flag.Status("EDIT"))*@
+        @*            {*@
+        @*                <th>Edit</th>*@
+        @*            }*@
+        @**@
+        @*             if (Flag.Status("DELETE"))*@
+        @*            {*@
+        @*                <th>Delete</th>*@
+        @*            }*@
+        @*        } *@
+    </tr>
+    </thead>
+
+@foreach (var item in Model) {
+<tbody>
+<tr>
+    <td>@item.Id</td>
+    <td>@item.UserName</td>
+    <td>@item.Name</td>
+    <td><a data-target="#assign-station-modal" data-toggle="modal" user-name="@item.UserName" user-id="@item.Id" class="btn btn-xs btn-success assign-station-btn"><i class="fa fa-paperclip"> </i> Assign Stations</a></td>
+@*    <td> <a data-toggle="modal" data-target="#delete-modal" action="@Url.Action("Delete", new { id=item.Id })" class="btn btn-xs btn-danger delete-btn"><i class="fa fa-recycle"> </i> Delete</a></td>*@
+
+    @*        *@
+    @*        @{*@
+    @*            if (Flag.Status("EDIT"))*@
+    @*            {*@
+    @*                <td>*@
+    @*                     <a href="@Url.Action("Edit", new { id=item.Id })" class="btn btn-xs btn-primary"><i class="fa fa-edit"> </i> Edit</a>*@
+    @*                    *@
+    @*                </td>*@
+    @*            }*@
+    @*            if (Flag.Status("DELETE"))*@
+    @*            {*@
+    @*                <td>*@
+    @*        	       <a data-toggle="modal" data-target="#delete-modal" action="@Url.Action("Delete", new { id=item.Id })" class="btn btn-xs btn-danger delete-btn"><i class="fa fa-recycle"> </i> Delete</a>*@
+    @*                </td>*@
+    @*            }*@
+    @*        }      *@
+</tr>
+    </tbody>
+}
+
+</table>
+
+@*modal*@
+<div class="modal fade" id="assign-station-modal" role="dialog">
+    <form id="assign-modal-form" action="" method="post">
+        @Html.AntiForgeryToken()
+        <div class="modal-dialog">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                        <span aria-hidden="true">&times;</span>
+                    </button>
+                    <h4 class="modal-title">Assign Stations to <span id="user-name"></span></h4>
+                </div>
+                <div class="modal-body">
+                    Stations
+                    <ul id="channels">
+                    @{
+                        IMSDataEntities db = new IMSDataEntities();
+
+                        var channels = db.UserAllocatedChannels.Where(x => x.UserId == Library.UserId);
+                        if (channels.Any())
+                        {
+                            foreach (var channelId in channels)
+                            {
+                                var channelDetails = db.Channels.Find(channelId.ChannelId);
+                                <li><label>@channelDetails.ChannelName</label><span>  </span><input type="checkbox" class="ChannelId" channel-id="@channelDetails.Id"></li>
+                            }
+                        }
+                    }
+                    </ul>
+                    <input type="hidden" id="UserId">
+                </div>
+
+                <div class="modal-footer">
+@*                    <button type="button" class="btn btn-default pull-left" data-dismiss="modal">No</button>*@
+@*                    <button type="submit" class="btn btn-danger">Delete</button>*@
+                </div>
+            </div>
+            <!-- /.modal-content -->
+        </div>
+        <!-- /.modal-dialog -->
+    </form>
+</div>
+@section Scripts{
+    <script src="@Url.Content("~/Scripts/Manage/manage-users.js")"></script>
+
+}

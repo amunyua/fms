@@ -1,0 +1,125 @@
+﻿@using StationLinerMVC.Models
+<hr />
+@{
+    var db = new IMSDataEntities();
+}
+
+
+<div class="col-sm-12">
+    <div class="col-sm-6 form-group">
+        <label for="WarehouseId" class="col-sm-2 control-label">Warehouse</label>
+        <div class="col-sm-10">
+            <div class=" col-sm-12">
+                <select name="WarehouseId" class="form-control" id="WarehouseId" required>
+                    <option value="">--Select Warehouse--</option>
+                    @{
+                        var warehouses = db.Warehouses;
+                        if (warehouses.Any())
+                        {
+                            foreach (var warehouse in warehouses)
+                            {
+                                <option value="@warehouse.Id">@warehouse.WarehouseName</option>
+                            }
+                        }
+                    }
+                </select>
+            </div>
+        </div>
+    </div>
+
+    <div class="col-sm-6 form-group">
+
+        <label for="ProductId" class="col-sm-2 control-label">Product</label>
+        <div class="col-sm-10">
+            <div class="col-sm-12">
+                <select name="ProductId" class="form-control" id="ProductId" style="width: 100%" readonly required>
+                   
+                </select>
+            </div>
+           
+        </div>
+    </div>
+</div>
+
+<div class="col-sm-12">
+    <div class="col-sm-6 form-group">
+        <label for="" class="col-sm-2 control-label">Available Amount</label>
+        <div class="col-sm-10">
+            <div class=" col-sm-12">
+                <input type="number" id="available-amount" placeholder="Available Quantity" class="form-control"/>
+            </div>
+        </div>
+    </div>
+
+    <div class="col-sm-6 form-group">
+        <label for="" class="col-sm-2 control-label">Maximum Capacity</label>
+        <div class="col-sm-10">
+            <div class="col-sm-12">
+                <input type="number" id="MaximumCapacity" placeholder="Maximum Warehouse Capacity" class="form-control"  />
+            </div>
+        </div>
+    </div>
+</div>
+<div class="col-sm-12">
+    <div class="col-sm-6 form-group">
+        <label for="" class="col-sm-2 control-label">Expected Quantity</label>
+        <div class="col-sm-10">
+            <div class="col-sm-12">
+                <input type="number" name="ExpectedQuantity" class="form-control" required />
+            </div>
+        </div>
+    </div>
+
+    <div class="col-sm-6 form-group">
+
+        <label for="" class="col-sm-2 control-label">Actual Quantity</label>
+        <div class="col-sm-10">
+            <div class="col-sm-12">
+                <input type="number" name="ActualQuantityAvailable" class="form-control" required />
+            </div>
+
+        </div>
+    </div>
+</div>
+<div class="col-sm-12">
+    <div class="col-sm-6 form-group">
+        <label for="" class="col-sm-2 control-label">Dip Before</label>
+        <div class="col-sm-10">
+            <div class=" col-sm-12">
+                <input type="number" name="DipBeforeOffload" placeholder="Dip reading before offload" class="form-control" required />
+            </div>
+        </div>
+    </div>
+
+    <div class="col-sm-6 form-group">
+
+        <label for="" class="col-sm-2 control-label">Dip After</label>
+        <div class="col-sm-10">
+            <div class="col-sm-12">
+                <input type="number" name="DipAfterOffload" placeholder="Dip  reading after offload" class="form-control" required />
+            </div>
+        </div>
+    </div>
+</div>
+
+
+<div class="col-sm-12">
+    <div class="col-sm-6 form-group">
+        <label for="" class="col-sm-2 control-label">Amount Sold</label>
+        <div class="col-sm-10">
+            <div class="col-sm-12">
+                <input type="number" name="AmountSoldDuringOffload" placeholder="Amount sold during offload" required class="form-control" />
+            </div>
+        </div>
+    </div>
+    <div class="col-sm-6 form-group">
+        <label for="" class="col-sm-2 control-label">Price Per Liter</label>
+        <div class="col-sm-10">
+            <div class="col-sm-12">
+                <input type="number" name="PricePerLiter" id="price-per-liter" placeholder="Price Per Liter" required class="form-control" />
+            </div>
+        </div>
+    </div>
+</div>
+<br/>
+<div class="clearfix"></div>
