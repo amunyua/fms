@@ -1,0 +1,98 @@
+﻿@using StationLinerMVC.Models
+
+@{
+    ViewBag.Title = "BeginFuelReceipt";
+    Layout = "~/Views/Shared/_StationHomePageL.cshtml";
+}
+
+<div class="row">
+    <div class="col-md-12">
+        <div class="box box-info">
+            <div class="box-header with-border">
+                <h3 class="box-title">Receive Fuel</h3>
+            </div>
+            <!-- /.box-header -->
+            <!-- form start -->
+           
+            <div class="box-body">
+                <form class="form-horizontal" action="@Url.Action("BeginFuelReceiptStore")" method="post">
+                   @Html.AntiForgeryToken()
+                    <div class="form-group">
+                        <label for="inputEmail3" class="col-sm-2 control-label">Tank</label>
+
+                        <div class="col-sm-8">
+                            <div class="col-md-6" style="padding-left:0px">
+                                <select name="TankId" class="form-control" required="required" id="tank-id">
+                                    <option value="">Choose Tank</option>
+                                    @{
+                                        using (IMSDataEntities db= new IMSDataEntities())
+                                        {
+                                            if (Library.ChannelId != null)
+                                            {
+                                                var tanks = db.StationTanks.Where(x => x.StationId == Library.ChannelId);
+                                                if (tanks.Any())
+                                                {
+                                                    foreach (var tank in tanks)
+                                                    {
+                                                        <option value="@tank.Id">@tank.TankName</option>
+                                                    }
+                                                }
+                                            }
+                                        }
+                                    }
+                                </select>
+                            </div>
+                            <div class="col-md-6" style="padding-right:0px">
+                                <input type="text" name="" class="form-control" id="prod-id" placeholder="Product" readonly />
+                            </div>
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        <label for="inputPassword3" class="col-sm-2 control-label">Current Fuel In tank</label>
+
+                        <div class="col-sm-8 ">
+                            <input type="number" name="HeightBefore" class="form-control" id="inputPassword3" required="required" placeholder="(mm)">
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        <label for="" class="col-sm-2 control-label">Current Fuel Volume In tank</label>
+
+                        <div class="col-sm-8 ">
+                            <input type="number" name="VolumeBefore" class="form-control" required="required" id="" placeholder="(l)">
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        <label for="" class="col-sm-2 control-label">Current Temperature</label>
+
+                        <div class="col-sm-8 ">
+                            <input type="number" name="TemperatureBefore" class="form-control" id="" required="required" placeholder="(degree celcius)">
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        <label for="" class="col-sm-2 control-label">Current Density in tank</label>
+
+                        <div class="col-sm-8 ">
+                            <input type="number" required="required" name="DesityBefore" class="form-control" id="" placeholder="(Kg/l)">
+                        </div>
+                    </div>
+                  
+                       
+                      
+               
+                    <!-- /.box-body -->
+                    <div class="box-footer">
+                        <a href="@Url.Action("StationHome")" class="btn btn-default">Cancel</a>
+                        <button type="submit" class="btn btn-info pull-right">Ok</button>
+                    </div>
+                    <!-- /.box-footer -->
+                </form>
+            </div>
+        </div>
+    </div>
+</div>
+@section Scripts{
+    <script src="@Url.Content("~/Scripts/fuel/fuel-receipt.js")"></script>
+
+}
+
+

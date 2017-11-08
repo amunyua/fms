@@ -1,0 +1,200 @@
+﻿@model IEnumerable<StationLinerMVC.Models.SupplierVehicle>
+
+@{
+    ViewBag.Title = "Vehicles";
+    Layout = "~/Views/Shared/_DtLayout.cshtml";
+ 
+}
+
+        @section PageTitle{@ViewBag.supplierName}
+@section BreadCrumbs{
+    <li>Suppliers</li>
+<li>@Html.ActionLink("Manage Suppliers", "Index")</li>
+<li class="active">Manage Vehicles</li>
+    }
+@section Actions{<li><a href="#add-driver-modal" data-toggle="modal" class="btn btn-sm btn-primary">Create New</a></li>}
+@section TableHeader{All Supplier Vehicles}
+
+  @{Html.RenderPartial("partials/_message");}
+<table id="example2" class="table table-bordered table-hover">
+    <thead>
+    <tr>
+      
+        <th>
+            @Html.DisplayNameFor(model => model.RegNumber)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.MaximumCapacity)
+        </th>
+        @{
+//            if (Flag.Status("EDIT"))
+//            {
+                <th>Edit</th>
+//            }
+
+//            if (Flag.Status("DELETE"))
+//            {
+                <th>Delete</th>
+//            }
+        }
+    </tr>
+    </thead>
+    <tbody>
+@foreach (var item in Model) {
+
+    <tr>
+       <td>
+            @Html.DisplayFor(modelItem => item.RegNumber)
+        </td>
+
+        <td>
+            @Html.DisplayFor(modelItem => item.MaximumCapacity)
+        </td>
+        @{
+//            if (Flag.Status("EDIT"))
+//            {
+                <td>
+                    <a href="#edit-modal" data-toggle="modal" edit-id="@item.Id" class="btn btn-xs btn-primary edit-supplier-driver"><i class="fa fa-edit"> </i> Edit</a>
+                </td>
+//            }
+//            if (Flag.Status("DELETE"))
+//            {
+                <td>
+        	       <a data-toggle="modal" data-target="#delete-modal" action="@Url.Action("DeleteVehicle", new { id = item.Id })" class="btn btn-xs btn-danger delete-btn"><i class="fa fa-recycle"> </i> Delete</a>
+                </td>
+//            }
+        }      
+    </tr>
+    
+}
+</tbody>
+</table>
+
+@*modal*@
+<div class="modal fade" id="delete-modal" role="dialog">
+    <form id="delete-modal-form" action="" method="post">
+        @Html.AntiForgeryToken()
+        <div class="modal-dialog">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                        <span aria-hidden="true">&times;</span>
+                    </button>
+                    <h4 class="modal-title">Delete Driver</h4>
+                </div>
+                <div class="modal-body">
+                    <p>Are you sure you want to Delete this driver?</p>
+                </div>
+                <div class="modal-footer">
+
+                    <button type="button" class="btn btn-default pull-left" data-dismiss="modal">No</button>
+                    <button type="submit" class="btn btn-danger">Delete</button>
+                </div>
+            </div>
+            <!-- /.modal-content -->
+        </div>
+        <!-- /.modal-dialog -->
+    </form>
+</div>
+
+<div class="modal fade" id="add-driver-modal" role="dialog">
+    <form id="" action="@Url.Action("AddVehicle")" method="post">
+        @Html.AntiForgeryToken()
+        <div class="modal-dialog">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                        <span aria-hidden="true">&times;</span>
+                    </button>   
+                    <h4 class="modal-title">Add Vehicle</h4>
+                </div>
+                <div class="modal-body">
+                    <div class="form-group">
+                        <label for="driver-name"> Registration Number</label>
+                        <input type="text" id="driver-name" name="RegNumber" required class="form-control unique" table="SupplierVehicles" />
+                    </div>
+
+                    <div class="form-group">
+                        <label for="recipient-name" class="">Maximum Tanker Capacity (L)</label>
+                        <input type="number" class="form-control" id="PhoneNumber" required name="MaximumCapacity" placeholder="Tanker capacity in liters">
+                    </div>
+                    @{
+                        var supplierId = Request.Url.Segments.LastOrDefault();
+                    }
+                    <input type="hidden" name="SupplierId" value="@supplierId" />
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-default pull-left" data-dismiss="modal">Cancel</button>
+                    <button type="submit" class="btn btn-primary">Save</button>
+                </div>
+            </div>
+            <!-- /.modal-content -->
+        </div>
+        <!-- /.modal-dialog -->
+    </form>
+</div>
+
+@*modal for edit*@
+@*modal*@
+<div class="modal fade" id="edit-modal" role="dialog">
+    <form id="" action="@Url.Action("EditVehicleDetails")" method="post">
+        @Html.AntiForgeryToken()
+        <div class="modal-dialog">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                        <span aria-hidden="true">&times;</span>
+                    </button>
+                    <h4 class="modal-title">Edit Vehicle</h4>
+                </div>
+                <div class="modal-body">
+                    <div class="form-group">
+                        <label for=""> Registration Number</label>
+                        <input type="text" id="edit-vreg" name="RegNumber" required class="form-control" />
+                    </div>
+
+                    <div class="form-group">
+                        <label for="e" class="">Maximum Capacity</label>
+                        <input type="text" class="form-control" id="edit-max-cap" required name="MaximumCapacity">
+                    </div>
+                </div>
+                <div class="modal-footer">
+                    <input type="hidden" name="VehicleId" id="p-id" />
+                    <button type="button" class="btn btn-default pull-left" data-dismiss="modal">No</button>
+                    <button type="submit" class="btn btn-primary">Update</button>
+                </div>
+            </div>
+            <!-- /.modal-content -->
+        </div>
+        <!-- /.modal-dialog -->
+    </form>
+</div>
+
+@section Scripts{
+    <script>
+        $('.edit-supplier-driver').on('click',
+            function() {
+                var id = $(this).attr('edit-id');
+//                alert(id);
+                $('#p-id').val('').val(id);
+                if (id != "") {
+                    var data = {
+                        "vehicleId":id
+                    }
+                    $.ajax({
+                        url: "/Suppliers/GetEditVehicleDetails",
+                        type: "POST",
+                        dataType: "json",
+                        data: data,
+                        success:function(data) {
+                            if (data) {
+                                $("#edit-vreg").val(data["RegNumber"]);
+                                $("#edit-max-cap").val(data["MaximumCapacity"]);
+                            }
+                        }
+                });
+                }
+                
+            });
+    </script>
+}

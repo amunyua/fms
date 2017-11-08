@@ -1,0 +1,189 @@
+﻿@using StationLinerMVC.Models
+@model IEnumerable<StationLinerMVC.Models.GeneralSettings>
+<div class="row">
+    <div class="col-md-12">
+        <ul class="list-inline list-unstyled  pull-right">
+            @*            <li><a href="#"><i class="fa fa-dashboard"></i> Home</a></li>*@
+            <li>System Settings</li>
+            <li>></li>
+            <li class="active">General Settings</li>
+        </ul>
+    </div>
+   
+</div>
+<br />
+<ul class="list-unstyled pull-right">
+    <li><a href="#add-bank-modal" data-toggle="modal" class="btn btn-sm btn-primary">Create New</a></li>                      
+</ul>
+<br /><br />
+
+<div class="box box-solid box-primary">
+    <div class="box-header">
+        <h3 class="box-title">Bank Details</h3>
+    </div>
+    <!-- /.box-header -->
+    <div class="box-body">
+        @{Html.RenderPartial("partials/_message");}
+
+        <table class="table table-bordered table-hover example2" style="width: 100%">
+            <thead>
+            <tr>
+                <th>Bank Name</th>
+                <th>Account Number</th>
+                <th>Account Name</th>
+                <th>Branch</th>
+                <th>Edit</th>
+                <th>Delete</th>
+            </tr>
+            </thead>
+            <tbody>
+                @{
+                    using (IMSDataEntities db = new IMSDataEntities())
+                    {
+                        var details = db.BankDetails.Where(x=>x.IsDeleted ==false);
+                        if (details.Any())
+                        {
+                            foreach (var detail in details)
+                            {
+                                <tr>
+                                    <td>@detail.Bank</td>
+                                <td>@detail.AccountNumber</td>
+                                <td>@detail.AccountName</td>
+                                <td>@detail.Branch</td>
+                                    <td>
+                                        <a href="#edit-bank-modal" edit-id="@detail.Id" data-toggle="modal" class="btn btn-xs btn-primary edit-b-btn">Edit</a>
+                                    </td>
+                                    <td><a href="#delete-bank-modal" delete-id="@detail.Id" data-toggle="modal" class="btn btn-xs btn-danger delete-b-btn">Delete</a></td>
+                                </tr>
+                            }
+                        }
+                    }
+                }
+            </tbody>
+
+        </table>
+
+        @*modal*@
+        <div class="modal fade" id="delete-bank-modal" role="dialog">
+            <form id="delete-modal-form" action="@Url.Action("DeleteBank")" method="post">
+                @Html.AntiForgeryToken()
+                <div class="modal-dialog">
+                    <div class="modal-content">
+                        <div class="modal-header">
+                            <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                                <span aria-hidden="true">&times;</span>
+                            </button>
+                            <h4 class="modal-title">Delete Bank</h4>
+                        </div>
+                        <div class="modal-body">
+                            <p>Are you sure you want to delete this Bank?</p>
+                        </div>
+                        <input type="hidden" name="BankId" id="bank-id" />
+
+                        <div class="modal-footer">
+                            <button type="button" class="btn btn-default pull-left" data-dismiss="modal">No</button>
+                            <button type="submit" class="btn btn-danger">Delete</button>
+                        </div>
+                    </div>
+                    <!-- /.modal-content -->
+                </div>
+                <!-- /.modal-dialog -->
+            </form>
+        </div>
+    </div>
+
+    
+    @*    modal for add*@
+    <div class="modal fade" id="add-bank-modal" role="dialog">
+        <form id="" action="@Url.Action("StoreBankDetails")" method="post">
+            @Html.AntiForgeryToken()
+            <div class="modal-dialog">
+                <div class="modal-content">
+                    <div class="modal-header">
+                        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                            <span aria-hidden="true">&times;</span>
+                        </button>
+                        <h4 class="modal-title">Create Bank</h4>
+                    </div>
+                    <div class="modal-body">
+                        <div class="form-group">
+                            <label for="" class="control-label">Bank Name:</label>
+                            <input type="text" class="form-control" id="" name="BankName" required="required">
+                        </div>
+                        
+                        <div class="form-group">
+                            <label for="" class="control-label">Account Number:</label>
+                            <input type="number" class="form-control" id="" name="AccountNumber" placeholder="eg 00008" required="required">
+                        </div>
+                        <div class="form-group">
+                            <label for="" class="control-label">Account Name:</label>
+                            <input type="text" class="form-control" id="" name="AccountName" required="required">
+                        </div>
+                        
+                        <div class="form-group">
+                            <label for="" class="control-label">Branch:</label>
+                            <input type="text" class="form-control" id="" name="Branch" required="required">
+                        </div>
+                    </div>
+                    <div class="modal-footer">
+                        <button type="button" class="btn btn-default pull-left" data-dismiss="modal">Cancel</button>
+                        <button type="submit" class="btn btn-primary">Save</button>
+                    </div>
+                </div>
+                <!-- /.modal-content -->
+            </div>
+            <!-- /.modal-dialog -->
+        </form>
+    </div>
+    
+    @*    modal for edit*@
+    
+    <div class="modal fade" id="edit-bank-modal" role="dialog">
+        <form id="" action="@Url.Action("EditBankDetails")" method="post">
+            @Html.AntiForgeryToken()
+            <div class="modal-dialog">
+                <div class="modal-content">
+                    <div class="modal-header">
+                        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                            <span aria-hidden="true">&times;</span>
+                        </button>
+                        <h4 class="modal-title">Edit Bank Details</h4>
+                    </div>
+                    <div class="modal-body">
+                        <div class="form-group">
+                            <label for="" class="control-label">Bank Name:</label>
+                            <input type="text" class="form-control" id="bank-name" name="BankName" required="required">
+                        </div>
+
+                        <div class="form-group">
+                            <label for="" class="control-label">Account Number:</label>
+                            <input type="number" class="form-control" id="account-number" name="AccountNumber" placeholder="eg 00008" required="required">
+                        </div>
+                        <div class="form-group">
+                            <label for="" class="control-label">Account Name:</label>
+                            <input type="text" class="form-control" id="account-name" name="AccountName" required="required">
+                        </div>
+
+                        <div class="form-group">
+                            <label for="" class="control-label">Branch:</label>
+                            <input type="text" class="form-control" id="branch" name="Branch" required="required">
+                        </div>
+                    </div>
+                    <div class="modal-footer">
+                        <input type="hidden" name="BankId" id="edit-bank-id"/>
+                        <button type="button" class="btn btn-default pull-left" data-dismiss="modal">Cancel</button>
+                        <button type="submit" class="btn btn-primary">Save</button>
+                    </div>
+                </div>
+                <!-- /.modal-content -->
+            </div>
+            <!-- /.modal-dialog -->
+        </form>
+    </div>
+</div>
+
+
+
+
+
+

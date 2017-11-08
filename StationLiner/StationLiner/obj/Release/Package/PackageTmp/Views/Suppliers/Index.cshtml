@@ -1,0 +1,858 @@
+﻿@model IEnumerable<StationLinerMVC.Models.Supplier>
+
+@{
+    ViewBag.Title = "Manage Suppliers";
+    Layout = "~/Views/Shared/_DtLayout.cshtml";
+ 
+}
+@section Styles
+{
+    <style>
+        #installationForm .tab-content {
+            margin-top: 20px;
+        }
+    </style>
+}
+
+@section PageTitle{Manage Suppliers}
+@section BreadCrumbs{
+    <li>Suppliers</li>
+    <li class="active">Manage Suppliers</li>
+    }
+@section Actions{@{
+                     if (Flag.Status("ADD"))
+                     {
+                         <li><a href="#create-modal" data-toggle="modal" class="btn btn-sm btn-primary">Create New</a></li>
+                     }       
+                    
+                      }} 
+@section TableHeader{All Suppliers}
+
+  @{Html.RenderPartial("partials/_message");}
+<table id="example2" class="table table-bordered table-hover">
+    <thead>
+    <tr>
+        
+        @*<th>
+            @Html.DisplayNameFor(model => model.Id)
+        </th>*@
+        <th>
+            @Html.DisplayNameFor(model => model.Name)
+        </th>
+
+        <th>
+            @Html.DisplayNameFor(model => model.Email)
+        </th>
+
+        <th>
+@*            @Html.DisplayNameFor(model => model.Contact1)*@
+                Telephone
+        </th>
+        <th>Manage Drivers</th>
+        <th>Manage Vehicles</th>
+        <th>Manage Products</th>
+        @{
+            if (Flag.Status("EDIT"))
+            {
+                <th>Edit</th>
+            }
+
+            if (Flag.Status("DELETE"))
+            {
+                <th>Delete</th>
+            }
+        }
+    </tr>
+    </thead>
+    <tbody>
+@foreach (var item in Model) {
+
+    <tr>
+
+        @*<td>
+            @Html.DisplayFor(modelItem => item.Id)
+        </td>*@
+
+        <td>
+            @Html.DisplayFor(modelItem => item.Name)
+        </td>
+
+      
+        <td>
+            @Html.DisplayFor(modelItem => item.Email)
+        </td>
+
+        <td>
+            @Html.DisplayFor(modelItem => item.Contact1)
+        </td>
+        <td>
+            <a href="@Url.Action("Drivers", new { id = item.Id })" class="btn btn-xs btn-success"><i class="fa fa-user"> </i> Manage Drivers</a>
+        </td>
+       <td>
+            <a href="@Url.Action("Vehicles", new { id = item.Id })" class="btn btn-xs btn-success"><i class="fa fa-user"> </i> Manage Vehicles</a>
+        </td>
+       
+        <td>
+            <a href="@Url.Action("SupplierProducts", new { id = item.Id })" class="btn btn-xs btn-success"><i class="fa fa-gears"> </i> Manage Products</a>
+        </td>
+        @{
+            if (Flag.Status("EDIT"))
+            {
+                <td>
+                    <a href="#edit-modal" data-toggle="modal" ed="@item.Id" class="btn btn-xs btn-primary e-sup"><i class="fa fa-edit"> </i> Edit</a>
+                </td>
+            }
+            if (Flag.Status("DELETE"))
+            {
+                <td>
+        	       <a data-toggle="modal" data-target="#delete-modal" action="@Url.Action("Delete", new { id=item.Id })" class="btn btn-xs btn-danger delete-btn"><i class="fa fa-recycle"> </i> Delete</a>
+                </td>
+            }
+        }      
+    </tr>
+  
+}
+    </tbody>
+</table>
+
+@*modal*@
+<div class="modal fade" id="delete-modal" role="dialog">
+    <form id="delete-modal-form" action="" method="post">
+        @Html.AntiForgeryToken()
+        <div class="modal-dialog">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                        <span aria-hidden="true">&times;</span>
+                    </button>
+                    <h4 class="modal-title">Delete Menu</h4>
+                </div>
+                <div class="modal-body">
+                    <p>Are you sure you want to delete this menu?</p>
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-default pull-left" data-dismiss="modal">No</button>
+                    <button type="submit" class="btn btn-danger">Delete</button>
+                </div>
+            </div>
+            <!-- /.modal-content -->
+        </div>
+        <!-- /.modal-dialog -->
+    </form>
+</div>
+
+
+<div class="modal fade" id="create-modal" role="dialog">
+<form id="installationForm1" method="post" action="@Url.Action("Create")"class="form-horizontal has-feedback">
+    @Html.AntiForgeryToken()
+<div class="modal-dialog">
+<div class="modal-content">
+    
+<div class="modal-header">
+    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+        <span aria-hidden="true">&times;</span>
+    </button>
+    <h3 class="modal-title">Create Supplier</h3>
+</div>
+<div class="modal-body">
+<div class="row">
+    <div class="col-md-12">
+        <div class="col-md-offset-2">
+            <ul class=" bootstrapWizard no-padding no-border form-wizard">
+                <li class="active">
+                    <a href="#create-step-1" data-toggle="tab">
+                        <span class="step">1</span>
+                    </a>
+                </li>
+                <li>
+                    <a href="#create-step-2" data-toggle="tab">
+                        <span class="step">2</span>
+                    </a>
+                </li>
+                <li>
+                    <a href="#create-step-3" data-toggle="tab">
+                        <span class="step">3</span>
+                    </a>
+                </li>
+            </ul>
+        </div>
+       
+       
+    </div>
+</div>
+
+<div class="tab-content">
+
+<!-- First tab -->
+    <div class="tab-pane active" id="create-step-1">
+        <h4>
+            <strong>Step 1</strong> - Supplier Contact Details
+        </h4>
+        <hr />
+        <div class="row">
+            <div class="col-md-12">
+                <div class="form-group">
+                    <div class="col-md-2 no-margin">
+                        <label class="control-label">Supplier Name</label>
+                    </div>
+                    <div class="col-md-10">
+                        <input type="text" class="form-control unique" table="Suppliers" name="Name" required="required" />
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="row">
+            <div class="col-md-12">
+                <div class="form-group">
+                    <div class="col-md-2">
+                        <label>Supplier Email</label>
+                    </div>
+                    <div class="col-md-10 ">
+                        <input type="email" required class="form-control unique" table="Suppliers" name="Email" />
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="row">
+            <div class="col-md-12">
+                <div class="form-group">
+                    <div class="col-md-2">
+                        <label>Telephone One</label>
+                    </div>
+                    <div class="col-md-10 ">
+                        <input type="text" class="form-control" name="Contact1" required data-inputmask='"mask": "(999) 999-999999"' data-mask data-fv-regexp-message="Please enter a valid phone number" pattern="^(\+\d{1,2}\s)?\(?\d{3}\)?[\s.-]?\d{3}[\s.-]?\d{6}" placeholder="start with the country code" />
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="row">
+            <div class="col-md-12">
+                <div class="form-group">
+                    <div class="col-md-2">
+                        <label>Postal Address</label>
+                    </div>
+                    <div class="col-md-10 ">
+                        <input type="text" class="form-control" name="PostalAddress" />
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="row">
+            <div class="col-md-12">
+                <div class="form-group">
+                    <div class="col-md-2">
+                        <label>Postal Code</label>
+                    </div>
+                    <div class="col-md-10">
+                        <input type="number" class="form-control" name="PostalCode" required="required" />
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="row">
+            <div class="col-md-12">
+                <div class="form-group">
+                    <div class="col-md-2">
+                        <label class="control-label">Country</label>
+                    </div>
+                    <div class="col-md-10" style="margin-bottom:10px">
+                        <select class="form-control select2" name="CountryId" style="width: 100%;border-color: #d2d6de;">
+                            @{
+                                foreach (var country in ViewBag.Countries)
+                                {
+                                    <option value="@country.Id">@country.CountryName</option>
+                                }
+                            }
+                        </select>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="row">
+            <div class="col-md-12">
+                <div class="form-group">
+                    <div class="col-md-2">
+                        <label>City</label>
+                    </div>
+                    <div class="col-md-10">
+                        <input type="text" class="form-control" required name="City" />
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+<!-- Second tab -->
+    <div class="tab-pane" id="create-step-2">
+        <h4>
+            <strong>Step 2</strong> - Contact Persons Details
+        </h4>
+        <hr />
+        <div class="row">
+            <div class="col-md-12" style="margin-bottom: 10px">
+                <div class="form-group">
+                    <div class="col-md-2">
+                        <label>Contact One</label>
+                    </div>
+                    <div class="col-md-10">
+                        <input type="text" class="form-control" name="ContactOneName" placeholder="Name" required="required" />
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="row">
+            <div class="col-md-12" style="margin-bottom: 10px">
+                <div class="form-group">
+                    <div class="col-md-2">
+                        <label>Designation</label>
+                    </div>
+                    <div class="col-md-10">
+                        <input type="text" class="form-control" name="ContactOneDesignation" required="required" />
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="row">
+            <div class="col-md-12" style="margin-bottom: 10px">
+                <div class="form-group">
+                    <div class="col-md-2">
+                        <label>Telephone</label>
+                    </div>
+                    <div class="col-md-10">
+                        <input type="text" class="form-control unique" table="Suppliers" name="ContactOneTelephone" required="required" data-inputmask='"mask": "(999) 999-999999"' data-mask data-fv-regexp-message="Please enter a valid phone number" pattern="^(\+\d{1,2}\s)?\(?\d{3}\)?[\s.-]?\d{3}[\s.-]?\d{6}" placeholder="start with the country code" />
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="row">
+            <div class="col-md-12" style="margin-bottom: 10px">
+                <div class="form-group">
+                    <div class="col-md-2">
+                        <label>Email</label>
+                    </div>
+                    <div class="col-md-10">
+                        <input type="email" class="form-control unique" table="Suppliers" name="ContactOneEmail" required="required" />
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="row">
+            <div class="col-md-12" style="margin-bottom: 10px">
+                <div class="form-group">
+                    <div class="col-md-2">
+                        <label>Contact Two</label>
+                    </div>
+                    <div class="col-md-10 ">
+                        <input type="text" class="form-control" name="ContactTwoName" placeholder="Name" />
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="row">
+            <div class="col-md-12" style="margin-bottom: 10px">
+                <div class="form-group">
+                    <div class="col-md-2">
+                        <label>Designation</label>
+                    </div>
+                    <div class="col-md-10">
+                        <input type="text" class="form-control" name="ContactTwoDesignation" />
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="row">
+            <div class="col-md-12" style="margin-bottom: 10px">
+                <div class="form-group">
+                    <div class="col-md-2">
+                        <label>Telephone</label>
+                    </div>
+                    <div class="col-md-10">
+                        <input type="text" class="form-control" name="ContactTwoTelephone" data-inputmask='"mask": "(999) 999-999999"' data-mask data-fv-regexp-message="Please enter a valid phone number" pattern="^(\+\d{1,2}\s)?\(?\d{3}\)?[\s.-]?\d{3}[\s.-]?\d{6}" placeholder="start with the country code" />
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="row">
+            <div class="col-md-12" style="margin-bottom: 10px">
+                <div class="form-group">
+                    <div class="col-md-2">
+                        <label>Email</label>
+                    </div>
+                    <div class="col-md-10">
+                        <input type="email" class="form-control" name="ContactTwoEmail" />
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="tab-pane" id="create-step-3">
+        <h4>
+            <strong>Step 3</strong> - Other Details
+        </h4>
+        <hr />
+        <div class="row">
+            <div class="col-md-12" style="margin-bottom: 10px">
+                <div class="form-group">
+                    <div class="col-md-2">
+                        <label>PIN Number</label>
+                    </div>
+                    <div class="col-md-10 no-margin">
+                        <input type="text" class="form-control" name="PinNumber" />
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="row">
+            <div class="col-md-12" style="margin-bottom: 10px">
+                <div class="form-group">
+                    <div class="col-md-2">
+                        <label>Credit Limit</label>
+                    </div>
+                    <div class="col-md-10 no-margin">
+                        <input type="number" class="form-control" name="CreditLimit" required="required" placeholder="in shillings" />
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="row">
+            <div class="col-md-12" style="margin-bottom: 10px">
+                <div class="form-group">
+                    <div class="col-md-2">
+                        <label>MOQ</label>
+                    </div>
+                    <div class="col-md-10 no-margin">
+                        <input type="text" class="form-control" name="MOQ" />
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="row">
+            <div class="col-md-12" style="margin-bottom: 10px">
+                <div class="form-group">
+                    <div class="col-md-2">
+                        <label>Payment Terms</label>
+                    </div>
+                    <div class="col-md-10 no-margin">
+                        <select name="PaymentTerms" class="form-control" required>
+                            @{
+                                foreach (var term in ViewBag.Terms)
+                                {
+                                    <option value="@term.Id">@term.PaymentTermName</option>
+                                }
+                            }
+                        </select>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="row">
+            <div class="col-md-12" style="margin-bottom: 10px">
+                <div class="form-group">
+                    <div class="col-md-2">
+                        <label>Notes</label>
+                    </div>
+                    <div class="col-md-10 no-margin">
+                        <textarea name="Notes" class="form-control"></textarea>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+
+</div>
+<div class="modal-footer">
+    <div class="row">
+        <div class="col-md-12">
+            <ul class="pager wizard no-margin">
+                <li class="previous"><a href="javascript: void(0);" style="background-color: #0091d9; color: white; border: 0px; font-size: 14px">Previous</a></li>
+
+                <li class="next pull-right"><a href="javascript: void(0);" style="background-color: #0091d9; color: white; border: 0px; font-size: 14px">Proceed</a></li>
+
+            </ul>
+        </div>
+    </div>
+</div>
+</div>
+<!-- /.modal-content -->
+</div>
+</div>
+<!-- /.modal-dialog -->
+</form>
+</div>
+    
+<div class="modal fade" id="edit-modal" role="dialog">
+    <form id="installationForm" method="post" action="@Url.Action("Edit")"class="form-horizontal has-feedback">
+        @Html.AntiForgeryToken()
+        <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="modal-header">
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                    <span aria-hidden="true">&times;</span>
+                </button>
+                <h3 class="modal-title">Edit Supplier</h3>
+            </div>
+        <div class="modal-body">
+        <div class="row">
+            <div class="col-md-12">
+                <div class="col-md-offset-2">
+                    <ul class=" bootstrapWizard no-padding no-border form-wizard">
+                        <li class="active">
+                            <a href="#edit-step-1" data-toggle="tab">
+                                <span class="step">1</span>
+                            </a>
+                        </li>
+                        <li>
+                            <a href="#edit-step-2" data-toggle="tab">
+                                <span class="step">2</span>
+                            </a>
+                        </li>
+                        <li>
+                            <a href="#edit-step-3" data-toggle="tab">
+                                <span class="step">3</span>
+                            </a>
+                        </li>
+                    </ul>
+                </div>
+       
+       
+            </div>
+        </div>
+            <br/>
+        <div class="tab-content">
+
+        <!-- First tab -->
+            <div class="tab-pane active" id="edit-step-1">
+                <h4>
+                    <strong>Step 1</strong> - Supplier Contact Details
+                </h4>
+                <hr />
+                <div class="row">
+                    <div class="col-md-12">
+                        <div class="form-group">
+                            <div class="col-md-2">
+                                <label class="control-label">Supplier Name</label>
+                            </div>
+                            <div class="col-md-10">
+                                <input type="text" class="form-control" name="Name" required="required" id="Name" />
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="row">
+                    <div class="col-md-12">
+                        <div class="form-group">
+                            <div class="col-md-2">
+                                <label>Supplier Email</label>
+                            </div>
+                            <div class="col-md-10">
+                                <input type="email" required class="form-control" name="Email" id="Email" />
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="row">
+                    <div class="col-md-12">
+                        <div class="form-group">
+                            <div class="col-md-2">
+                                <label>Telephone One</label>
+                            </div>
+                            <div class="col-md-10 ">
+                                <input type="text" class="form-control" name="Contact1" id="Contact1" required data-inputmask='"mask": "(999) 999-999999"' data-mask data-fv-regexp-message="Please enter a valid phone number" pattern="^(\+\d{1,2}\s)?\(?\d{3}\)?[\s.-]?\d{3}[\s.-]?\d{6}" placeholder="start with the country code" />
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="row">
+                    <div class="col-md-12">
+                        <div class="form-group">
+                            <div class="col-md-2">
+                                <label>Postal Address</label>
+                            </div>
+                            <div class="col-md-10">
+                                <input type="text" class="form-control" name="PostalAddress" id="PostalAddress" />
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="row">
+                    <div class="col-md-12">
+                        <div class="form-group">
+                            <div class="col-md-2">
+                                <label>Postal Code</label>
+                            </div>
+                            <div class="col-md-10">
+                                <input type="number" class="form-control" name="PostalCode" id="PostalCode" required="required" />
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="row">
+                    <div class="col-md-12">
+                        <div class="form-group">
+                            <div class="col-md-2">
+                                <label class="control-label">Country</label>
+                            </div>
+                            <div class="col-md-10">
+                                <select class="form-control" name="CountryId" id="CountryId" style="margin-bottom: 10px">
+                                    @{
+                                        foreach (var country in ViewBag.Countries)
+                                        {
+                                            <option value="@country.Id">@country.CountryName</option>
+                                        }
+                                    }
+                                </select>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="row">
+                    <div class="col-md-12">
+                        <div class="form-group">
+                            <div class="col-md-2">
+                                <label>City</label>
+                            </div>
+                            <div class="col-md-10 ">
+                                <input type="text" class="form-control" required name="City" id="City" />
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+        <!-- Second tab -->
+            <div class="tab-pane" id="edit-step-2">
+                <h4>
+                    <strong>Step 2</strong> - Contact Persons Details
+                </h4>
+                <hr />
+                <div class="row">
+                    <div class="col-md-12" style="margin-bottom: 10px">
+                        <div class="form-group">
+                            <div class="col-md-2">
+                                <label>Contact One</label>
+                            </div>
+                            <div class="col-md-10 ">
+                                <input type="text" class="form-control" name="ContactOneName" id="ContactOneName" placeholder="Name" required="required" />
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="row">
+                    <div class="col-md-12" style="margin-bottom: 10px">
+                        <div class="form-group">
+                            <div class="col-md-2">
+                                <label>Designation</label>
+                            </div>
+                            <div class="col-md-10">
+                                <input type="text" class="form-control" name="ContactOneDesignation" id="ContactOneDesignation" required="required" />
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="row">
+                    <div class="col-md-12" style="margin-bottom: 10px">
+                        <div class="form-group">
+                            <div class="col-md-2">
+                                <label>Telephone</label>
+                            </div>
+                            <div class="col-md-10">
+                                <input type="text" class="form-control" name="ContactOneTelephone" id="ContactOneTelephone" required="required" data-inputmask='"mask": "(999) 999-999999"' data-mask data-fv-regexp-message="Please enter a valid phone number" pattern="^(\+\d{1,2}\s)?\(?\d{3}\)?[\s.-]?\d{3}[\s.-]?\d{6}" placeholder="start with the country code" />
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="row">
+                    <div class="col-md-12" style="margin-bottom: 10px">
+                        <div class="form-group">
+                            <div class="col-md-2">
+                                <label>Email</label>
+                            </div>
+                            <div class="col-md-10">
+                                <input type="email" class="form-control" name="ContactOneEmail" id="ContactOneEmail" required="required" />
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="row">
+                    <div class="col-md-12" style="margin-bottom: 10px">
+                        <div class="form-group">
+                            <div class="col-md-2">
+                                <label>Contact Two</label>
+                            </div>
+                            <div class="col-md-10">
+                                <input type="text" class="form-control" name="ContactTwoName" id="ContactTwoName" placeholder="Name" />
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="row">
+                    <div class="col-md-12" style="margin-bottom: 10px">
+                        <div class="form-group">
+                            <div class="col-md-2">
+                                <label>Designation</label>
+                            </div>
+                            <div class="col-md-10">
+                                <input type="text" class="form-control" name="ContactTwoDesignation" id="ContactTwoDesignation" />
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="row">
+                    <div class="col-md-12" style="margin-bottom: 10px">
+                        <div class="form-group">
+                            <div class="col-md-2">
+                                <label>Telephone</label>
+                            </div>
+                            <div class="col-md-10">
+                                <input type="text" class="form-control" name="ContactTwoTelephone" id="ContactTwoTelephone" data-inputmask='"mask": "(999) 999-999999"' data-mask data-fv-regexp-message="Please enter a valid phone number" pattern="^(\+\d{1,2}\s)?\(?\d{3}\)?[\s.-]?\d{3}[\s.-]?\d{6}" placeholder="start with the country code" />
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="row">
+                    <div class="col-md-12" style="margin-bottom: 10px">
+                        <div class="form-group">
+                            <div class="col-md-2">
+                                <label>Email</label>
+                            </div>
+                            <div class="col-md-10">
+                                <input type="email" class="form-control" name="ContactTwoEmail" id="ContactTwoEmail" />
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="tab-pane" id="edit-step-3">
+                <h4>
+                    <strong>Step 3</strong> - Other Details
+                </h4>
+                <hr />
+                <div class="row">
+                    <div class="col-md-12" style="margin-bottom: 10px">
+                        <div class="form-group">
+                            <div class="col-md-2">
+                                <label>PIN Number</label>
+                            </div>
+                            <div class="col-md-10 no-margin">
+                                <input type="text" class="form-control" name="PinNumber" id="PinNumber" />
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="row">
+                    <div class="col-md-12" style="margin-bottom: 10px">
+                        <div class="form-group">
+                            <div class="col-md-2">
+                                <label>Credit Limit</label>
+                            </div>
+                            <div class="col-md-10 no-margin">
+                                <input type="number" class="form-control" name="CreditLimit" id="CreditLimit" required="required" />
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="row">
+                    <div class="col-md-12" style="margin-bottom: 10px">
+                        <div class="form-group">
+                            <div class="col-md-2">
+                                <label>MOQ</label>
+                            </div>
+                            <div class="col-md-10 no-margin">
+                                <input type="text" class="form-control" name="MOQ" id="MOQ" />
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="row">
+                    <div class="col-md-12" style="margin-bottom: 10px">
+                        <div class="form-group">
+                            <div class="col-md-2">
+                                <label>Payment Terms</label>
+                            </div>
+                            <div class="col-md-10 no-margin">
+                                <select name="PaymentTerms" class="form-control" id="PaymentTerms" required>
+                                    @{
+                                        foreach (var term in ViewBag.Terms)
+                                        {
+                                            <option value="@term.Id">@term.PaymentTermName</option>
+                                        }
+                                    }
+                                </select>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="row">
+                    <div class="col-md-12" style="margin-bottom: 10px">
+                        <div class="form-group">
+                            <div class="col-md-2">
+                                <label>Notes</label>
+                            </div>
+                            <div class="col-md-10 no-margin">
+                                <textarea name="Notes" class="form-control" id="Notes"></textarea>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+
+        </div>
+       
+        </div>
+   
+                
+        <div class="modal-footer">
+            <input type="hidden" name="Id" id="edit-id-holder"/>
+            <div class="row">
+                <div class="col-md-12">
+                    <ul class="pager wizard no-margin">
+                        <li class="previous"><a href="javascript: void(0);" style="background-color: #0091d9; color: white; border: 0px; font-size: 14px">Previous</a></li>
+
+                        <li class="next pull-right"><a href="javascript: void(0);" style="background-color: #0091d9; color: white; border: 0px; font-size: 14px">Proceed</a></li>
+
+                    </ul>
+                </div>
+            </div>
+        </div>
+            </div>
+            <!-- /.modal-content -->
+        </div>
+        <!-- /.modal-dialog -->
+    </form>
+</div>
+
+@section Scripts
+{
+    <script src="@Url.Content("~/Content/js/station-wizard.js")"></script>
+    <script src="@Url.Content("~/Content/js/form-validation.js")"></script>
+    <script src="@Url.Content("~/Content/js/form-validation-framework.js")"></script>
+    <script src="@Url.Content("~/Scripts/Suppliers/suppliers.js")"></script>
+@*    <script src="@Url.Content("~/Scripts/Suppliers/suppliers1.js")"></script>*@
+    <script>
+        var url = "/Suppliers/GetSupplierEditDetails";
+        var fields = [
+            "Name",
+            "Email",
+            "Contact1",
+            "PostalAddress",
+            "PostalCode",
+            "CountryId",
+            "City",
+            "ContactOneName",
+            "ContactOneDesignation",
+            "ContactOneEmail",
+            "ContactOneTelephone",
+            "ContactTwoName",
+            "ContactTwoDesignation",
+            "ContactTwoTelephone",
+            "ContactTwoEmail",
+            "PinNumber",
+            "CreditLimit",
+            "MOQ",
+            "PaymentTerms",
+            "Notes"
+        ];
+    </script>
+}

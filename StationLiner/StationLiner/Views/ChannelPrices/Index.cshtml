@@ -1,0 +1,61 @@
+﻿@model List<StationLinerMVC.Controllers.ChannelPricesController.ChannelStationName>
+@{
+    ViewBag.Title = "Index";
+    Layout = "~/Views/Shared/_DtLayout.cshtml";
+}
+
+@section PageTitle{Station Prices}
+@section BreadCrumbs{
+    <li>Manage Station</li>
+    <li class="active">Station Prices</li>
+}
+@section Actions{ <li><a href="@Url.Action("Create")" class="btn btn-sm btn-primary">Add/Edit</a></li>}
+@section TableHeader{Station Prices}
+
+@{Html.RenderPartial("partials/_message");}
+<table id="example2" class="table table-bordered table-hover">
+    <thead>
+        <tr>
+            <th>
+                Station
+            </th>
+            <th>
+                Product
+            </th>
+
+            <th>
+                Price
+            </th>
+            <th>
+                PriceList
+            </th>
+        </tr>
+    </thead>
+
+    <tbody>
+        @foreach (var item in Model)
+        {
+            <tr>
+                <td>
+                    @Html.DisplayFor(modelItem => item.StationName)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.ProductStationPrice.Product.ProductName)
+                </td>
+
+
+
+                <td>
+                    @Html.DisplayFor(modelItem => item.ProductStationPrice.ProductPrice)
+                </td>
+
+                <td>
+                    @Html.DisplayFor(modelItem => item.ProductStationPrice.PriceList.PriceListName)
+                </td>
+
+            </tr>
+        }
+    </tbody>
+
+</table>
+

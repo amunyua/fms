@@ -1,0 +1,104 @@
+﻿
+@{
+    ViewBag.Title = "CloseShiftView";
+    Layout = "~/Views/Shared/wizard_layout_station.cshtml";
+}
+
+@section Styles{
+    <style>
+         .has-feedback .form-control {
+            padding-right: 5px;
+        }
+
+         div.custom {
+             padding-left: 5px;
+             padding-right: 5px;
+         }
+
+    </style>
+}
+
+<div class="box  box-info" id="app">
+    <div class="box-header">
+        <div class="col-md-12">
+            <h2 class=""><strong>CLOSE SHIFT</strong>
+            <input type="hidden" id="shift-id" value="@ViewBag.ShiftId"/>
+            </h2>    
+        </div>
+    </div>
+    <!-- /.box-header -->
+    <div class="box-body">
+        <form id="installationForm" class=" has-feedback">
+            <div id="bootstrap-wizard-2" class="col-sm-12">
+                <div class="form-bootstrapWizard">
+                    <div class="col-md-offset-2">
+                        <ul class="bootstrapWizard form-wizard">
+                            <li class="active" data-target="#step1">
+                                <a href="#basic-tab" data-toggle="tab" class="active"> <span class="step">1</span> </a>
+                            </li>
+                            <li data-target="#step2" class="">
+                                <a href="#database-tab" data-toggle="tab"> <span class="step">2</span></a>
+                            </li>
+                            <li data-target="#step4">
+                                <a href="#dip-readings" data-toggle="tab"> <span class="step">3</span> </a>
+                            </li>
+                        </ul>
+                    </div>
+                </div>
+                <br/>
+                <div class="tab-content">
+                    <!-- First tab -->
+                    <div class="tab-pane active" id="basic-tab">
+                        <div style="padding-top:1px"></div>
+                        <h3>
+                            <strong>Step 1 </strong> - Closing Shift Pump Details
+                        </h3>
+                        <hr/>
+
+                        @*                        @{Html.RenderPartial("pump_closing_details");}*@
+                        @{Html.RenderPartial("pump_closing_details1");}
+
+                    </div>
+
+                    <!-- Second tab -->
+                    <div class="tab-pane" id="database-tab">
+                        <div style="padding-top:1px"></div>
+                        <h3>
+                            <strong>Step 2 </strong> - Attendants Cash Drop
+                        </h3>
+                        <hr/>
+                        @{Html.RenderPartial("staff_sales");}
+                    </div>
+                    <div class="tab-pane" id="dip-readings">
+
+                        @{Html.RenderPartial("close_day_dips");}
+
+                    </div>
+
+
+                    <!-- Previous/Next buttons -->
+                    <ul class="pager wizard">
+                        <li class="previous"><a href="javascript: void(0);" style="background-color: #0091d9; color: white; border: 0px; font-size: 14px">Previous</a></li>
+
+                        <li class="next pull-right"><a href="javascript: void(0);" style="background-color: #0091d9; color: white; border: 0px; font-size: 14px">Save % Proceed</a></li>
+                        <li class="pull-right save-readings" style="display: none;background-color: #0091d9; color: white; border: 0px; font-size: 14px"><a href="javascript: void(0); ">Skip</a></li>
+
+                    </ul>
+                </div>
+            </div>
+        </form>
+
+    </div>
+    <div class="overlay" style="display: none">
+        <i class="fa fa-spinner fa-spin"></i>
+    </div>
+</div>
+
+@section Scripts
+{
+@*    <script src="@Url.Content("~/Scripts/vuejs/vue.js")"></script>*@
+   
+    <script src="@Url.Content("~/Scripts/Shifts/close_shift1.js")"></script>
+}
+
+

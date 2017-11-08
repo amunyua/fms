@@ -1,0 +1,74 @@
+﻿@using StationLinerMVC.Models
+
+@{
+    ViewBag.Title = "Open Shift";
+    Layout = "~/Views/Shared/_StationHomePageL.cshtml";
+}
+
+@ViewBag.ShiftId
+
+<div class="box box-solid box-primary">
+    <div class="box-header">
+        <h3 class="box-title">Shift Details @ViewBag.StationId</h3>
+    </div>
+    <!-- /.box-header -->
+    <div class="box-body">
+        @{Html.RenderPartial("partials/_message");}
+        <form action="" method="post">
+            
+                @{
+                    using (IMSDataEntities db = new IMSDataEntities())
+                    {
+                        var pumps = db.StationPumps.Where(x => x.StationId == Library.ChannelId);
+                        if (pumps.Any())
+                        {
+                            foreach (var pump in pumps)
+                            {
+                                <div class="col-md-12 " >
+                                    <div class="col-md-2 " >
+                                        <p class="">@pump.Name</p>
+                                    </div>
+                                    
+                                    @*                                    here loop through the nozzles that belong to that pump*@
+                                    @{
+                                        var nozzles = db.PumpNozzles.Where(x => x.PumpId == pump.Id);
+                                        if (nozzles.Any())
+                                        {
+                                            <div class="col-md-4">
+                                                <ul class="list-unstyled">
+                                                    @foreach (var nozzle in nozzles)
+                                                    {
+//                                                        var nozzleType = db.FuelTypes.Find(nozzle.FuelType);
+                                                        <li>
+                                                            
+@*                                                            @nozzleType.Name*@
+                                                            <ul>
+                                                                <li>
+                                                                    <div class="form-group">
+                                                                        <label class="">Manual</label><input type="text" class="form-control "/>
+                                                                    </div>
+                                                                    <div class="form-group">
+                                                                        <label class="">Automatic</label><input type="text" class="form-control "/>
+                                                                    </div>
+                                                                </li>
+
+                                                            </ul>
+                                                        </li>
+                                                        
+                                                    }
+                                                </ul>
+                                            </div>
+                                        }
+                                    }
+                                </div>
+                    <hr/>
+                    <div class="clearfix"></div>
+                            }
+                        }
+                    }
+                }
+           
+        </form>
+    </div>
+</div>
+

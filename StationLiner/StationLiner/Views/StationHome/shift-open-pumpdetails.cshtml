@@ -1,0 +1,133 @@
+﻿@using StationLinerMVC.Models
+
+<div class="row">
+    <div class="col-md-12">
+        <div class="col-md-2">
+            <label>PUMP</label>
+        </div>
+        
+        <div class="col-md-10">
+            <div class="col-md-6">
+                <label class="control-label">SIDE A</label>
+            </div>
+            <div class="col-md-6">
+                <label class="control-label center">SIDE B</label>
+            </div>
+        </div>
+        
+    </div>
+</div>
+
+@{
+    using (IMSDataEntities db = new IMSDataEntities())
+    {
+        var pumps = db.StationPumps.Where(x => x.StationId == Library.ChannelId && x.IsDeleted != true);
+        if (pumps.Any())
+        {
+            int count = 1;
+            foreach (var pump in pumps)
+            {
+                <div class="row">
+                    <div class="col-md-12 outer-div" style="padding-top: 10px; border-top: 1px solid #d19133;">
+                        <div class="col-md-2">
+                            <input type="hidden" value="@pump.Id" class="pump-id pump-id-get" pump="@count" />
+                            
+                            <div class="form-group has-success" style="text-align: center">
+                                <label class="control-label pull-left">@pump.Name</label>
+                                <select name="" class="form-control attendant" pump="@count" required>
+
+                                    @{
+                                        var staffs = db.Users.Where(x=>x.IsDeleted != true);
+                                        if (staffs.Any())
+                                        {
+                                            foreach (var staff in staffs)
+                                            {
+                                                <option value="@staff.Id">@staff.FullName</option>
+                                            }
+                                        }
+                                    }
+                                </select>
+                            </div>
+
+                        </div>
+                       
+                        <div class="col-md-10 no-padding">
+                            @{
+                                var nozzles = db.PumpNozzles.Where(x => x.PumpId == pump.Id && x.IsDeleted != true);
+                                if (nozzles.Any())
+                                {
+                                    var sideAnozzoles = nozzles.Where(x => x.Side == "A");
+                                    var sideBnozzoles = nozzles.Where(x => x.Side == "B");
+                                    <div class="col-md-6">
+                                        @if (sideAnozzoles.Any())
+                                        {
+                                            foreach (var nozzle in sideAnozzoles)
+                                            {
+                                                var product = db.Products.Find(nozzle.ProductId);
+                                                <div class="nozzle-div">
+                                                    <div class="col-md-2 ">
+                                                        <label>@product.ProductName</label>
+                                                        <input type="hidden" pump="@count" class="nozzle-id" value="@nozzle.Id"/>
+                                                    </div>
+                                                    <div class="col-md-10">
+                                                        <div class="col-md-6">
+                                                            <div class="form-group has-success">
+                                                                <input type="number" class="form-control manual-reading" pump="@count" name="manualReading" required placeholder="Manual side @nozzle.Side" style="padding-right: 3px;"/>
+                                                            </div>
+                                                        </div>
+
+                                                        <div class="col-md-6">
+                                                            <div class="form-group has-success">
+                                                                <input type="number" class="form-control electronic-reading" pump="@count" name="ElectronicReading" required placeholder="Elec side @nozzle.Side" style="padding-right: 3px;"/>
+                                                            </div>
+                                                        </div>
+                                                    </div>
+
+                                                </div>
+
+                                            }
+                                        }
+                                    </div>
+                                    <div class="col-md-6">
+                                        @if (sideBnozzoles.Any())
+                                        {
+                                            foreach (var nozzle in sideBnozzoles)
+                                            {
+                                                var product = db.Products.Find(nozzle.ProductId);
+                                                <div class="nozzle-div">
+                                                    <div class="col-md-2 ">
+                                                        <label>@product.ProductName</label>
+                                                        <input type="hidden" pump="@count" class="nozzle-id" value="@nozzle.Id"/>
+                                                    </div>
+                                                    <div class="col-md-10">
+                                                        <div class="col-md-6">
+                                                            <div class="form-group has-success">
+                                                                <input type="number" class="form-control manual-reading" name="manualReading" pump="@count" required placeholder="Manual side @nozzle.Side" style="padding-right: 3px;"/>
+                                                            </div>
+                                                        </div>
+
+                                                        <div class="col-md-6">
+                                                            <div class="form-group has-success">
+                                                                <input type="number" class="form-control electronic-reading" name="ElectronicReading" pump="@count" required placeholder="Elec side @nozzle.Side" style="padding-right: 3px;"/>
+                                                            </div>
+                                                        </div>
+                                                    </div>
+
+                                                </div>
+
+                                            }
+                                        }
+                                    </div>
+                                 }
+                            }
+
+                        </div>
+                    </div>
+
+                </div>
+              
+                count++;
+            }
+        }
+    }
+}

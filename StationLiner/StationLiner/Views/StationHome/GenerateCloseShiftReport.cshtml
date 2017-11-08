@@ -1,0 +1,238 @@
+﻿@using System.Data.Entity
+@using StationLinerMVC.Models
+
+@{
+    ViewBag.Title = "Close shift details";
+    Layout = "~/Views/Shared/ReportViewStation.cshtml";
+}
+<section class="invoice">
+    <!-- title row -->
+    <div class="row">
+        <div class="col-xs-12">
+            @* <h2 class="page-header">
+$1$                <i class="fa fa-globe"></i> Station Liner.#1#
+                
+            </h2>*@
+        </div>
+        <!-- /.col -->
+    </div>
+    <!-- info row -->
+    <div class="row invoice-info">
+        <div class="col-md-12">
+            <small class="pull-right"> @DateTime.Now.ToShortTimeString()</small>
+            <p style="text-align: center">
+                @*                <img src="" style="height: 150px; width: 200px"/>*@
+                <h3 style="text-align: center">Close Shift Summary</h3>
+            </p>
+            <hr/>
+        </div>
+    </div>
+   @{
+       long? id = ViewBag.readingId;
+       if (ViewBag.readingId != null)
+       {
+           using (IMSDataEntities db = new IMSDataEntities())
+           {
+               double totalExpected = 0;
+               var stationPumps = db.StationPumps;
+               var readings = db.NozzleReadings.Where(x => x.ShiftId == id);
+               var pumps = readings.Select(x => x.PumpId /*new {x.PumpId, x.Nozzle.StationPump, x.Users.FullName}*/).Distinct();
+               <div class="row">
+                   <div class="col-sm-12 table-responsive">
+                       <table class="table table-striped">
+                           <thead>
+                           <tr>
+                               <th>Pump Name</th>
+                               <th>Attendant</th>
+                               <th>Product</th>
+                               <th>Side</th>
+                               <th>Openning Manual</th>
+                               <th>Closing Manual</th>
+                               <th>Start Electronic</th>
+                               <th>Closing Electronic</th>
+                               <th>Price Per Liter</th>
+                               <th>Liters Dispensed</th>
+                               @*                        <th>Amount Expected</th>*@
+                           </tr>
+                           </thead>
+                           <tbody>
+                           @{
+
+                               if (pumps.Any())
+                               {
+                                   foreach (var pump in pumps)
+                                   {
+                                       var pumpo = stationPumps.Find(pump);
+                                       var p = readings.FirstOrDefault(x => x.PumpId == pump);
+                                       <tr>
+                                           <td><label>@pumpo.Name</label></td>
+                                           <td> @p.Users.FullName</td>
+@*                                           <td> @pump.FullName</td>*@
+
+                                           @{
+                                       var nozzles = readings.Where(x => x.PumpId == pump);
+                                       if (nozzles.Any())
+                                       {
+                                                   <td>
+                                                       @foreach (var nozzle in nozzles)
+                                                       {
+                                                           @nozzle.Nozzle.Product.ProductName
+                                                           <br/>
+                                                       }
+                                                   </td>
+                                                   <td>
+                                                       @foreach (var nozzle in nozzles)
+                                                       {
+                                                           @nozzle.Nozzle.Side
+                                                           <br/>
+                                                       }
+                                                   </td>
+                                                   <td>
+                                                       @foreach (var nozzle in nozzles)
+                                                       {
+                                                           @nozzle.StartManualReading.ToString("N0")
+                                                           <br/>
+                                                       }
+                                                   </td>
+                                                   <td>
+                                                       @foreach (var nozzle in nozzles)
+                                                       {
+                                                           @nozzle.EndManualReading.ToString("N0")
+                                                           <br/>
+                                                       }
+                                                   </td>
+                                                   <td>
+                                                       @foreach (var nozzle in nozzles)
+                                                       {
+                                                           @nozzle.StartElectronicReading.ToString("N0")
+                                                           <br/>
+                                                       }
+                                                   </td>
+                                                   <td>
+                                                       @foreach (var nozzle in nozzles)
+                                                       {
+                                                           @nozzle.EndElectronicReading.ToString("N0")
+                                                           <br/>
+                                                       }
+                                                   </td>
+                                                   <td>
+                                                       @foreach (var nozzle in nozzles)
+                                                       {
+                                                           @nozzle.NozzlePricePerLiter.ToString("N0")<br/>
+                                                       }
+                                                   </td>
+                                                   <td>
+                                                       @foreach (var nozzle in nozzles)
+                                                       {
+                                                           var amountDispensed = nozzle.EndElectronicReading - nozzle.StartElectronicReading;
+                                                           var aDispensed = (amountDispensed < 0) ? 0 : amountDispensed;
+                                                           var expected = aDispensed * nozzle.NozzlePricePerLiter;
+                                                           totalExpected += expected;
+                                                           @aDispensed.ToString("N0")<br/>
+                                                       }
+                                                   </td>
+                                           @* <td>
+                                                @foreach (var nozzle in nozzles)
+                                                {
+                                                    var amountDispensed = nozzle.EndElectronicReading - nozzle.StartElectronicReading;
+                                                    var expected = amountDispensed * nozzle.NozzlePricePerLiter;
+                                                    @expected<br/>
+                                                }
+                                            </td>*@
+
+                                               }
+                                           }
+
+                                       </tr>
+                                   }
+                               }
+
+                           }
+                           
+
+                           </tbody>
+                       </table>
+
+                   </div>
+               </div>
+               <div class="row">
+                   <!-- accepted payments column -->
+                   <div class="col-xs-6">
+                   </div>
+                   <!-- /.col -->
+                   @{
+                       var staffs = readings.Select(x=>x.Users).Distinct();
+                       var cashDrops = db.CashDrops.Where(x => x.ShiftId == id);
+                      
+                   }
+                   <div class="col-xs-6">
+                       <p class="lead">Summary</p>
+
+                       <div class="table-responsive">
+                           <table class="table">
+                               <thead>
+                               <tr>
+                                   <th>Attendant</th>
+                                   <th>Total Expected</th>
+                                   <th>Total Collected</th>
+                                   <th>Short</th>
+                               </tr>
+                               </thead>
+                               <tbody>
+                               @foreach (var staff in staffs)
+                               {
+                                   double expectedCash = 0;
+                                   double shorte = 0;
+                                   
+                                   //get total expected for each attendant
+                                   var records = readings.Where(x => x.StaffId == staff.Id);
+                                   foreach (var record in records)
+                                   {
+                                       var prodCash = record.EndElectronicReading - record.StartElectronicReading;
+                                       var expected = (prodCash > 0) ? prodCash * record.NozzlePricePerLiter : 0;
+                                       expectedCash += expected;
+                                       
+                                   }
+                                   
+                                   
+                                   //get total money collected by each attendant
+                                   var drops = cashDrops.Where(x => x.StaffId == staff.Id);
+                                   double totalCashDrops = 0;
+                                   if (drops.Any())
+                                   {
+                                       foreach (var drop in drops)
+                                       {
+                                           totalCashDrops += drop.Amount;
+                                       }
+                                   }
+                                   var less = expectedCash - totalCashDrops;
+                                   shorte = (less > 0) ? less : 0;
+                                   <tr >
+                                       <td>@staff.FullName</td>
+                                       <td>@expectedCash.ToString("N0")</td>
+                                       <td>@totalCashDrops.ToString("N0")</td>
+                                       <td>@shorte.ToString("N0")</td>
+                                   </tr>
+                                  
+                               }
+
+                               </tbody>
+                           </table>
+                       </div>
+                   </div>
+                   <!-- /.col -->
+
+               </div>
+
+           }
+       }
+   }
+
+       <!-- this row will not appear when printing -->
+    <div class="row no-print">
+        <div class="col-xs-12">
+            <button onclick="window.print()" class="btn btn-success pull-right"><i class="fa fa-print"></i> Print</button>
+        </div>
+    </div>
+</section>
+

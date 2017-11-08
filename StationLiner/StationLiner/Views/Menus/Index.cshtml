@@ -1,0 +1,137 @@
+﻿@using StationLinerMVC.Models
+@model IEnumerable<StationLinerMVC.Models.Menu>
+
+@{
+    ViewBag.Title = "System Menus";
+    Layout = "~/Views/Shared/_DtLayout.cshtml";
+ 
+}
+
+        @section PageTitle{Manage System Menus}
+@section BreadCrumbs{
+    <li>System Settings</li>
+    <li class="active">Manage Menu</li>
+    }
+@*@section Actions{ <li><a href="@Url.Action("Create")" class="btn btn-sm btn-primary">Create New</a></li>}*@
+@section TableHeader{All System Menus}
+
+  @{Html.RenderPartial("partials/_message");}
+<table id="example2" class="table table-bordered table-hover">
+    <thead>
+    <tr>
+        
+       @* <th >
+            @Html.DisplayNameFor(model => model.MenuId)
+        </th>*@
+        <th>
+            @Html.DisplayNameFor(model => model.MenuName)
+        </th>
+        <th>
+            
+            @Html.DisplayNameFor(model => model.ParentMenu)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.Controller)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.Action)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.Icon)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.Sequence)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.Status)
+        </th>
+        <th>Edit</th>
+@*        <th>Delete</th>*@
+    </tr>
+    </thead>
+
+
+    <tbody>
+    @foreach (var item in Model)
+    {
+    <tr>
+
+       @* <td >
+            @Html.DisplayFor(modelItem => item.MenuId)
+        </td>*@
+
+        <td>
+            @Html.DisplayFor(modelItem => item.MenuName)
+        </td>
+
+        <td>
+            @{
+                var parentMenu = "None";
+                if (item.ParentMenu != null)
+                {
+                    using (IMSDataEntities data = new IMSDataEntities())
+                    {
+                         parentMenu = data.Menus.Find(item.ParentMenu).MenuName;
+                    }
+                }
+                @parentMenu
+            }
+        </td>
+
+        <td>
+            @Html.DisplayFor(modelItem => item.Controller)
+        </td>
+
+        <td>
+            @Html.DisplayFor(modelItem => item.Action)
+        </td>
+
+        <td>
+            @Html.DisplayFor(modelItem => item.Icon)
+        </td>
+
+        <td>
+            @Html.DisplayFor(modelItem => item.Sequence)
+        </td>
+
+        <td>
+            @Html.DisplayFor(modelItem => item.Status)
+        </td>
+        <td>
+        <a href="@Url.Action("Edit", new {id = item.MenuId})" class="btn btn-xs btn-primary"><i class="fa fa-edit"> </i> Edit</a>
+
+        @*<td>
+            <a data-toggle="modal" data-target="#delete-modal" action="@Url.Action("Delete", new {id = item.MenuId})" class="btn btn-xs btn-danger delete-btn"><i class="fa fa-recycle"> </i> Delete</a>
+        </td>*@
+    </tr>
+    
+}
+    </tbody>
+
+</table>
+
+@*modal*@
+<div class="modal fade" id="delete-modal" role="dialog">
+    <form id="delete-modal-form" action="" method="post">
+        @Html.AntiForgeryToken()
+        <div class="modal-dialog">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                        <span aria-hidden="true">&times;</span>
+                    </button>
+                    <h4 class="modal-title">Delete Menu</h4>
+                </div>
+                <div class="modal-body">
+                    <p>Are you sure you want to delete this Menu?</p>
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-default pull-left" data-dismiss="modal">No</button>
+                    <button type="submit" class="btn btn-danger">Delete</button>
+                </div>
+            </div>
+            <!-- /.modal-content -->
+        </div>
+        <!-- /.modal-dialog -->
+    </form>
+</div>

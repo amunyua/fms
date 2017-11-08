@@ -1,0 +1,46 @@
+﻿
+
+@if (Session["success"] != null)
+{
+    <div class="alert alert-success alert-dismissible alert-dismissable-jquery alert-dismiss">
+        <button type="button" class="close" data-dismiss="alert" aria-hidden="true">×</button>
+        <strong><i class="icon fa fa-check"></i> Success!</strong>
+        @Session["success"]
+
+        @{
+    Session["success"] = null;
+        }
+    </div>
+
+}
+
+@if (Session["warning"] != null)
+{
+    <div class="alert alert-warning alert-dismissible alert-dismissable-jquery alert-dismiss">
+        <button type="button" class="close" data-dismiss="alert" aria-hidden="true">×</button>
+        <strong><i class="icon fa fa-check"></i> Warning!</strong>
+        @Session["warning"]
+
+        @{
+    Session["warning"] = null;
+        }
+    </div>
+
+}
+
+@if (ViewBag.Errors != null)
+{
+    var errors = ViewBag.Errors;
+    <div class="alert alert-warning alert-dismissible alert-dismissable-jquery alert-dismiss">
+        <button type="button" class="close" data-dismiss="alert" aria-hidden="true">×</button>
+        <strong><i class="icon fa fa-check"></i> Warning!</strong>
+        <ul>
+            @foreach (var error in errors)
+            {
+                <li>@error</li>
+            }
+        </ul>
+
+    </div>
+
+}

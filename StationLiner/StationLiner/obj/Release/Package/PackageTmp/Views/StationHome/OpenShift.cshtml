@@ -1,0 +1,112 @@
+﻿@using StationLinerMVC.Models
+
+@{
+    ViewBag.Title = "Open Shift";
+    Layout = "~/Views/Shared/_StationHomePageL.cshtml";
+}
+
+@ViewBag.ShiftId
+
+<div class="box box-solid box-primary">
+    <div class="box-header">
+        <h3 class="box-title">Shift Details</h3>
+    </div>
+    <!-- /.box-header -->
+    <div class="box-body">
+        @{Html.RenderPartial("partials/_message");}
+        <form action="" method="post" id="open-shift-form">
+            
+            <table class="table" id="shifts-tbl">
+                <thead>
+                <tr>
+                    <th>Pump Name</th>
+                    <th>Attendant</th>
+                    <th>Product</th>
+                </tr>
+                </thead>
+                <tbody>
+                @{
+                    using (IMSDataEntities db = new IMSDataEntities())
+                    {
+                        var pumps = db.StationPumps.Where(x => x.StationId == Library.ChannelId);
+                        if (pumps.Any())
+                        {
+                            int count = 1;
+                            foreach (var pump in pumps)
+                            {
+                                <tr>
+                                    <td>
+                                        <input type="hidden" value="@pump.Id" class="pump-id pump-id-get" pump="@count" />
+                                        @pump.Name
+                                    </td>
+                                    <td>
+                                        <div class="form-group" style="text-align: center">
+                                            <select name="" class="form-control attendant" pump="@count"  required>
+                                                @*                                                <option value="">Select Attendant</option>*@
+                                                @{
+                                                    var staffs = db.Users;
+                                                    if (staffs.Any())
+                                                    {
+                                                        foreach (var staff in staffs)
+                                                        {
+                                                            <option value="@staff.Id">@staff.FullName</option>
+                                                        }
+                                                    }
+                                                }
+                                            </select>
+
+                                        </div>
+                                    </td>
+                                    <td>
+                                        @*                                        <table class="table">*@
+                                        @*                                            <tr>*@
+                                        @{
+                                            var nozzles = db.PumpNozzles.Where(x => x.PumpId == pump.Id);
+                                            if (nozzles.Any())
+                                            {
+                                                foreach (var nozzle in nozzles)
+                                                {
+                                                    var product = db.Products.Find(nozzle.ProductId);
+
+                                                    <td>
+                                                        
+                                                        <div class="nozzle-div">
+                                                            <input type="hidden" pump="@count" class="nozzle-id" value="@nozzle.Id" />
+                                                            @product.ProductName
+                                                            <div class="form-group has-success">
+                                                                <input type="number" class="form-control manual-reading" pump="@count" required placeholder="Manual side @nozzle.Side" />
+                                                            </div>
+                                                            <div class="form-group has-success">
+                                                                <input type="number" class="form-control electronic-reading" pump="@count" required placeholder="Elec side @nozzle.Side" />
+                                                            </div>
+                                                        </div>
+                                                    </td>
+
+                                                }
+                                            }
+                                        }
+                                        @*                                            </tr>*@
+                                        @*                                        </table>*@
+                                    </td>
+                                </tr>
+                                count++;
+                            }
+                        }
+                    }
+                }
+                </tbody>
+            </table>
+            <button class="btn btn-primary pull-right" id="save-btn">Save</button>
+        </form>
+    </div>
+    <div class="overlay" style="display: none">
+        <i class="fa fa-spinner fa-spin"></i>
+    </div>
+</div>
+
+@section Scripts
+{
+    <script src="@Url.Content("~/Scripts/Shifts/open_shift.js")"></script>
+}
+
+

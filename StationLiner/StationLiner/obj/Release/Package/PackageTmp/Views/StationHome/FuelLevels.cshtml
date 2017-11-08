@@ -1,0 +1,192 @@
+﻿@using StationLinerMVC.Models
+@model IEnumerable<StationLinerMVC.Models.TankReading>
+
+@{
+    ViewBag.Title = "FuelLevels";
+    Layout = "~/Views/Shared/_StationHomePageL.cshtml";
+}
+<div class="nav-tabs-custom">
+    <div class="tab-content">
+        <ul class="list-unstyled pull-right">
+            <li><a href="#fuel-level-modal" data-toggle="modal" class="btn btn-sm btn-primary">Record Fuel Levels</a></li>
+        </ul>
+        <br/><br/>
+
+        <div class="box box-solid box-info">
+            <div class="box-header">
+                <h3 class="box-title">Fuel Levels</h3>
+            </div>
+            <!-- /.box-header -->
+            <div class="box-body">
+                @{Html.RenderPartial("partials/_message");}
+                <table class="table table-bordered table-hover " id="live-tbt">
+                    <thead>
+                    <tr>
+                        <th>
+                            Tank
+                        </th>
+                        <th>
+                            @Html.DisplayNameFor(model => model.Height)
+                        </th>
+                        <th>
+                            @Html.DisplayNameFor(model => model.Volume)
+                        </th>
+                       
+                        <th>
+                            Record Description
+                        </th>
+                        <th>
+                            Record Time
+                        </th>
+                    </tr>
+                    </thead>
+                    <tbody>
+                    @foreach (var item in Model)
+                    {
+                        <tr>
+                            <td>
+                                @Html.DisplayFor(modelItem => item.Tank.TankName)
+                            </td>
+                            <td>
+                                @Html.DisplayFor(modelItem => item.Height)
+                            </td>
+                            <td>
+                                @Html.DisplayFor(modelItem => item.Volume)
+                            </td>
+                            <td>
+                                @Html.DisplayFor(modelItem => item.ReferenceDescription)
+                            </td>
+                            <td>
+                                @Html.DisplayFor(modelItem => item.DateCreated)
+                            </td>
+                       
+                        </tr>
+                    }
+                    </tbody>
+                </table>
+
+            </div>
+
+        </div>
+    </div>
+</div>
+
+<div class="modal fade" id="fuel-level-modal" role="dialog">
+    
+        <form id="dip-readings-form" action="" method="post" class="enable-form-validation">
+            @Html.AntiForgeryToken()
+        <div class="modal-dialog">
+            <div class="box box-unstyled">
+                <div class="modal-content">
+
+                    <div class="modal-header">
+                        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                            <span aria-hidden="true">&times;</span>
+                        </button>
+                        <h4 class="modal-title">Tank Levels</h4>
+                    </div>
+                    <div class="modal-body">
+                        @{
+                            using (IMSDataEntities db = new IMSDataEntities())
+                            {
+                                var tanks = db.StationTanks.Where(x => x.StationId == Library.ChannelId && x.IsDeleted != true);
+                                if (tanks.Any())
+                                {
+                                    <table class="table" id="readings-table">
+                                        <thead>
+                                        <tr>
+                                            <th>Tank</th>
+                                            <th>Product</th>
+                                            <th>Height</th>
+                                        </tr>
+                                        </thead>
+                                        <tbody>
+                                        @foreach (var tank in tanks)
+                                        {
+                                            <tr class="readings">
+                                                <td><input type="hidden" value="@tank.Id" class="tank-id"/>@tank.TankName</td>
+                                                <td>
+                                                    @{
+                                                        var product = db.Products.Find(tank.ProductId);
+                                                        @product.ProductName
+                                                        ;
+                                                    }
+                                                </td>
+                                                <td>
+                                                    <input type="number" required placeholder="Height" class="form-control height" name="Height">
+                                                </td>
+                                            </tr>
+                                        }
+                                        </tbody>
+                                    </table>
+
+                                }
+                            }
+                        }
+                    </div>
+                    <div class="modal-footer">
+                        <button type="button" class="btn btn-default pull-left" data-dismiss="modal">Cancel</button>
+                        <button type="submit" class="btn btn-primary" id="save-readings">Save</button>
+                    </div>
+                </div>
+                <div class="overlay" id="readings-overlay" style="display: none">
+                    <i class="fa fa-spinner fa-spin"></i>
+                </div>
+            </div>
+                <!-- /.modal-content -->
+            </div>
+            <!-- /.modal-dialog -->
+        </form>
+      
+</div>
+
+@section Scripts{
+    <script>
+        $("#dip-readings-form").on('submit',
+            function(e) {
+                e.preventDefault();
+                var readings = [];
+                $('#readings-table tr.readings').each(
+                    function(index, element) {
+//                        var tankId = $(element).find('.tank-id').val();
+                        readings.push({
+                            "TankId": $(element).find('.tank-id').val(),
+                            "Height": $(element).find('.height').val()
+                        });
+//                        console.log(readings);
+                        
+                        
+                    });
+                var data = {
+                    "trModels": readings
+                }
+
+//                console.log(data);
+                    $.ajax({
+                        url: "/StationHome/UpdateFuelLevels",
+                        dataType: "json",
+                        type: "POST",
+                        data: data,
+                        beforeSend: function () {
+                            $("div #readings-overlay").fadeIn('slow');
+                        },
+                        success: function (data) {
+                            if (data.status == 'success') {
+                                toastr.success(data.message, 'Success!');
+                                setTimeout(function () {
+                                    window.location.href = "/StationHome/FuelLevels";
+                                    },
+                                    3000);
+                            } else {
+                                $("div #readings-overlay").fadeOut('slow');
+                            }
+                        }
+                
+                    });
+
+            });
+        $("#live-tbt").DataTable({
+            "ordering":false
+        });
+    </script>
+}

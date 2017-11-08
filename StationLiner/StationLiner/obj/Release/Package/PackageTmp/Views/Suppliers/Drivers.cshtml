@@ -1,0 +1,197 @@
+﻿@model IEnumerable<StationLinerMVC.Models.SupplierDriver>
+
+@{
+    ViewBag.Title = "Drivers";
+    Layout = "~/Views/Shared/_DtLayout.cshtml";
+ 
+}
+
+        @section PageTitle{@ViewBag.supplierName}
+@section BreadCrumbs{
+    <li>Suppliers</li>
+    <li>@Html.ActionLink("Manage Suppliers", "Index")</li>
+    <li class="active">Manage Drives</li>
+    }
+@section Actions{ <li><a href="#add-driver-modal" data-toggle="modal" class="btn btn-sm btn-primary">Create New</a></li>}
+@section TableHeader{All Drivers for: @ViewBag.supplierName}
+
+  @{Html.RenderPartial("partials/_message");}
+<table id="example2" class="table table-bordered table-hover">
+    <thead>
+    <tr>
+        <th>
+            @Html.DisplayNameFor(model => model.DriverName)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.PhoneNumber)
+        </th>
+        @{
+//            if (Flag.Status("EDIT"))
+//            {
+                <th>Edit</th>
+//            }
+
+//            if (Flag.Status("DELETE"))
+//            {
+                <th>Delete</th>
+//            }
+        }
+    </tr>
+    </thead>
+    <tbody>
+@foreach (var item in Model) {
+
+    <tr>
+
+        <td>
+            @Html.DisplayFor(modelItem => item.DriverName)
+        </td>
+
+        <td>
+            @Html.DisplayFor(modelItem => item.PhoneNumber)
+        </td>
+        @{
+//            if (Flag.Status("EDIT"))
+//            {
+                <td>
+                    <a href="#edit-modal" data-toggle="modal" edit-id="@item.Id" class="btn btn-xs btn-primary edit-driver"><i class="fa fa-edit"> </i> Edit</a>
+                </td>
+//            }
+//            if (Flag.Status("DELETE"))
+//            {
+                <td>
+        	       <a data-toggle="modal" data-target="#delete-modal" action="@Url.Action("DeleteDriver", new { id=item.Id })" class="btn btn-xs btn-danger delete-btn"><i class="fa fa-recycle"> </i> Delete</a>
+                </td>
+//            }
+        }      
+    </tr>
+    
+}
+    </tbody>
+</table>
+@*modal*@
+<div class="modal fade" id="delete-modal" role="dialog">
+    <form id="delete-modal-form" action="" method="post">
+        @Html.AntiForgeryToken()
+        <div class="modal-dialog">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                        <span aria-hidden="true">&times;</span>
+                    </button>
+                    <h4 class="modal-title">Delete Driver</h4>
+                </div>
+                <div class="modal-body">
+                    <p>Are you sure you want to Delete this driver?</p>
+                </div>
+                <div class="modal-footer">
+
+                    <button type="button" class="btn btn-default pull-left" data-dismiss="modal">No</button>
+                    <button type="submit" class="btn btn-danger">Delete</button>
+                </div>
+            </div>
+            <!-- /.modal-content -->
+        </div>
+        <!-- /.modal-dialog -->
+    </form>
+</div>
+
+<div class="modal fade" id="add-driver-modal" role="dialog">
+    <form id="" action="@Url.Action("AddDriver")" method="post">
+        @Html.AntiForgeryToken()
+        <div class="modal-dialog">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                        <span aria-hidden="true">&times;</span>
+                    </button>
+                    <h4 class="modal-title">Add Driver</h4>
+                </div>
+                <div class="modal-body">
+                    <div class="form-group">
+                        <label for="driver-name"> Driver Name</label>
+                        <input type="text" id="driver-name"name="DriverName" class="form-control unique" table="SupplierDrivers" />
+                    </div>
+
+                    <div class="form-group">
+                        <label for="recipient-name" class="">Phone Number:</label>
+                        <input type="text" class="form-control " required id="PhoneNumber" name="PhoneNumber" data-inputmask='"mask": "(999) 999-999999"' data-mask data-fv-regexp-message="Please enter a valid phone number" pattern="^(\+\d{1,2}\s)?\(?\d{3}\)?[\s.-]?\d{3}[\s.-]?\d{6}" placeholder="start with the country code">
+                    </div>
+                    @{
+                        var supplierId = Request.Url.Segments.LastOrDefault();
+                    }
+                    <input type="hidden" name="SupplierId" value="@supplierId" />
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-default pull-left" data-dismiss="modal">Cancel</button>
+                    <button type="submit" class="btn btn-primary">Save</button>
+                </div>
+            </div>
+            <!-- /.modal-content -->
+        </div>
+        <!-- /.modal-dialog -->
+    </form>
+</div>
+
+@*modal for edit*@
+@*modal*@
+<div class="modal fade" id="edit-modal" role="dialog">
+    <form id="" action="@Url.Action("EditDriverDetails")" method="post">
+        @Html.AntiForgeryToken()
+        <div class="modal-dialog">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                        <span aria-hidden="true">&times;</span>
+                    </button>
+                    <h4 class="modal-title">Edit Driver</h4>
+                </div>
+                <div class="modal-body">
+                    <div class="form-group">
+                        <label for=""> Driver Name</label>
+                        <input type="text" id="d-name"name="DriverName" required class="form-control" />
+                    </div>
+
+                    <div class="form-group">
+                        <label for="e" class="">Phone Number:</label>
+                        <input type="text" class="form-control" id="d-phone" required name="PhoneNumber" data-inputmask='"mask": "(999) 999-999999"' data-mask data-fv-regexp-message="Please enter a valid phone number" pattern="^(\+\d{1,2}\s)?\(?\d{3}\)?[\s.-]?\d{3}[\s.-]?\d{6}" placeholder="start with the country code">
+                    </div>
+                </div>
+                <div class="modal-footer">
+                    <input type="hidden" name="DriverId" id="p-id" />
+                    <button type="button" class="btn btn-default pull-left" data-dismiss="modal">No</button>
+                    <button type="submit" class="btn btn-primary">Update</button>
+                </div>
+            </div>
+            <!-- /.modal-content -->
+        </div>
+        <!-- /.modal-dialog -->
+    </form>
+</div>
+
+@section Scripts{
+    <script>
+        $('.edit-driver').on('click',
+            function() {
+                var id = $(this).attr('edit-id');
+                $('#p-id').val('').val(id);
+
+                var data = {
+                    id: id
+                }
+
+                $.ajax({
+                    url: "/Suppliers/GetDriverDetails",
+                    type: "POST",
+                    dataType: "json",
+                    data: data,
+                    success: function(data) {
+                        if (data) {
+                            $('#d-name').val(data["DriverName"]);
+                            $('#d-phone').val(data["PhoneNumber"]);
+                        }
+                    }
+                });
+            });
+    </script>
+}

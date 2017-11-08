@@ -1,0 +1,420 @@
+﻿@using System.Activities.Validation
+@using System.Diagnostics
+@using StationLinerMVC.Models
+@model IEnumerable<StationLinerMVC.Models.Roles>
+
+
+@{
+    ViewBag.Title = "Manage Roles";
+    Layout = "~/Views/Shared/_DtLayout.cshtml";
+ 
+}
+
+        @section PageTitle{Manage Roles}
+@section BreadCrumbs{
+    <li>User Manager</li>
+    <li class="active">Manage Roles</li>
+    }
+@section Actions{ 
+    @{
+        if (Flag.Status("ADD"))
+        {
+@*            <li><a href="@Url.Action("Create")" class="btn btn-sm btn-primary">Create New</a></li>*@
+            <li><a href="#create-role-modal" data-toggle="modal" class="btn btn-sm btn-primary">Create New</a></li>
+        }
+    }
+    }
+@section TableHeader{All User Roles}
+
+@{Html.RenderPartial("partials/_message");}
+
+<table id="example2" class="table table-bordered table-hover">
+    <thead>
+            <tr>
+        @*<th>
+            @Html.DisplayNameFor(model => model.RoleId)
+        </th>*@
+        <th>
+            @Html.DisplayNameFor(model => model.Name)
+        </th>
+                <th>
+                    @Html.DisplayNameFor(model => model.Description)
+                </th>
+                <th style="text-align: center">Admin Permissions</th>
+                <th style="text-align: center">Station Permissions</th>
+       
+        @{
+            if (Flag.Status("EDIT"))
+            {
+                <th style="text-align: center">Edit</th>
+            }
+        }        
+        
+                @{
+                    if (Flag.Status("DELETE"))
+                    {
+                        <th style="text-align: center">Delete</th>
+                    }
+                }    
+    </tr>
+    </thead>
+<tbody>
+    @foreach (var item in Model)
+    {
+
+        <tr>
+
+            @* <td>
+                    @Html.DisplayFor(modelItem => item.RoleId)
+                </td>*@
+
+            <td>
+                @Html.DisplayFor(modelItem => item.Name)
+            </td>
+
+            <td>
+                @Html.DisplayFor(modelItem => item.Description)
+            </td>
+            <td style="text-align: center">
+                <a href="#assign-roles-modal" role-name="@item.Name" role-id="@item.RoleId" data-toggle="modal" class="btn btn-info btn-xs assign-role-btn"><i class="fa fa-paper-clip"> </i> Assign Admin Permissions</a>
+            </td>
+
+            <td style="text-align: center">
+                <a href="#station-mode-roles" role-name="@item.Name" role-id="@item.RoleId" data-toggle="modal" class="btn btn-success btn-xs assign-station-role-btn" style="
+                                                                                                                                                                                                                                                                                                                                                                                                        background-color: gold;
+                                                                                                                                                                                                                                                                                                                                                                                                        border-color: goldenrod;
+                                                                                                                                                                                                                                                                                                                                                                                                    "><i class="fa fa-paper-clip"> </i>Assign Station Permissions</a>
+            </td>
+            @{
+        if (Flag.Status("EDIT"))
+        {
+            <td style="text-align: center">
+                <a href="#edit-role-modal" edit-id="@item.RoleId" data-toggle="modal" class="btn btn-xs btn-primary edit-user-role"><i class="fa fa-edit"> </i> Edit</a>
+            </td>
+        }
+            }
+            @{
+        if (Flag.Status("DELETE"))
+        {
+            <td style="text-align: center">
+                <a data-toggle="modal" data-target="#delete-modal" action="@Url.Action("Delete", new { id=item.RoleId })" class="btn btn-xs btn-danger delete-btn"><i class="fa fa-recycle"> </i> Delete</a>
+            </td>
+        }
+            }
+        </tr>
+   
+    }
+</tbody>
+
+</table>
+
+@*modal*@
+<div class="modal fade" id="delete-modal" role="dialog">
+    <form id="delete-modal-form" action="" method="post">
+        @Html.AntiForgeryToken()
+        <div class="modal-dialog">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                        <span aria-hidden="true">&times;</span>
+                    </button>
+                    <h4 class="modal-title">Delete Role</h4>
+                </div>
+                <div class="modal-body">
+                    <p>Are you sure you want to delete this role?</p>
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-default pull-left" data-dismiss="modal">No</button>
+                    <button type="submit" class="btn btn-danger">Delete</button>
+                </div>
+            </div>
+            <!-- /.modal-content -->
+        </div>
+        <!-- /.modal-dialog -->
+    </form>
+</div>
+@*modal for assigning roles*@
+<div class="modal fade" id="assign-roles-modal" role="dialog">
+    @Html.AntiForgeryToken()
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="modal-header">
+                <button type="button"  class="close" data-dismiss="modal" aria-label="Close">
+                    <span aria-hidden="true">&times;</span>
+                </button>
+                <h4 class="modal-title">Assign Permissions to <strong><span id="role-name"></span></strong></h4>
+            </div>
+            <div class="modal-body">
+                <div class="panel">
+                    <div class="panel-body">
+                        @{
+                            var db = new IMSDataEntities();
+
+                            if (Library.GetRoleName() == Constants.AdminRole)
+                            {
+                                var parentMenus = db.Menus.Where(x => x.ParentMenu == null);
+                                if (parentMenus.Any())
+                                {
+                                    foreach (var parentMenu in parentMenus)
+                                    {
+                                        <ul class="list-unstyled">
+                                            <li class="parent">
+                                                <label class="parent-menu" value="@parentMenu.MenuId">@parentMenu.MenuName</label><span class=" col-md-offset-4">@* @parentMenu.LayoutBase*@ </span>
+                                                @{
+                                                    var childMenus = db.Menus.Where(x => x.ParentMenu == parentMenu.MenuId);
+                                                    if (childMenus.Any())
+                                                    {
+
+                                                        <ul class="list-unstyled">
+                                                            @foreach (var childMenu in childMenus)
+                                                            {
+                                                                <li class="menu-item-li ">
+                                                                    <input type="checkbox" class="assigned-unassigned minimal" value="@childMenu.MenuId"/>  @childMenu.MenuName
+                                                                    @{
+                                                                        var allocatedActions = db.CrudMenuActions.Where(x => x.MenuId == childMenu.MenuId);
+                                                                        if (allocatedActions.Any())
+                                                                        {
+                                                                            var allocatedAction = allocatedActions.FirstOrDefault();
+                                                                            var action = allocatedAction.CrudActions.TrimStart(new char[] {'{', ','}).TrimEnd('}');
+                                                                            var actions = action.Split(',');
+                                                                            <ul class="permissions-list list-unstyled list-inline" style="display: none">
+                                                                                @foreach (var actn in actions)
+                                                                                {
+                                                                                    <li style="padding-left: 0px">
+                                                                                        @{
+                                                                                            var id = Int64.Parse(actn);
+                                                                                            var crud = db.CrudActions.Find(id);
+                                                                                            <input type="checkbox" value="@crud.Id" class="individual-permission minimal"/>
+                                                                                            @crud.ActionCode
+
+                                                                                        }
+                                                                                    </li>
+                                                                                }
+                                                                            </ul>
+                                                                        }
+
+                                                                    }
+                                                                </li>
+                                                            }
+                                                        </ul>
+                                                    }
+                                                }
+                                            </li>
+                                        </ul>
+
+                                    }
+                                }
+                            }
+                            else
+                            {
+
+//                                var parentMenus = db.Menus.Where(x => x.ParentMenu == null);
+                                var menus = db.UserRoleAllocations.Where(x => x.RoleId == Library.UserRole).Select(x=>x.ParentId).Distinct();
+                                if (menus.Any())
+                                {
+                                    foreach (var menu in menus)
+                                    {
+                                        <ul class="list-unstyled">
+                                            <li class="parent">
+                                                @{
+                                                    var parentMenu = db.Menus.Find(menu);
+
+                                                    <label class="parent-menu" value="@parentMenu.MenuId">@parentMenu.MenuName</label><span class=" col-md-offset-4">@* @parentMenu.LayoutBase*@ </span>
+
+                                        {
+                                            var allocatedChildMenus = db.UserRoleAllocations.Where(x => x.ParentId == parentMenu.MenuId);
+                                            if (allocatedChildMenus.Any())
+                                            {
+
+                                                <ul class="list-unstyled">
+                                                    @foreach (var allocatedmenu in allocatedChildMenus)
+                                                    {
+                                                        var childMenu = db.Menus.Find(allocatedmenu.MenuId);
+                                                        <li class="menu-item-li">
+                                                            <input type="checkbox" class="assigned-unassigned minimal" value="@childMenu.MenuId"/>@childMenu.MenuName
+                                                            @{
+                                                        var allocatedActions = db.CrudMenuActions.Where(x => x.MenuId == childMenu.MenuId);
+                                                        if (allocatedActions.Any())
+                                                        {
+                                                            var allocatedAction = allocatedActions.FirstOrDefault();
+                                                            var action = allocatedAction.CrudActions.TrimStart(new char[] { '{', ',' }).TrimEnd('}');
+                                                            var actions = action.Split(',');
+                                                            <ul class="permissions-list list-unstyled" style="display: none">
+                                                                @foreach (var actn in actions)
+                                                                {
+                                                                    <li style="padding-left: 0px">
+                                                                        @{
+                                                                    var crud = db.CrudActions.Find(actn);
+                                                                    <input type="checkbox" value="@crud.Id" class="individual-permission minimal" />
+                                                                            @crud.ActionCode
+
+                                                                        }
+                                                                    </li>
+                                                                }
+                                                            </ul>
+                                                        }
+
+                                                            }
+                                                        </li>
+                                                    }
+                                                </ul>
+                                            }
+                                        }
+                                                }
+                                            </li>
+                                        </ul>
+
+                                    }
+                                }
+                            }
+                        }
+                    </div>
+                </div>
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-default pull-right" data-dismiss="modal">Ok</button>
+                @*                                <button type="submit" class="btn btn-danger">Delete</button>*@
+            </div>
+            <input type="hidden" id="role-id" />
+        </div>
+        <!-- /.modal-content -->
+    </div>
+    <!-- /.modal-dialog -->
+</div>
+
+
+<div class="modal fade" id="station-mode-roles" role="dialog">
+    <form id="" action="" method="post">
+        @Html.AntiForgeryToken()
+        <div class="modal-dialog">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                        <span aria-hidden="true">&times;</span>
+                    </button>
+                    <h4 class="modal-title">Assign Station Roles</h4>
+                </div>
+                <div class="modal-body">
+                    <ul class="list-unstyled">
+                        @{
+                            using (IMSDataEntities stationRoles = new IMSDataEntities())
+                            {
+                                var roles = stationRoles.StationMenus;
+
+                                if (roles.Any())
+                                {
+                                    foreach (var role in roles)
+                                    {
+                                        <li>
+                                            <input type="checkbox" class="station-role minimal" value="@role.Id"/>
+                                            CAN @role.MenuName
+                                        </li>
+                                    }
+                                }
+                            }
+                        }
+                    </ul>
+                </div>
+                <div class="modal-footer">
+                    <input type="hidden" id="station-role-id-holder"/>
+                    <button type="button" class="btn btn-success pull-right" data-dismiss="modal">Ok</button>
+                    @*                    <button type="submit" class="btn btn-danger">Delete</button>*@
+                </div>
+            </div>
+            <!-- /.modal-content -->
+        </div>
+        <!-- /.modal-dialog -->
+    </form>
+</div>
+
+
+<div class="modal fade" id="create-role-modal" role="dialog">
+    <form id="create-role-form" action="@Url.Action("Create")" method="post">
+        @Html.AntiForgeryToken()
+        <div class="modal-dialog">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                        <span aria-hidden="true">&times;</span>
+                    </button>
+                    <h4 class="modal-title">Create Role</h4>
+                </div>
+                <div class="modal-body">
+                    <div class="form-group">
+                        <label> Role Name</label>
+                        <input type="text" name="Name" class="form-control unique" table="Roles" required/>
+                    </div>
+                    <div class="form-group">
+                        <label> Description</label>
+                        <input type="text" name="Description" class="form-control" required />
+                    </div>
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-default pull-left" data-dismiss="modal">Cancel</button>
+                    <button type="submit" class="btn btn-primary">Save</button>
+                </div>
+            </div>
+            <!-- /.modal-content -->
+        </div>
+        <!-- /.modal-dialog -->
+    </form>
+</div>
+
+<!--Edit modal-->
+<div class="modal fade" id="edit-role-modal" role="dialog">
+    <form id="" action="@Url.Action("Edit")" method="post">
+        @Html.AntiForgeryToken()
+        <div class="modal-dialog">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                        <span aria-hidden="true">&times;</span>
+                    </button>
+                    <h4 class="modal-title">Edit Role</h4>
+                </div>
+                <div class="modal-body">
+                    <div class="form-group">
+                        <label> Role Name</label>
+                        <input type="text" name="Name" id="edit-role-name" class="form-control" required />
+                    </div>
+                    <div class="form-group">
+                        <label> Description</label>
+                        <input type="text" name="Description" id="role-description" class="form-control" required />
+                    </div>
+                </div>
+                <div class="modal-footer">
+                    <input type="hidden" id="edit-role-id" name="RoleId"/>
+                    <button type="button" class="btn btn-default pull-left" data-dismiss="modal">Cancel</button>
+                    <button type="submit" class="btn btn-primary">Save</button>
+                </div>
+            </div>
+            <!-- /.modal-content -->
+        </div>
+        <!-- /.modal-dialog -->
+    </form>
+</div>
+
+@section Scripts{
+    <script src="@Url.Content("~/Scripts/Roles/assign_roles.js")"></script>
+    <script>
+        $(".edit-user-role").on("click",
+            function() {
+                var id = $(this).attr('edit-id');
+                var data = {
+                    "id":id
+                }
+                $('#edit-role-id').val(id);
+                $.ajax({
+                    url: "/Roles/GetEditData",
+                    dataType: "json",
+                    type: "POST",
+                    data: data,
+                    success: function(data) {
+                        $('#edit-role-name').val(data["Name"]);
+                        $("#role-description").val(data["Description"]);
+                    }
+                });
+            });
+    </script>
+
+}

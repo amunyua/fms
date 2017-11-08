@@ -1,0 +1,110 @@
+﻿
+@{
+    ViewBag.Title = "CalibrationChart";
+    Layout = "~/Views/Shared/_Basic_layout.cshtml";
+}
+
+@section BreadCrumbs{
+    <li>Manage Station</li>
+    <li>
+        @Html.ActionLink("Station Tanks ", "Index")
+    </li>
+    <li class="active">Create/Edit</li>
+}
+@section PageTitle{
+    Create/Update calibration chart
+}
+<br/>
+<br/>
+<div class="col-sm-12">
+    <div class="box box-solid box-info">
+        <div class="box-body">
+            <div class="row">
+                
+                <div class="col-md-4 col-md-offset-4" style="margin-bottom: 10px">
+                    <div class="form-group">
+                        <div class="col-md-2"style="padding-right: 0px">
+                            <label class="control-label pull-right" style="padding-top: 9px;">Tank</label>
+                        </div>
+                        <div class="col-md-8">
+                            <select name="" id="tank-cal-id" class="form-control">
+                                <option value="">Select Tank</option>
+                                @foreach (var tank in ViewBag.tanks)
+                                {
+                                    <option value="@tank.Id">@tank.TankName</option>
+                                }
+                            </select>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="col-md-6">
+                <div class="box box-solid box-info">
+                    <div class="box-body">
+                        <table class="table" id="calibration-table">
+                            <thead>
+                            <tr>
+                                <th>#Id</th>
+                                <th>Height(mm)</th>
+                                <th>Volume(L)</th>
+                                <th style="width: 80px;">Actions</th>
+                            </tr>
+                            </thead>
+                            <tbody></tbody>
+                        </table>
+                    </div>
+                    <div class="box-footer">
+                        <h5 class="pull-right" ><a class="btn btn-info" id="no-op-save-btn" style="display: none;">Save</a></h5>
+                    </div>
+                    <div class="overlay" id="cal-table-overlay" style="display: none">
+                        <i class="fa fa-spinner fa-spin"></i>
+                    </div>
+                </div>
+            </div>
+            <div class="col-md-6">
+                
+                <div class="col-md-6">
+                    <div class="box box-solid box-info">
+                        <div class="box-header">Optimization</div>
+                        <div class="box-body">
+                            <div class="form-group">
+                                <ul class="list-unstyled">
+                                    <li><label><input type="radio" value="no-optimisation" class="minimal" name="optimisation" checked/> <span style="margin-left: 10px">No Optimisation</span></label></li>
+                                    <li><label><input type="radio" value="fixed-heights" class="minimal" name="optimisation" /> <span style="margin-left: 10px">Fixed Heights</span></label></li>
+                                    <li><label><input type="radio" value="fixed-volumes" class="minimal" name="optimisation" /> <span style="margin-left: 10px">Fixed Volumes</span></label></li>
+                                </ul>
+                               
+                                @*                                <input type="radio" name="alex />No Optimisation*@
+                            </div>
+                            <div class="form-group" id="triggers" >
+                                <div class="col-md-6">
+                                    <div id="opt-div" style="display: none">
+                                        <label class="control-label" id="dif-label">Heights</label>
+                                        <input class="form-control" id="heights" type="number" value="10"/>
+                                    </div>
+                                    </div>
+                                <div class="col-md-6">
+                                        <label class="control-label">Go</label>
+                                        <button class="btn btn-info btn-block" id="apply-optimization">Apply</button>
+                                   
+                                </div>
+                            </div>
+                        </div>
+                        <div class="overlay" id="optimisation-box">
+                            <i class="fa fa-spinner fa-spin"></i>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        
+        <div class="overlay" style="display: none">
+            <i class="fa fa-spinner fa-spin"></i>
+        </div>
+    </div>
+</div>
+@section Scripts
+{
+    <script src="@Url.Content("~/Scripts/calibration/calibrationChart.js")"></script>
+
+}

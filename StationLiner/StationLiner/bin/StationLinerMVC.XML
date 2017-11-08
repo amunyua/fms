@@ -1,0 +1,226 @@
+<?xml version="1.0"?>
+<doc>
+    <assembly>
+        <name>StationLinerMVC</name>
+    </assembly>
+    <members>
+        <member name="M:StationLinerMVC.Controllers.StationHomeController.GetTotalExpectedForEachStaff(StationLinerMVC.Models.ExpectedCashModels)">
+            <summary>
+            
+            </summary>
+            <param name="closeDetails"></param>
+            <returns></returns>
+        </member>
+        <member name="M:StationLinerMVC.Controllers.StationHomeController.UpdateFuelLevels(System.Collections.Generic.List{StationLinerMVC.Models.TankReadingModels})">
+            <summary>
+            This function updates fuel tanks levels
+            It will be called when dip readings are taken
+            </summary>
+            <param name="trModels">this is the data recieved from json</param>
+            <returns></returns>
+        </member>
+        <member name="M:StationLinerMVC.Controllers.StationHomeController.FuelLevels">
+            <summary>
+            Navigate to Fuel levels view
+            </summary>
+            <returns></returns>
+            
+        </member>
+        <member name="M:StationLinerMVC.Controllers.StationsController.UpdateCalibtationDetails(StationLinerMVC.Controllers.StationsController.CalibrationModels)">
+            <summary>
+            Update calibration details.
+            </summary>
+            <returns></returns>
+        </member>
+        <member name="T:StationLinerMVC.Controllers.StationsController.TankModels">
+            <summary>
+            
+            </summary>
+            <returns></returns>
+        </member>
+        <member name="M:StationLinerMVC.CryptorEngine.Encrypt(System.String)">
+            <summary>
+            Encrypt a string using dual encryption method. Return a encrypted cipher Text
+            </summary>
+            <param name="toEncrypt">string to be encrypted</param>
+            <param name="useHashing">use hashing? send to for extra secirity</param>
+            <returns></returns>
+        </member>
+        <member name="M:StationLinerMVC.CryptorEngine.Decrypt(System.String)">
+            <summary>
+            DeCrypt a string using dual encryption method. Return a DeCrypted clear string
+            </summary>
+            <param name="cipherString">encrypted string</param>
+            <param name="useHashing">Did you use hashing to encrypt this data? pass true is yes</param>
+            <returns></returns>
+        </member>
+        <member name="M:StationLinerMVC.EncryptDecrypt.Encrypt(System.String,System.String)">
+            <summary>
+            Encrypts specified plaintext using Rijndael symmetric key algorithm
+            and returns a base64-encoded result.
+            </summary>
+            <Created>March,13 2012</Created>
+            <author>Abhishek Kasma</author>
+            <param name="plainText">
+            Plaintext value to be encrypted.
+            </param>
+            <param name="passPhrase">
+            Passphrase from which a pseudo-random password will be derived. The
+            derived password will be used to generate the encryption key.
+            Passphrase can be any string. In this example we assume that this
+            passphrase is an ASCII string.
+            </param>
+            <param name="saltValue">
+            Salt value used along with passphrase to generate password. Salt can
+            be any string. In this example we assume that salt is an ASCII string.
+            </param>
+            <param name="hashAlgorithm">
+            Hash algorithm used to generate password. Allowed values are: "MD5" and
+            "SHA1". SHA1 hashes are a bit slower, but more secure than MD5 hashes.
+            </param>
+            <param name="passwordIterations">
+            Number of iterations used to generate password. One or two iterations
+            should be enough.
+            </param>
+            <param name="initVector">
+            Initialization vector (or IV). This value is required to encrypt the
+            first block of plaintext data. For RijndaelManaged class IV must be 
+            exactly 16 ASCII characters long.
+            </param>
+            <param name="keySize">
+            Size of encryption key in bits. Allowed values are: 128, 192, and 256. 
+            Longer keys are more secure than shorter keys.
+            </param>
+            <returns>
+            Encrypted value formatted as a base64-encoded string.
+            </returns>
+        </member>
+        <member name="M:StationLinerMVC.EncryptDecrypt.Decrypt(System.String,System.String)">
+            <summary>
+            Decrypts specified ciphertext
+            </summary>
+            <Created>March,13 2012</Created>
+            <author>Abhishek Kasma</author>
+            <param name="cipherText">
+            Base64-formatted ciphertext value.
+            </param>
+            <param name="passPhrase">
+            Passphrase from which a pseudo-random password will be derived. The
+            derived password will be used to generate the encryption key.
+            Passphrase can be any string. In this example we assume that this
+            passphrase is an ASCII string.
+            </param>
+            <param name="saltValue">
+            Salt value used along with passphrase to generate password. Salt can
+            be any string. In this example we assume that salt is an ASCII string.
+            </param>
+            <param name="hashAlgorithm">
+            Hash algorithm used to generate password. Allowed values are: "MD5" and
+            "SHA1". SHA1 hashes are a bit slower, but more secure than MD5 hashes.
+            </param>
+            <param name="passwordIterations">
+            Number of iterations used to generate password. One or two iterations
+            should be enough.
+            </param>
+            <param name="initVector">
+            Initialization vector (or IV). This value is required to encrypt the
+            first block of plaintext data. For RijndaelManaged class IV must be
+            exactly 16 ASCII characters long.
+            </param>
+            <param name="keySize">
+            Size of encryption key in bits. Allowed values are: 128, 192, and 256.
+            Longer keys are more secure than shorter keys.
+            </param>
+            <returns>
+            Decrypted string value.
+            </returns>
+        </member>
+        <member name="P:StationLinerMVC.Models.JQueryDataTableParamModel.sEcho">
+            <summary>
+            Request sequence number sent by DataTable,
+            same value must be returned in response
+            </summary>       
+        </member>
+        <member name="P:StationLinerMVC.Models.JQueryDataTableParamModel.sSearch">
+            <summary>
+            Text used for filtering
+            </summary>
+        </member>
+        <member name="P:StationLinerMVC.Models.JQueryDataTableParamModel.iDisplayLength">
+            <summary>
+            Number of records that should be shown in table
+            </summary>
+        </member>
+        <member name="P:StationLinerMVC.Models.JQueryDataTableParamModel.iDisplayStart">
+            <summary>
+            First record that should be shown(used for paging)
+            </summary>
+        </member>
+        <member name="P:StationLinerMVC.Models.JQueryDataTableParamModel.iColumns">
+            <summary>
+            Number of columns in table
+            </summary>
+        </member>
+        <member name="P:StationLinerMVC.Models.JQueryDataTableParamModel.iSortingCols">
+            <summary>
+            Number of columns that are used in sorting
+            </summary>
+        </member>
+        <member name="P:StationLinerMVC.Models.JQueryDataTableParamModel.sColumns">
+            <summary>
+            Comma separated list of column names
+            </summary>
+        </member>
+        <member name="T:StationLinerMVC.Models.TankReading">
+            <summary>
+            this model class corresponds to database table tankreadings.
+            it will be updated when dip readings are take, either during opening and closing a shift or when dip readings are taken independenlty
+            </summary>
+        </member>
+        <member name="T:StationLinerMVC.Models.TankReadingModels">
+            <summary>
+            This model is for the purpose of recieving json data which will be type casted to its type
+            </summary>
+        </member>
+        <member name="M:MoreLinq.MoreEnumerable.MaxBy``2(System.Collections.Generic.IEnumerable{``0},System.Func{``0,``1})">
+            <summary>
+            Returns the maximal element of the given sequence, based on
+            the given projection.
+            </summary>
+            <remarks>
+            If more than one element has the maximal projected value, the first
+            one encountered will be returned. This overload uses the default comparer
+            for the projected type. This operator uses immediate execution, but
+            only buffers a single result (the current maximal element).
+            </remarks>
+            <typeparam name="TSource">Type of the source sequence</typeparam>
+            <typeparam name="TKey">Type of the projected element</typeparam>
+            <param name="source">Source sequence</param>
+            <param name="selector">Selector to use to pick the results to compare</param>
+            <returns>The maximal element, according to the projection.</returns>
+            <exception cref="T:System.ArgumentNullException"><paramref name="source"/> or <paramref name="selector"/> is null</exception>
+            <exception cref="T:System.InvalidOperationException"><paramref name="source"/> is empty</exception>
+        </member>
+        <member name="M:MoreLinq.MoreEnumerable.MaxBy``2(System.Collections.Generic.IEnumerable{``0},System.Func{``0,``1},System.Collections.Generic.IComparer{``1})">
+            <summary>
+            Returns the maximal element of the given sequence, based on
+            the given projection and the specified comparer for projected values. 
+            </summary>
+            <remarks>
+            If more than one element has the maximal projected value, the first
+            one encountered will be returned. This overload uses the default comparer
+            for the projected type. This operator uses immediate execution, but
+            only buffers a single result (the current maximal element).
+            </remarks>
+            <typeparam name="TSource">Type of the source sequence</typeparam>
+            <typeparam name="TKey">Type of the projected element</typeparam>
+            <param name="source">Source sequence</param>
+            <param name="selector">Selector to use to pick the results to compare</param>
+            <param name="comparer">Comparer to use to compare projected values</param>
+            <returns>The maximal element, according to the projection.</returns>
+            <exception cref="T:System.ArgumentNullException"><paramref name="source"/>, <paramref name="selector"/> 
+            or <paramref name="comparer"/> is null</exception>
+            <exception cref="T:System.InvalidOperationException"><paramref name="source"/> is empty</exception>
+        </member>
+    </members>
+</doc>

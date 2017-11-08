@@ -1,0 +1,61 @@
+﻿@model  IEnumerable<StationLinerMVC.Controllers.StationHomeController.ShiftSummaryModels>
+@{
+//    ViewBag.Title = "ShiftSummary";
+    Layout = "~/Views/Shared/_StationHomePageL.cshtml";
+
+}
+
+
+@section PageTitle{Shift Summaries}
+@section BreadCrumbs{
+}
+<div class="nav-tabs-custom">
+    <div class="tab-content">
+        <ul class="list-unstyled pull-right">
+@*            <li><a href="@Url.Action("RecieveFuelWizard")" class="btn btn-sm btn-primary">Recieve Fuel</a></li>*@
+        </ul>
+        <br /><br />
+
+        <div class="box box-solid box-info">
+            <div class="box-header">
+                <h3 class="box-title">Shift Summuries</h3>
+            </div>
+            <!-- /.box-header -->
+            <div class="box-body">
+                @{Html.RenderPartial("partials/_message");}
+                <table id="example2" class="table table-bordered table-hover">
+                    <thead>
+                    <tr>
+                        <th>Shift Name</th>
+                        <th>Start Time</th>
+                        <th>End Time</th>
+                        <th>View Summary</th>
+                    </tr>
+                    </thead>
+                    <tbody>
+                    @foreach (var item in Model) {
+                        <tr>
+                            <td>
+                                @Html.DisplayFor(modelItem => item.ShiftName)
+                            </td>
+                            <td>
+                                @Html.DisplayFor(modelItem => item.StartTime)
+                            </td>
+                            <td>
+                                @Html.DisplayFor(modelItem => item.EndTime)
+                            </td>
+                            <td>
+                                <a href="@Url.Action("GenerateCloseShiftReport",new {id = item.ShiftId})" class="btn btn-success btn-xs">View Summary</a>
+@*                                @Html.DisplayFor(modelItem => item.ShiftId)*@
+                            </td>
+                        
+                        </tr>
+                    }
+                    </tbody>
+
+
+                </table>
+            </div>
+        </div>
+    </div>
+</div>

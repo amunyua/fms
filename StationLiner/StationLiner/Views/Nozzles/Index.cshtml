@@ -1,0 +1,129 @@
+﻿@model IEnumerable<StationLinerMVC.Models.Nozzle>
+
+@{
+    ViewBag.Title = "Index";
+    Layout = "~/Views/Shared/_DtLayout.cshtml";
+ 
+}
+
+        @section PageTitle{Manage Nozzles}
+@section BreadCrumbs{
+    <li>Pump Management</li>
+    <li class="active">Nozzles</li>
+    }
+@section Actions{ <li><a href="@Url.Action("Create")" class="btn btn-sm btn-primary">Create New</a></li>}
+@section TableHeader{All Nozzles}
+
+  @{Html.RenderPartial("partials/_message");}
+<table id="example2" class="table table-bordered table-hover">
+    <thead>
+    <tr>
+        <th>
+            @Html.DisplayNameFor(model => model.Id)
+        </th>
+        <th>
+            Nozzle Name
+        </th>
+        <th>
+            Description
+        </th>
+        <th>
+            Nozzle Type
+        </th>
+
+        <th>
+            Pump
+        </th>
+
+
+        <th>
+            @Html.DisplayNameFor(model => model.Status)
+        </th>
+
+        @{
+            if (Flag.Status("EDIT"))
+            {
+                <th>Edit</th>
+            }
+
+            if (Flag.Status("DELETE"))
+            {
+                <th>Delete</th>
+            }
+        }
+    </tr>
+    </thead>
+
+@foreach (var item in Model) {
+<tbody>
+<tr>
+    <td>
+        @Html.DisplayFor(modelItem => item.Id)
+    </td>
+
+    <td>
+        @Html.DisplayFor(modelItem => item.NozzleName)
+    </td>
+       <td>
+        @Html.DisplayFor(modelItem => item.Description)
+    </td>
+       <td>
+        @Html.DisplayFor(modelItem => item.NozzleTypes.Name)
+    </td>
+
+
+    <td>
+        @Html.DisplayFor(modelItem => item.Pump.Name)
+    </td>
+
+    <td>
+        @Html.DisplayFor(modelItem => item.Status)
+    </td>
+
+
+    @{
+        if (Flag.Status("EDIT"))
+        {
+            <td>
+                <a href="@Url.Action("Edit", new {id = item.Id})" class="btn btn-xs btn-primary"><i class="fa fa-edit"> </i> Edit</a>
+
+            </td>
+        }
+        if (Flag.Status("DELETE"))
+        {
+            <td>
+                <a data-toggle="modal" data-target="#delete-modal" action="@Url.Action("Delete", new {id = item.Id})" class="btn btn-xs btn-danger delete-btn"><i class="fa fa-recycle"> </i> Delete</a>
+            </td>
+        }
+    }
+</tr>
+    </tbody>
+}
+
+</table>
+
+@*modal*@
+<div class="modal fade" id="delete-modal" role="dialog">
+    <form id="delete-modal-form" action="" method="post">
+        @Html.AntiForgeryToken()
+        <div class="modal-dialog">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                        <span aria-hidden="true">&times;</span>
+                    </button>
+                    <h4 class="modal-title">Delete Nozzle</h4>
+                </div>
+                <div class="modal-body">
+                    <p>Are you sure you want to delete this nozzle?</p>
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-default pull-left" data-dismiss="modal">No</button>
+                    <button type="submit" class="btn btn-danger">Delete</button>
+                </div>
+            </div>
+            <!-- /.modal-content -->
+        </div>
+        <!-- /.modal-dialog -->
+    </form>
+</div>

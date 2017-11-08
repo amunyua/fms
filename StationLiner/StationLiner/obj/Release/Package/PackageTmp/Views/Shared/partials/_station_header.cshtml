@@ -1,0 +1,72 @@
+﻿@using StationLinerMVC.Models
+  <header class="main-header">
+    <nav class="navbar navbar-static-top">
+        <div class="container">
+            <div class="navbar-header">
+                <a href="@Url.Action("StationDashboard", "Dashboard")" class="navbar-brand"><b>Tovuti FMS</b></a>
+                <button type="button" class="navbar-toggle collapsed" data-toggle="collapse" data-target="#navbar-collapse">
+                    <i class="fa fa-bars"></i>
+                </button>
+            </div>
+
+            <!-- Collect the nav links, forms, and other content for toggling -->
+            <div class="collapse navbar-collapse pull-left" id="navbar-collapse">
+                <ul class="nav navbar-nav">
+                    <li class="active"><a href="@Url.Action("StationHome","StationHome")">Home <span class="sr-only">(current)</span></a></li>
+                    <li><a href="@Url.Action("StationDashboard", "Dashboard")">Dashboard</a></li>
+                </ul>
+            </div>
+        <div class="navbar-custom-menu">
+        <ul class="nav navbar-nav">
+        <!-- Messages: style can be found in dropdown.less-->
+        @*<li class=" messages-menu pull-left">
+            <a href="#" >
+                <i class="fa fa-user"></i>  @HttpContext.Current.User.Identity.Name
+                $1$                        <span class="label label-success">4</span>#1#
+            </a>
+            
+        </li>*@
+
+        <!-- Notifications: style can be found in dropdown.less -->
+        @{Html.RenderPartial("partials/change_mode");}
+      
+        <!-- User Account: style can be found in dropdown.less -->
+            <li class="dropdown user user-menu">
+                <a href="#" class="dropdown-toggle" data-toggle="dropdown">
+                    <img src="@Url.Content("~/Content/power-128.png")" class="user-image" alt="User Image">
+                    <span class="hidden-xs">@HttpContext.Current.User.Identity.Name</span>
+                </a>
+                <ul class="dropdown-menu animated bounceIn" style="background-color: #222d32;">
+                    <li><hr style="margin-bottom: 10px;margin-top: 0px"/></li>
+                   @* <li class="" style="background-color: #222d32;">
+
+                        <div class="sidebar text-center">
+                            <a href="#" class=""><i class="fa fa-user text-yellow"></i> Profile</a>
+                        </div>
+                    </li>
+                    <li><hr style="margin-bottom: 5px;margin-top: 5px" /></li>*@
+                    <li class="" style="background-color: #222d32;">
+                        <div class="row">
+                            <div class=" text-center sidebar">
+                                <a href="@Url.Action("Changepassword", "Manage")" class="sidebar "><i class="fa fa-edit text-yellow "></i> Update Password</a>
+                            </div>
+                        </div>
+                    </li>
+                    <li><hr style="margin-bottom: 10px;margin-top: 0px" /></li>
+                    <li>
+                        <div class=" sidebar text-center">
+                            <form action="@Url.Action("LogOff", "Account")" method="post" id="logoutform">
+                                @Html.AntiForgeryToken()
+                                <a href="javascript:{}" onclick="document.getElementById('logoutform').submit();return false;"><i class="glyphicon glyphicon-off text-yellow"></i> Sign Out</a>
+                            </form>
+                        </div>
+                    </li>
+                </ul>
+            </li>
+        </ul>
+        </div>
+            <!-- /.navbar-custom-menu -->
+        </div>
+        <!-- /.container-fluid -->
+    </nav>
+</header>

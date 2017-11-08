@@ -1,0 +1,10 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<parameters>
+  <parameter name="IIS Web Application Name" description="" value="FuelCard" tags="IisApp">
+    <parameterEntry kind="ProviderPath" scope="IisApp" match="^C:\\ForeCourt\\StationLiner\\StationLiner\\obj\\Release\\Package\\PackageTmp$" />
+    <parameterEntry kind="ProviderPath" scope="setAcl" match="^C:\\ForeCourt\\StationLiner\\StationLiner\\obj\\Release\\Package\\PackageTmp$" />
+  </parameter>
+  <parameter name="IMSDataEntities-Web.config Connection String" description="" value="Data Source=DESKTOP-DPCM9QQ;Initial Catalog=station;Persist Security Info=True;User ID=sa;Password=kinuthia; MultipleActiveResultSets=true;" tags="">
+    <parameterEntry kind="XmlFile" scope="C:\\ForeCourt\\StationLiner\\StationLiner\\obj\\Release\\Package\\PackageTmp\\Web\.config$" match="/configuration/connectionStrings/add[@name='IMSDataEntities']/@connectionString" />
+  </parameter>
+</parameters>

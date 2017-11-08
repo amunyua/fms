@@ -1,0 +1,60 @@
+﻿@model StationLinerMVC.Models.TaxRate
+
+@{
+    ViewBag.Title = "Create";
+    Layout = "~/Views/Shared/_FormLayout.cshtml";
+}
+@section BreadCrumbs{
+    <li>Tax Management</li>
+    <li>
+        @Html.ActionLink("Tax Rates", "Index")
+    </li>
+    <li class="active">Create Rate</li>
+        }
+       @section PageTitle{
+           Create Tax Rate
+           }
+     @section Description{Input tax rate details}
+@section FormTitle{ Tax Rate}
+
+@using (Html.BeginForm()) 
+{
+    @Html.AntiForgeryToken()
+    
+    <div class="form-horizontal">
+        @Html.ValidationSummary(true, "", new { @class = "text-danger" })
+        <div class="form-group">
+            @Html.LabelFor(model => model.TaxRateName,"Rate Name", htmlAttributes: new { @class = "control-label col-md-2" })
+            <div class="col-md-10">
+                @Html.EditorFor(model => model.TaxRateName, new { htmlAttributes = new { @class = "form-control" } })
+                @Html.ValidationMessageFor(model => model.TaxRateName, "", new { @class = "text-danger" })
+            </div>
+        </div>
+
+        <div class="form-group">
+            @Html.LabelFor(model => model.TaxRateValue,"Rate Value", htmlAttributes: new { @class = "control-label col-md-2" })
+            <div class="col-md-10">
+                @Html.EditorFor(model => model.TaxRateValue, new { htmlAttributes = new { @class = "form-control" } })
+                @Html.ValidationMessageFor(model => model.TaxRateValue, "", new { @class = "text-danger" })
+            </div>
+        </div>
+
+        <div class="form-group">
+            @Html.LabelFor(model => model.TaxRateDescription,"Rate Description", htmlAttributes: new { @class = "control-label col-md-2" })
+            <div class="col-md-10">
+                @Html.EditorFor(model => model.TaxRateDescription, new { htmlAttributes = new { @class = "form-control" } })
+                @Html.ValidationMessageFor(model => model.TaxRateDescription, "", new { @class = "text-danger" })
+            </div>
+        </div>
+
+
+
+        <div class="pull-right col-md-10">
+            <div class="actions col-md-offset-6">
+                <input type="submit" value="Save Changes" class="btn btn-primary" />
+            </div>
+        </div>
+    </div>
+}
+
+

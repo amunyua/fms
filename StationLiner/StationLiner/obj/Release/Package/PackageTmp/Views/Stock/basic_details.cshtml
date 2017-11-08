@@ -1,0 +1,114 @@
+﻿@using StationLinerMVC.Models
+<hr/>
+@{
+    var db= new IMSDataEntities();
+}
+
+<div class="col-sm-12">
+    <div class="col-sm-6 form-group">
+        <label for="invoice-ref" class="col-sm-2 control-label">Invoice Ref Number</label>
+        <div class="col-sm-10">
+            <div class=" col-sm-6">
+                <input type="text" id="invoice-ref" name="InvoiceRefNumber" class="form-control" />
+            </div>
+            <div class=" col-sm-6">
+                <label class="btn btn-default btn-file btn-block input-label">
+                    <span class="message">Upload doc</span><input type="file" name="Invoice" hidden> 
+                </label>
+            </div>
+           
+           
+        </div>
+    </div>
+
+    <div class="col-sm-6 form-group">
+       
+        <label for="delivery-note-ref" class="col-sm-2 control-label">Delivery note Ref</label>
+        <div class="col-sm-10">
+            <div class="col-sm-6">
+                <input type="text" name="DeliveryNoteRefNo" id="delivery-note-ref" class="form-control" />
+            </div>
+            <div class=" col-sm-6">
+                <label class="btn btn-default btn-file btn-block input-label">
+                    <span class="message">Upload doc</span> <input type="file" name="Delivery" hidden>
+                </label>
+            </div>
+        </div>
+    </div>
+</div>
+<div class="col-sm-12">
+    <div class="col-sm-6 form-group">
+        <label for="transaction-type" class="col-sm-2 control-label">Transaction Type</label>
+        <div class="col-sm-10">
+            <div class="col-sm-12">
+                <select name="TransactionType" id="transaction-type" class="form-control" required="required">
+                    <option value="">--Select Transaction type--</option>
+                    <option value="PURCHASE">Purchase</option>
+                    <option value="RECONCILLIATION">Reconcilliation</option>
+                    <option value="TRANSFER">Transfer</option>
+                </select>
+            </div>
+        </div>
+    </div>
+
+    <div class="col-sm-6 form-group purchase" style="display: none">
+        <label for="transaction-category" class="col-sm-2 control-label">Transaction Category</label>
+        <div class="col-sm-10">
+            <div class="col-sm-12">
+                <select name="TransactionCategory" id="transaction-category" class="form-control" required="required">
+                    <option value="">--Select Category--</option>
+                    <option value="fuel">Fuel Purchase</option>
+                    <option value="others">Others</option>
+                </select>
+            </div>
+        </div>
+    </div>
+</div>
+
+
+
+<div class="col-sm-12">
+    <div class="col-sm-6 form-group purchase" style="display: none">
+        <label for="supplier" class="col-sm-2 control-label">Supplier</label>
+        <div class="col-sm-10">
+            <div class="col-sm-12">
+                <select name="SupplierId" id="supplier" class="form-control select2" style="width: 100%">
+                    <option value="">--Select Supplier--</option>
+                    @{
+                        var suppliers = db.Supppliers;
+                        foreach (var supplier in suppliers)
+                        {
+                            <option value="@supplier.Id">@supplier.Name</option>
+                        }
+                    }
+                </select>
+            </div>
+        </div>
+    </div>
+
+</div>
+
+<div class="fuel col-sm-12" style="display: none">
+    <div class="col-sm-6 form-group ">
+        <label for="vehicle" class="col-sm-2 control-label">Vehicle</label>
+        <div class="col-sm-10">
+            <div class="col-sm-12">
+                <select name="VehicleId" id="vehicle" class="form-control select2" style="width: 100%">
+                    <span id="all-vehicles"></span>
+
+                </select>
+            </div>
+        </div>
+    </div>
+    <div class="col-sm-6 form-group" id="">
+        <label for="driver" class="col-sm-2 control-label">Driver</label>
+        <div class="col-sm-10">
+            <select name="DriverId" id="driver" class="form-control select2" style="width: 100%">
+               
+            </select>
+        </div>
+    </div>
+
+</div>
+
+<div class="clearfix"></div>

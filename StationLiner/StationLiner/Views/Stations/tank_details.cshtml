@@ -1,0 +1,95 @@
+﻿@using StationLinerMVC.Models
+<div class="col-md-12">
+    <div class="row">
+        <ul class="list-unstyled pull-right">
+            <li>
+                <a href="#tanks-modal" data-toggle="modal" class="btn btn-sm btn-primary" style="margin-bottom: 10px">Add Tanks</a>
+            </li>
+        </ul>
+    </div>
+       
+
+
+    <div class="row">
+      
+                <table class="table table-bordered " id="tanks">
+                    <thead>
+                    <tr>
+@*                        <th>Id</th>*@
+                        <th>Tank Name</th>
+                        <th>Length</th>
+                    </tr>
+                    </thead>
+                </table>
+            
+    </div>
+</div>
+
+<div class="modal fade" id="tanks-modal" role="dialog">
+    <form id="add-tanks-form" action="" method="post">
+        @Html.AntiForgeryToken()
+        <div class="modal-dialog">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                        <span aria-hidden="true">&times;</span>
+                    </button>
+                    <h4 class="modal-title">Add Tank</h4>
+                </div>
+                <div class="modal-body">
+                    
+                    <div class="form-group">
+                        <label for="" class="control-label">Tank Name:</label>
+                        <input type="text"  name="TankName"class="form-control" required="required" id="Tank-name">
+                    </div>
+                    <div class="form-group">
+                        <label for="tank-type" class="control-label">Product:</label>
+                        <select class="form-control" required="required" name="FuelType">
+                            <option value=""> Select type</option>
+                            @{
+                                using (var db = new IMSDataEntities())
+                                {
+                                    var types = db.Products.Where(x => x.IsDeleted == false && x.ProductCategory.ProductCategoryName == Constants.Fuel);
+                                    if (types.Any())
+                                    {
+                                        foreach (var type in types)
+                                        {
+                                            <option value="@type.Id">@type.ProductName</option>
+                                        }
+                                    }
+                                }
+                            }
+                        </select>
+                    </div>
+                    <div class="form-group">
+                        <label for="description" class="control-label">Description:</label>
+                        <input type="text" name="Description" class="form-control" id="description" required="required">
+                    </div>
+                    
+                    <div class="form-group">
+                        <label for="length" class="control-label">Length(mm):</label>
+                        <input type="number" name="Length" class="form-control" id="length" required="required">
+                    </div>
+                    
+                    <div class="form-group">
+                        <label for="volume" class="control-label">Volume(ltrs):</label>
+                        <input type="number" name="Volume" class="form-control" id="volime" required="required">
+                    </div>
+                    
+                    <div class="form-group">
+                        <label for="Diameter" class="control-label">Diameter(mm):</label>
+                        <input type="number" name="Diameter" class="form-control" id="Diameter" required="required">
+                    </div>
+
+                    <input type="hidden" name="StationId" class="StationId"/>
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-default pull-left" data-dismiss="modal">Cancel</button>
+                    <button type="submit" class="btn btn-success save-btn"  style="display:none" id="save-tanks-btn">Save</button>
+                </div>
+            </div>
+            <!-- /.modal-content -->
+        </div>
+        <!-- /.modal-dialog -->
+    </form>
+</div>

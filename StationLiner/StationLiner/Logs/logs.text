@@ -1,0 +1,10 @@
+Mon, 06 Nov 2017 16:45:22 Value cannot be null.
+Parameter name: source    at System.Linq.Enumerable.Any[TSource](IEnumerable`1 source)
+   at StationLinerMVC.Controllers.StationsController.UpdateCalibtationDetails(CalibrationModels calibration) in c:\ForeCourt\StationLiner\StationLiner\Controllers\StationsController.cs:line 725
+Wed, 08 Nov 2017 15:58:44 The specified parameter type 'StationLinerMVC.Controllers.StationsController+GetId' is not valid. Only scalar types, such as System.Int32, System.Decimal, System.DateTime, and System.Guid, are supported.
+Parameter name: item    at System.Data.Entity.Core.Objects.ObjectParameterCollection.Add(ObjectParameter item)
+   at System.Data.Entity.Core.Objects.ObjectContext.CreateQuery[T](String queryString, ObjectParameter[] parameters)
+   at System.Data.Entity.Internal.Linq.InternalSet`1.BuildFindQuery(WrappedEntityKey key)
+   at System.Data.Entity.Internal.Linq.InternalSet`1.FindInStore(WrappedEntityKey key, String keyValuesParamName)
+   at System.Data.Entity.Internal.Linq.InternalSet`1.Find(Object[] keyValues)
+   at StationLinerMVC.Controllers.StationsController.getTankVolume(GetId id) in c:\ForeCourt\StationLiner\StationLiner\Controllers\StationsController.cs:line 753

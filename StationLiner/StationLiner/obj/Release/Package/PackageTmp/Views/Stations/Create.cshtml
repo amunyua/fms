@@ -1,0 +1,160 @@
+﻿@model StationLinerMVC.Models.Station
+
+@{
+    ViewBag.Title = "Create Station";
+    Layout = "~/Views/Shared/_WizardLayout.cshtml";
+}
+@section BreadCrumbs{
+    <li>Station Management</li>
+    <li>
+        @Html.ActionLink("All Stations", "Index")
+    </li>
+    <li class="active">Create station</li>
+        }
+@section PageTitle{
+    Create Station
+}
+@section Description{Station Details}
+@section FormTitle{ Station}
+
+@*@using (Html.BeginForm()) *@
+@*{*@
+@*   *@
+
+@section Style
+{
+    <style>
+        .tovuti-blue {
+            background-color: #0091d9;
+        }
+    </style>
+}
+<article class="col-sm-12 col-md-12 col-lg-12 sortable-grid ui-sortable">
+    <div id="wid-id-0">
+            
+        <!-- widget div-->
+        <div role="content">
+            <!-- widget content -->
+            <div class="widget-body">
+                <div class="row">
+@*                    <form id="" novalidate="novalidate" method="post" action="@Url.Action("Create")" enctype="multipart/form-data">*@
+@*                        @Html.AntiForgeryToken()*@
+                    @{Html.RenderPartial("partials/_message"); }
+                    <input type="hidden" class="StationId"/>
+                        <div id="bootstrap-wizard-2" class="col-sm-12">
+                            <div class="form-bootstrapWizard">
+                                <div class="col-md-offset-2" style="text-align: center">
+                                    <ul class="bootstrapWizard form-wizard">
+                                        <li class="active" data-target="#step1">
+                                            <a href="#tab1" data-toggle="tab" class="active"> <span class="step">1</span> </a>
+                                        </li>
+                                        <li data-target="#step2" class="">
+                                            <a href="#tab2" data-toggle="tab"> <span class="step">2</span></a>
+                                        </li>
+                                        <li data-target="#step4">
+                                            <a href="#tab4" data-toggle="tab"> <span class="step">3</span> </a>
+                                        </li>
+                                    </ul>
+                                </div>
+                                
+                                <div class="clearfix"></div>
+                            </div>
+
+                               
+                            <div class="tab-content">
+                                <div class="tab-pane active" id="tab1">
+                                    <br>
+                                    <h3><strong>Step 1 </strong> - Station's Basic Details</h3>
+                                    <hr/>
+                                    @{Html.RenderPartial("Basic_Details"); }
+                                    <br />
+                                    <div class="form-actions">
+                                        <div class="row">
+                                            <div class="col-sm-12">
+
+                                                <ul class="pager wizard no-margin">
+                                                    <li class="previous disabled">
+                                                        <a href="#" class="btn btn-lg btn-default  tovuti-blue" style="background-color: #0091d9; color: white; border: 0px;font-size: 14px"> Previous </a>
+                                                    </li>
+                                                    <li class="skip" id="skip">
+                                                        <a href="#" class="btn btn-lg btn-default tovuti-blue" style="background-color: #0091d9; color: white;border: 0px;font-size: 14px"> Skip </a>
+                                                    </li>
+                                                    <li class="next">
+                                                        <a href="#" class="btn btn-lg txt-color-darken" style="background-color: #0091d9; color: white;border: 0px ;font-size: 14px"> Save & Add Tanks </a>
+                                                    </li>
+                                                </ul>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="tab-pane" id="tab2">
+                                    <br>
+                                    <h3><strong>Step 2</strong> - Tank details</h3>
+                                    <hr/>
+
+                                    @{Html.RenderPartial("tank_details"); }
+                                    <div class="form-actions">
+                                        <div class="row">
+                                            <div class="col-sm-12">
+                                                <ul class="pager wizard no-margin">
+                                                    <li class="previous">
+                                                        <a href="#" class="btn btn-lg btn-default tovuti-blue" style="background-color: #0091d9; color: white;border: 0px ;font-size: 14px"> Previous </a>
+                                                    </li>
+                                                    <li class="next disabled">
+                                                        <a href="#" class="btn btn-lg tovuti-blue" style="background-color: #0091d9; color: white;border: 0px ;font-size: 14px"> Next </a>
+                                                    </li>
+                                                </ul>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="tab-pane" id="tab4">
+                                    <br>
+                                    <h3><strong>Finish</strong> - Pump Details</h3>
+                                    <hr>
+                                    @{Html.RenderPartial("pump_details"); }
+                                    <br>
+                                    <div class="form-actions">
+                                        <div class="row">
+                                            <div class="col-sm-12">
+                                                <ul class="pager wizard no-margin">
+                                                    <li class="previous">
+                                                        <a href="#" class="btn btn-lg btn-default tovuti-blue" style="background-color: #0091d9; color: white;border: 0px ;font-size: 14px"> Previous </a>
+                                                    </li>
+                                                   
+                                                    <li class="next disabled">
+                                                        <a style="background-color: gold; color: white;border: 0px ;font-size: 14px" id="complete-add-stn"  class="btn btn-success tovuti-blue txt-color-darken pull-right"> Complete </a>
+                                                    </li>
+                                                    @*<li class="next disabled">
+                                                        <a href="@Url.Action("Index")" style="background-color: #0091d9;; color: white;border: 0px ; font-size: 14px; margin-right: 5px;"  class="btn btn-success tovuti-blue txt-color-darken pull-right"> Calibrate Tanks </a>
+                                                    </li>*@
+                                                </ul>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+
+                            </div>
+                        </div>
+@*                    </form>*@
+                </div>
+            </div>
+            <!-- end widget content -->
+        </div>
+        <!-- end widget div -->
+    </div>
+    <!-- end widget -->
+</article>
+
+@*}*@
+
+@section Scripts{
+    <script src="@Url.Content("~/Scripts/Stations/stations.js")"></script>
+    <script>
+        $('#skip').click(function () {
+            $('#bootstrap-wizard-2').bootstrapWizard('show', 1);
+        });
+    </script>
+}
+
+

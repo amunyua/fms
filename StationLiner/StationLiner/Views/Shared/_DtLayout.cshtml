@@ -1,0 +1,252 @@
+﻿<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <title>Tovuti FMS | @ViewBag.Title </title>
+    <!-- Tell the browser to be responsive to screen width -->
+    <meta content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no" name="viewport">
+    @* @Scripts.Render("~/bundles/modernizr")*@
+    <!-- Bootstrap 3.3.6 -->
+    <link rel="stylesheet" href="@Url.Content("~/Content/bootstrap/css/bootstrap.min.css")">
+    <!-- Font Awesome -->
+    <link rel="stylesheet" href="@Url.Content("~/Content/fontawesome/font-awesome.css")">
+    <link rel="stylesheet" href="@Url.Content("~/Content/fontawesome/ions.css")">
+    <!-- Ionicons -->
+    <!-- DataTables -->
+    <link rel="stylesheet" href="@Url.Content("~/Content/plugins/datatables/dataTables.bootstrap.css")">
+    <!-- iCheck for checkboxes and radio inputs -->
+    <link rel="stylesheet" href="@Url.Content("~/Content/plugins/iCheck/all.css")">
+    <!-- Theme style -->
+    <link rel="stylesheet" href="@Url.Content("~/Content/dist/css/AdminLTE.min.css")">
+    <!-- AdminLTE Skins. Choose a skin from the css/skins
+         folder instead of downloading all of them to reduce the load. -->
+    <link rel="stylesheet" href="@Url.Content("~/Content/dist/css/skins/_all-skins.min.css")">
+    <link rel="stylesheet" href="@Url.Content("~/Content/plugins/select2/select2.min.css")">
+    <link rel="stylesheet" href="@Url.Content("~/Content/css/animate.css")">
+    <link rel="stylesheet" href="@Url.Content("~/Content/css/wizard.css")">
+    <link rel="stylesheet" href="@Url.Content("~/Content/plugins/toastr/toastr.css")">
+
+
+
+    @RenderSection("Styles",false)
+   
+
+</head>
+<body class="hold-transition skin-blue sidebar-mini">
+    <div class="wrapper">
+        @{Html.RenderPartial("partials/_Header"); }
+
+        <!-- Left side column. contains the logo and sidebar -->
+        @{Html.RenderPartial("partials/_SideMenu"); }
+
+        <!-- Content Wrapper. Contains page content -->
+        <div class="content-wrapper">
+            <!-- Content Header (Page header) -->
+            <section class="content-header">
+                <h1>
+                    @RenderSection("PageTitle", false)
+                    @*<small>advanced tables</small>*@
+                </h1>
+                <ol class="breadcrumb">
+                    @RenderSection("BreadCrumbs", false)
+                </ol>
+            </section>
+
+            <!-- Main content -->
+            <section class="content">
+                <div class="row">
+                    <div class="col-xs-12">
+                        <ul class="list-unstyled pull-right">
+                            @RenderSection("Actions", false)
+                        </ul>
+                        <br /><br />
+                        <div class="box box-solid box-primary">
+                            <div class="box-header">
+                                <h3 class="box-title">@RenderSection("TableHeader", false)</h3>
+                            </div>
+                            <!-- /.box-header -->
+                            <div class="box-body">
+                                @RenderBody()
+                            </div>
+                            <!-- /.box-body -->
+                        </div>
+
+                    </div>
+                    <!-- /.col -->
+                </div>
+                <!-- /.row -->
+            </section>
+            <!-- /.content -->
+        </div>
+        <!-- /.content-wrapper -->
+        @{Html.RenderPartial("partials/_Footer"); }
+
+        <!-- Control Sidebar -->
+        <!-- /.control-sidebar -->
+        <!-- Add the sidebar's background. This div must be placed
+             immediately after the control sidebar -->
+        <div class="control-sidebar-bg"></div>
+    </div>
+    <!-- ./wrapper -->
+    <!-- jQuery 2.2.3 -->
+    <script src="@Url.Content("~/Content/plugins/jQuery/jquery-2.2.3.min.js")"></script>
+    <!-- Bootstrap 3.3.6 -->
+    <script src="@Url.Content("~/Content/bootstrap/js/bootstrap.min.js")"></script>
+    <!-- DataTables -->
+    <script src="@Url.Content("~/Content/plugins/datatables/jquery.dataTables.min.js")"></script>
+    <script src="@Url.Content("~/Content/plugins/datatables/dataTables.bootstrap.min.js")"></script>
+    <!-- SlimScroll -->
+    <script src="@Url.Content("~/Content/plugins/slimScroll/jquery.slimscroll.min.js")"></script>
+    <!-- FastClick -->
+    <script src="@Url.Content("~/Content/plugins/fastclick/fastclick.js")"></script>
+<script src="@Url.Content("~/Content/plugins/notification/SmartNotification.min.js")"></script>
+<script src="@Url.Content("~/Content/js/form-validation.js")"></script>
+<script src="@Url.Content("~/Content/js/form-validation-framework.js")"></script>
+    
+    <script src="@Url.Content("~/Content/plugins/input-mask/jquery.inputmask.js")"></script>
+<script src="@Url.Content("~/Content/plugins/input-mask/jquery.inputmask.date.extensions.js")"></script>
+<script src="@Url.Content("~/Content/plugins/input-mask/jquery.inputmask.extensions.js")"></script>
+
+<!-- iCheck 1.0.1 -->
+    <script src="@Url.Content("~/Content/plugins/iCheck/icheck.min.js")"></script>
+    <!-- AdminLTE App -->
+    <script src="@Url.Content("~/Content/dist/js/app.min.js")"></script>
+    <!-- AdminLTE for demo purposes -->
+    <script src="@Url.Content("~/Content/dist/js/demo.js")"></script>
+
+@*    <script src="@Url.Content("~/Scripts/Menu/menus.js")"></script>*@
+<script src="@Url.Content("~/Scripts/Delete_js/delete_js.js")"></script>
+<script src="@Url.Content("~/Scripts/commonjs/commonjs.js")"></script>
+    <script src="@Url.Content("~/Content/plugins/select2/select2.full.min.js")"></script>
+<script src="@Url.Content("~/Content/plugins/toastr/toastr.js")"></script>
+
+<!-- page script -->
+
+<script>
+  
+    $(function () {
+
+       /* $('body').find('form').attr("class", "enable-form-validation").formValidation({
+            framework: 'bootstrap',
+            excluded: [':disabled', ':hidden', ':not(:visible)'],
+            icon: {
+                valid: 'glyphicon glyphicon-ok',
+                invalid: 'glyphicon glyphicon-remove',
+                validating: 'glyphicon glyphicon-refresh'
+            },
+            live: 'enabled',
+                message: 'This value is not valid',
+            trigger: "blur keyup",
+            fields: {
+                unique: {
+                    selector: ".uniques",
+                    verbose: false,
+                    trigger: "blur",
+                    validators: {
+                        notEmpty: {
+                            message: 'Value cannot be empty'
+                        },
+                        remote: {
+                            
+                            message:"The value is already taken",
+                            url: '/Common/Check',
+                            type: 'POST',
+                            dataType:"json",
+                            data: function (validator, $field, value) {
+//                                console.log($field.attr("table"), $field.attr("name"), value);
+                                return {
+                                    "Table": $field.attr("table"),
+                                    "Column": "UserName",
+                                    "Value": value
+                                }
+                            },
+                           
+//                            delay: 2000     // Send Ajax request every 2 seconds
+                        }
+                    }
+                }
+            }
+        });*/
+        //input masks
+        $("[data-mask]").inputmask();
+        //Initialize Select2 Elements
+        $(".select2").select2();
+        $("#table1").DataTable();
+        //iCheck for checkbox and radio inputs
+        $('input[type="checkbox"].minimal, input[type="radio"].minimal').iCheck({
+            checkboxClass: 'icheckbox_minimal-blue',
+            radioClass: 'iradio_minimal-blue'
+        });
+        //Red color scheme for iCheck
+        $('input[type="checkbox"].minimal-red, input[type="radio"].minimal-red').iCheck({
+            checkboxClass: 'icheckbox_minimal-red',
+            radioClass: 'iradio_minimal-red'
+        });
+        //Flat red color scheme for iCheck
+        $('input[type="checkbox"].flat-red, input[type="radio"].flat-red').iCheck({
+            checkboxClass: 'icheckbox_flat-green',
+            radioClass: 'iradio_flat-green'
+        });
+
+        $('#example2').DataTable({
+            "paging": true,
+//                aaSorting: [[0, 'asc']],
+            "lengthChange": true,
+            "searching": true,
+            "ordering": true,
+            "info": true,
+            "autoWidth": true,
+//                "order": [[0, "desc"]],
+            "sScrollX": '100%',
+            "columnDefs": [
+                {
+//                        "targets": [0],
+//                        "visible": false,
+//                        "searchable": false
+                }
+//                    {
+//                        "targets": [3],
+//                        "visible": false
+//                    }
+            ]
+        });
+
+/*
+            $('#example2').DataTable({
+                "paging": true,
+                "lengthChange": false,
+                "searching": false,
+                "ordering": true,
+                "info": true,
+                "autoWidth": false
+            });*/
+    });
+</script>
+<script>
+    $('body').find('select.form-control').addClass('select2').attr('style', "width:100%;").parent().attr('style','margin-bottom:10px');
+    $(document).ready(function () {
+        $('body').find('.set-parent-open').parents('li').addClass('active');
+        //remove padding from form elements which has a span of 10
+//        $('form').find('.form-control').parent('div.col-md-10').addClass("no-padding");
+
+//        console.log($('body').find('.table td:first-child').each(function(index,element) {
+//            $(element).attr("style", "display:none");
+//        }));
+//        $('body').find('select.form-control').addClass('select2').attr('style', "width:100%");
+
+        setTimeout(function() {
+                $('body').find('.alert-dismiss').hide();
+            },
+            3000);
+
+
+    });
+</script>
+
+
+        @RenderSection("Scripts",false);
+
+
+</body>
+</html>

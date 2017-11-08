@@ -1,0 +1,25 @@
+﻿@*@model System.Web.Mvc.HandleErrorInfo*@
+
+@{
+    ViewBag.Title = "Locked Out";
+    Layout = "~/Views/Shared/_Lockout_layout.cshtml";    
+}
+
+<!-- User name -->
+<div class="lockscreen-name">Hello  @ViewBag.UserName</div>
+
+<!-- START LOCK SCREEN ITEM -->
+<div class="lockscreen-item">
+
+
+</div>
+<!-- /.lockscreen-item -->
+<div class="help-block text-center">
+    @ViewBag.LockoutMessage
+</div>
+<div class="text-center">
+    @Html.Raw(ViewBag.Link)
+</div>
+<div class="lockscreen-footer text-center">
+    Copyright &copy;- @DateTime.Now.ToString("yyyy")  Inventory Management System. All rights reserved -- <b>Tovuti Group</b>
+</div>

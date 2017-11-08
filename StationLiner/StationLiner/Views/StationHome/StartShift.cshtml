@@ -1,0 +1,209 @@
+﻿@using StationLinerMVC.Models
+
+@{
+    ViewBag.Title = "Start Shift";
+    Layout = "~/Views/Shared/wizard_layout_station.cshtml";
+}
+@section Styles{
+    <style>
+        .outerDiv {
+            border-top: 1px aqua;
+            background: #0091d9;
+        }
+    </style>
+}
+
+<div class="box  box-info ">
+    <div class="box-header">
+        <div class="col-md-12">
+            <h2 class=""><strong>START SHIFT</strong>
+            </h2>
+        </div>
+    </div>
+    <!-- /.box-header -->
+    <div class="box-body">
+        <form id="start-shift-form" method="post" action="" class=" has-feedback">
+            <div id="bootstrap-wizard-2" class="col-sm-12 ">
+                <div class="form-bootstrapWizard ">
+                    <div class="row">
+                        <div class="col-md-offset-3">
+                            <ul class="bootstrapWizard form-wizard">
+                                <li class="active " data-target="#step1">
+                                    <a href="#tab1" data-toggle="tab" class="active"> <span class="step">1</span> </a>
+                                </li>
+                                <li data-target="#step2" class="">
+                                    <a href="#tab2" data-toggle="tab"> <span class="step">2</span></a>
+                                </li>
+                                 <li data-target="#step3" class="">
+                                    <a href="#tab3" data-toggle="tab"> <span class="step">3</span></a>
+                                </li>
+                                @* <li data-target="#step4">
+                <a href="#tab4" data-toggle="tab"> <span class="step">3</span> </a>
+            </li>*@
+                            </ul>
+                            
+                        </div>
+                    </div>
+                    
+                    <div class="clearfix"></div>
+                </div>
+                <div class="alert alert-danger alert-dismissible" style="margin-top: 15px; margin-bottom: 0px;display: none" id="start-shift-alert">
+                    <button type="button" class="close" data-dismiss="alert" aria-hidden="true">×</button>
+                    <strong><i class="icon fa fa-check"></i> Failed!  </strong><span id="alert-warning-message">
+                      
+                    </span>
+                </div>
+
+                <div class="tab-content">
+                    <div class="tab-pane active" id="tab1">
+                        <br>
+                        <h3>
+                            <strong>Step 1 </strong> - Shift Details
+                        </h3>
+                        @*                        <br/>*@
+                        <hr />
+                        <div class="row">
+                            <div class="col-sm-12">
+                                <div class="col-sm-12">
+
+                                    @{
+                                        using (IMSDataEntities db = new IMSDataEntities())
+                                        {
+                                            if (Library.ChannelId != null)
+                                            {
+                                                var shifts = db.StationShifts.Where(x => x.StationId == Library.ChannelId);
+                                                if (shifts.Any())
+                                                {
+                                                    <div class="col-sm-6 form-group">
+                                                        <label for="shift-id" class="col-sm-2 control-label">Shift</label>
+                                                        <div class="col-sm-10">
+                                                            <div class="col-sm-12">
+                                                                @foreach (var shift in shifts)
+                                                                {
+                                                                    var shiftDetail = db.ShiftCategories.Find(shift.ShiftCategoryId);
+                                                                    <div class="radio">
+                                                                        <label>
+                                                                            <input type="radio" name="ShiftCategoryId" id="shift-id" value="@shift.ShiftCategoryId" class="minimal" required="required" /><span style="margin-left:10px">
+                                                                                <strong>@shiftDetail.ShiftName</strong>
+                                                                                @shiftDetail.ShiftDescription
+                                                                            </span>
+                                                                        </label>
+                                                                    </div>
+                                                                }
+                                                            </div>
+                                                        </div>
+                                                    </div>
+
+                                                    <div class="col-sm-6 form-group">
+                                                        <label for="start-time" class="col-sm-2 control-label">Start TIme</label>
+                                                        <div class="col-sm-10">
+                                                            <div class="col-sm-12">
+                                                                <input type="time" id="start-time" value="@DateTime.Now.ToString("hh:mm")" class="form-control" name="ShiftStartTIme" required="required" />
+                                                            </div>
+                                                        </div>
+                                                    </div>
+
+                                                }
+                                                else
+                                                {
+                                                    <div class="alert alert-info ">
+                                                        <p>Please assign atleast one shift to this station and then come back</p>
+                                                    </div>
+
+                                                }
+                                            }
+                                        }
+                                    }
+                                </div>
+                            </div>
+                        </div>
+                        <hr />
+                        <div class="row">
+                            <div class="col-md-12">
+                                <ul class="pager wizard no-margin">
+                                    <li class="previous disabled">
+                                        <a href="#" class="btn btn-lg btn-default  tovuti-blue" style="background-color: #0091d9; color: white; border: 0px; font-size: 14px"> Previous </a>
+                                    </li>
+
+                                    <li class="next">
+                                        <a href="#" class="btn btn-lg txt-color-darken" style="background-color: #0091d9; color: white; border: 0px; font-size: 14px"> Next </a>
+                                    </li>
+                                </ul>
+                            </div>
+                        </div>
+                       
+                    </div>
+                    <div class="tab-pane" id="tab2">
+                        <br>
+                        <h3>
+                            <strong>Step 2</strong> - Pump Details
+                        </h3>
+                        <hr />
+                        <div class="row">
+                            <div class="col-md-12">
+                                @*                                @{ Html.RenderPartial("shift-open-pumpdetails");}*@
+                                @{ Html.RenderPartial("shift-open-pumpdetails");}
+
+
+                            </div>
+                        </div>
+                        <hr />
+                        <div class="row">
+                            <div class="col-sm-12">
+                                <ul class="pager wizard no-margin">
+                                    <li class="previous">
+                                        <a href="#" class="btn btn-lg btn-default tovuti-blue" style="background-color: #0091d9; color: white; border: 0px; font-size: 14px"> Previous </a>
+                                    </li>
+                                    <li class="next disabled">
+                                        <a href="#" class="btn btn-lg tovuti-blue" style="background-color: #0091d9; color: white; border: 0px; font-size: 14px"> Next </a>
+                                    </li>
+                                </ul>
+                            </div>
+                        </div>
+                        
+                    </div>
+                    
+                    <div class="tab-pane" id="tab3">
+                        <br>
+                        <h3>
+                            <strong>Step 3</strong> - Fuel Levels
+                        </h3>
+                        <hr />
+                        <div class="row">
+                            <div class="col-md-12">
+                                @{Html.RenderPartial("close_day_dips");}
+                            </div>
+                        </div>
+                        
+                        <div class="row">
+                            <div class="col-sm-12">
+                                <ul class="pager wizard no-margin">
+                                    <li class="previous">
+                                        <a href="#" class="btn btn-lg btn-default tovuti-blue" style="background-color: #0091d9; color: white; border: 0px; font-size: 14px"> Previous </a>
+                                    </li>
+
+                                    <li class="next disabled pull-right">
+                                        <a href="#" class="btn btn-lg tovuti-blue" style="background-color: #0091d9; color: white; border: 0px; font-size: 14px"> Next </a>
+                                    </li>
+                                    <li class="pull-right" ><a href="@Url.Action("StationHome")" class="btn btn-lg tovuti-blue" style="background-color: #0091d9; color: white; border: 0px; font-size: 14px; margin-right: 10px">Skip</a></li>
+                                </ul>
+                            </div>
+                        </div>
+
+                    </div>
+
+
+                </div>
+       
+        </div>
+        </form>
+    </div>
+    <div class="overlay" id="shift-overlay" style="display: none">
+        <i class="fa fa-spinner fa-spin"></i>
+    </div>
+</div>
+@section Scripts{
+    <script src="@Url.Content("~/Scripts/station_home/start-shift.js")"></script>
+}
+
+

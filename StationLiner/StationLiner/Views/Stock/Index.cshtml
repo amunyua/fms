@@ -1,0 +1,71 @@
+﻿@model IEnumerable<StationLinerMVC.Models.WarehouseProduct>
+
+@{
+    ViewBag.Title = "Manage Stock";
+    Layout = "~/Views/Shared/_DtLayout.cshtml";
+ 
+}
+
+        @section PageTitle{Manage Stock}
+@section BreadCrumbs{
+    <li>Stock Management</li>
+    <li class="active">Manage Stock</li>
+    }
+@section Actions{ <li><a href="@Url.Action("Create")" class="btn btn-sm btn-primary">Create Transaction</a></li>}
+@section TableHeader{Available Stock}
+
+  @{Html.RenderPartial("partials/_message");}
+<table id="example2" class="table table-bordered table-hover">
+    <thead>
+    <tr>
+        <th>
+            @Html.DisplayNameFor(model => model.Id)
+        </th>
+        <th>Product Name</th>
+        <th>
+            @Html.DisplayNameFor(model => model.Product.Id)
+        </th>
+        <th>
+            Warehouse
+        </th>
+        
+        
+        <th>
+            @Html.DisplayNameFor(model => model.AvailableStock)
+        </th>
+        <th>Reorder Level</th>
+       
+    </tr>
+    </thead>
+
+@foreach (var item in Model) {
+<tbody>
+    <tr>
+        <td>
+            @Html.DisplayFor(modelItem => item.Id)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.Product.ProductName)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.Product.Id)
+        </td>
+
+        <td>
+            @Html.DisplayFor(modelItem => item.Warehouse.WarehouseName)
+        </td>
+
+        <td>
+            @Html.DisplayFor(modelItem => item.AvailableStock)
+        </td>
+
+        <td>
+            @Html.DisplayFor(modelItem => item.ReorderLevel)
+        </td>
+           
+    </tr>
+    </tbody>
+}
+
+</table>
+

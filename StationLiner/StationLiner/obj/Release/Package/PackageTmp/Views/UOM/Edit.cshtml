@@ -1,0 +1,51 @@
+﻿@model StationLinerMVC.Models.UOM
+
+@{
+    ViewBag.Title = "Edit Uom";
+    Layout = "~/Views/Shared/_FormLayout.cshtml";
+}
+@section BreadCrumbs{
+   <li>Products</li>
+<li>
+    @Html.ActionLink("UOM", "Index")
+</li>
+<li class="active">Edit Unit of Measure</li>
+        }
+       @section PageTitle{
+           Edit
+           }
+     @section Description{Edit Unit of measure}
+@section FormTitle{ Edit Uom}
+@using (Html.BeginForm())
+{
+    @Html.AntiForgeryToken()
+    
+    <div class="form-horizontal">
+        @Html.ValidationSummary(true, "", new { @class = "text-danger" })
+        @Html.HiddenFor(model => model.Id)
+
+        <div class="form-group">
+            @Html.LabelFor(model => model.UOMName, htmlAttributes: new { @class = "control-label col-md-2" })
+            <div class="col-md-10">
+                @Html.EditorFor(model => model.UOMName, new { htmlAttributes = new { @class = "form-control" } })
+                @Html.ValidationMessageFor(model => model.UOMName, "", new { @class = "text-danger" })
+            </div>
+        </div>
+
+        <div class="form-group">
+            @Html.LabelFor(model => model.UOMDesc, htmlAttributes: new { @class = "control-label col-md-2" })
+            <div class="col-md-10">
+                @Html.EditorFor(model => model.UOMDesc, new { htmlAttributes = new { @class = "form-control" } })
+                @Html.ValidationMessageFor(model => model.UOMDesc, "", new { @class = "text-danger" })
+            </div>
+        </div>
+
+        <div class="pull-right col-md-10">
+            <div class="actions col-md-offset-10">
+                <input type="submit" value="Save Changes" class="btn btn-primary" />
+            </div>
+        </div>
+    </div>
+}
+
+

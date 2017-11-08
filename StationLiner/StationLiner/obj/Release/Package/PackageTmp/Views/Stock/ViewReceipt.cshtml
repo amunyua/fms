@@ -1,0 +1,73 @@
+﻿@using System.Diagnostics
+@using StationLinerMVC.Models
+
+
+@{
+    ViewBag.Title = "ViewReceipt";
+    Layout = "~/Views/Shared/_ReportView.cshtml";
+}
+<hr/>
+@{
+    var db = new IMSDataEntities();
+
+    var id = Int64.Parse(Request.Url.Segments.LastOrDefault());
+    var transaction = db.Transactions.Find(id);
+    //    Debug.WriteLine(id);
+    if (transaction != null)
+    {
+        <ul class="list-unstyled col-xs-12">
+            @{
+                var transactionDetails = db.TransctionDetails.Where(x => x.TransactionId == id);
+                if (transactionDetails.Any())
+                {
+                    foreach (var detail in transactionDetails)
+                    {
+                        <li class="col-xs-6" style="padding-left: 0px; margin-bottom: 10px;"><b>Product</b>:<span class="col-xs-4 pull-right">@db.Products.Find(detail.ProductId).Product_Name </span></li>
+                        <li class="col-xs-6" style="padding-left: 0px; margin-bottom: 10px;"><b>Warehouse</b>:<span class="col-xs-4 pull-right">@db.Warehouses.Find(detail.WarehouseId).WarehouseName </span> </li>
+                    }
+                
+                }
+            }
+        </ul>
+    <br/>
+        <ul class="list-unstyled col-xs-6">
+            <li style="margin-bottom: 10px"><b>Supplier:</b> <span style="padding-left: 0px;" class="col-xs-4 pull-right">@db.Supppliers.Find(transaction.SupplierId).Name </span></li>
+            <li style="margin-bottom: 10px"><b>Trasaction Ref No: </b><span style="padding-left: 0px;" class="col-xs-4 pull-right"> @transaction.Id </span></li>
+            <li style="margin-bottom: 10px"><b>Vehicle </b>:<span style="padding-left: 0px;" class="col-xs-4 pull-right">@db.Vehicles.Find(transaction.VehicleId).RegNumber </span></li>
+            <li style="margin-bottom: 10px"><b>Driver </b>:<span style="padding-left: 0px;" class="col-xs-4 pull-right">@db.Drivers.Find(transaction.DriverId).DriverName </span></li>
+        </ul>
+
+        <ul class="list-unstyled">
+            <li></li>
+        </ul>
+    
+        <ul class="list-unstyled col-xs-6 pull-right">
+            <li style="padding-left: 0px; margin-bottom: 10px"><b>Transaction Type:</b><span style="padding-left: 0px;" class="col-xs-4 pull-right"> @{ var type = (transaction.TransactionCategory == "fuel") ? "Fuel Purchase" : transaction.TransactionCategory; } @type </span></li>
+            <li style="margin-bottom: 10px"><b>Delivery Note:</b> <span style="padding-left: 0px;" class="col-xs-4 pull-right">@transaction.DeliveryNote </span></li>
+            <li style="margin-bottom: 10px"><b>Invoice No:</b><span style="padding-left: 0px;" class="col-xs-4 pull-right"> @transaction.InvoiceRefNumber</span> </li>
+        </ul>
+    
+       {
+            var fuelDetails = db.FuelTransactionDetails.Where(x => x.TransactionId == transaction.Id);
+            if (fuelDetails.Any())
+            {
+                <ul class="list-unstyled col-xs-12">
+                    @foreach (var fueld in fuelDetails)
+                    {
+                        <li class="col-xs-6" style="padding-left: 0px; margin-bottom: 10px;"><b>Expected Quantity</b>:<span class="col-xs-4 pull-right">@fueld.ExpectedQuantity </span>  <b>Ltrs</b> </li>
+                        <li class="col-xs-6" style="padding-left: 0px; margin-bottom: 10px;"><b>Quantity Available prior</b>:<span class="col-xs-4 pull-right"> @fueld.ActualQuantityAvailable</span> </li>
+                        <li class="col-xs-6" style="padding-left: 0px; margin-bottom: 10px;"><b>Dip Before Offload</b>:<span class="col-xs-4 pull-right"> @fueld.DipBeforeOffload </span> </li>
+                        <li class="col-xs-6" style="padding-left: 0px; margin-bottom: 10px;"><b>Dip After Offload</b>:<span class="col-xs-4 pull-right"> @fueld.DipAfterOffload </span></li>
+                        <li class="col-xs-6" style="padding-left: 0px; margin-bottom: 10px;"><b>Amount Sold During offload</b>: <span class="col-xs-4 pull-right">@fueld.AmountSoldDuringOffload</span> </li>
+                        <li class="col-xs-6" style="padding-left: 0px; margin-bottom: 10px;"><b>Price Per Liter</b>: <span class="col-xs-4 pull-right">@fueld.PricePerLiter</span> </li>
+                    }
+                </ul>
+            }
+        }
+
+
+    }
+
+}
+<br/>
+

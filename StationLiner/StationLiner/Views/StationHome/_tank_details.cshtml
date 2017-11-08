@@ -1,0 +1,84 @@
+﻿@using StationLinerMVC.Models
+<div class="row">
+    <div class="col-md-12">
+        <div class="col-md-6 form-group has-success">
+            <div class="col-md-4">
+                <label class="control-label pull-right">Tank</label>
+            </div>
+            <div class="col-md-8">
+                <select name="TankId" class="form-control" required="required" id="TankId">
+                    <option value="">Choose Tank</option>
+                    @{
+                        using (IMSDataEntities db = new IMSDataEntities())
+                        {
+                            if (Library.ChannelId != null)
+                            {
+                                var tanks = db.StationTanks.Where(x => x.StationId == Library.ChannelId && x.IsDeleted != true);
+                                if (tanks.Any())
+                                {
+                                    foreach (var tank in tanks)
+                                    {
+                                        <option value="@tank.Id">@tank.TankName</option>
+                                    }
+                                }
+                            }
+                        }
+                    }
+                </select>
+            </div>
+        </div>
+        <div class="col-md-6 form-group has-success">
+            <div class="col-md-4">
+                <label class="control-label pull-right">Product</label>
+            </div>
+            <div class="col-md-8">
+                <input type="text" name="" class="form-control" id="prod-id" placeholder="Product" readonly />
+            </div>
+        </div>
+        
+    </div>
+</div>
+
+<div class="row">
+    <div class="col-md-12">
+        <div class="col-md-6 form-group has-success">
+            <div class="col-md-4 ">
+                <label class="control-label pull-right">Current Height</label>
+            </div>
+            <div class="col-md-8">
+                <input type="number" name="HeightBefore" class="form-control" id="HeightBefore" required="required" placeholder="(mm)">
+            </div>
+        </div>
+        <div class="col-md-6 form-group has-success">
+            <div class="col-md-4">
+                <label class="control-label pull-right">Current Volume</label>
+            </div>
+            <div class="col-md-8">
+                <input type="number" name="VolumeBefore" class="form-control" required="required" id="VolumeBefore" placeholder="(l)">
+            </div>
+        </div>
+        
+    </div>
+</div>
+
+<div class="row">
+    <div class="col-md-12">
+        <div class="col-md-6 form-group has-success">
+            <div class="col-md-4">
+                <label class="control-label pull-right">Current Tempe</label>
+            </div>
+            <div class="col-md-8">
+                <input type="number" name="TemperatureBefore" class="form-control" id="TemperatureBefore" required="required" placeholder="(degree celcius)">
+            </div>
+        </div>
+        <div class="col-md-6 form-group has-success">
+            <div class="col-md-4">
+                <label class="control-label pull-right">Density </label>
+            </div>
+            <div class="col-md-8">
+                <input type="number" required="required" name="DesityBefore" class="form-control" id="DesityBefore" placeholder="(Kg/l)">
+            </div>
+        </div>
+        
+    </div>
+</div>

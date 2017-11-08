@@ -1,0 +1,297 @@
+﻿@using StationLinerMVC.Models
+
+@{
+    ViewBag.Title = "Index";
+    Layout = "~/Views/Shared/_Dashboard_layout.cshtml";
+}
+<!-- Main content -->
+<section class="content">
+@*<div class="row">
+    <div class="col-md-3 col-sm-6 col-xs-12">
+        <div class="info-box">
+            <span class="info-box-icon bg-aqua"><i class="ion ion-ios-gear-outline"></i></span>
+
+            <div class="info-box-content">
+                <span class="info-box-text">CPU Traffic</span>
+                <span class="info-box-number">90<small>%</small></span>
+            </div>
+            <!-- /.info-box-content -->
+        </div>
+        <!-- /.info-box -->
+    </div>
+    <!-- /.col -->
+    <div class="col-md-3 col-sm-6 col-xs-12">
+        <div class="info-box">
+            <span class="info-box-icon bg-red"><i class="fa fa-google-plus"></i></span>
+
+            <div class="info-box-content">
+                <span class="info-box-text">Likes</span>
+                <span class="info-box-number">41,410</span>
+            </div>
+            <!-- /.info-box-content -->
+        </div>
+        <!-- /.info-box -->
+    </div>
+    <!-- /.col -->
+
+    <!-- fix for small devices only -->
+    <div class="clearfix visible-sm-block"></div>
+
+    <div class="col-md-3 col-sm-6 col-xs-12">
+        <div class="info-box">
+            <span class="info-box-icon bg-green"><i class="ion ion-ios-cart-outline"></i></span>
+
+            <div class="info-box-content">
+                <span class="info-box-text">Sales</span>
+                <span class="info-box-number">760</span>
+            </div>
+            <!-- /.info-box-content -->
+        </div>
+        <!-- /.info-box -->
+    </div>
+    <!-- /.col -->
+    <div class="col-md-3 col-sm-6 col-xs-12">
+        <div class="info-box">
+            <span class="info-box-icon bg-yellow"><i class="ion ion-ios-people-outline"></i></span>
+
+            <div class="info-box-content">
+                <span class="info-box-text">New Members</span>
+                <span class="info-box-number">2,000</span>
+            </div>
+            <!-- /.info-box-content -->
+        </div>
+        <!-- /.info-box -->
+    </div>
+    <!-- /.col -->
+</div>*@
+    @{
+        using (IMSDataEntities db = new IMSDataEntities())
+        {
+            <div class="row">
+                <div class="col-md-12">
+                    <div class="box">
+                        <div class="box-header with-border col-md-12">
+                            <h3 class="box-title col-md-2" style="margin-top: 10px;">Sales Report For</h3>
+                            <div class="form-group col-md-3" style="margin-bottom: 0px">
+                                <select class="form-control" id="station-btn">
+                                    <option value="all"> All Stations </option>
+                                    @{
+            var allocatedChannels = db.UserAllocatedChannels.Where(x => x.UserId == Library.UserId && x.Station.IsDeleted != true);
+            if (allocatedChannels.Any())
+            {
+
+                foreach (var channel in allocatedChannels)
+                {
+                    var channelDetails = db.Stations.Find(channel.StationId);
+                    <option value="@channelDetails.Id"> @channelDetails.StationName</option>
+                }
+            }
+          }
+                                </select>
+                            </div>
+                        
+                            
+                            <div class="form-group col-md-6 ">
+                                <select class="form-control col-md-6 " id="period-range">
+                                    <option value="month-to-date">Month to date</option>
+                                    <option value="quater-to-date">Quater to date</option>
+                                    <option value="year-to-date">Year to date</option>
+                                </select>
+                            </div>
+                            
+
+
+                            <div class="box-tools pull-right">
+                                <button type="button" class="btn btn-box-tool" data-widget="collapse"><i class="fa fa-minus"></i>
+                                </button>
+                                <div class="btn-group">
+                                    <button type="button" class="btn btn-box-tool dropdown-toggle" data-toggle="dropdown">
+                                        <i class="fa fa-wrench"></i></button>
+                                    <ul class="dropdown-menu" role="menu">
+                                        <li><a href="#">Action</a></li>
+                                        <li><a href="#">Another action</a></li>
+                                        <li><a href="#">Something else here</a></li>
+                                        <li class="divider"></li>
+                                        <li><a href="#">Separated link</a></li>
+                                    </ul>
+                                </div>
+                                <button type="button" class="btn btn-box-tool" data-widget="remove"><i class="fa fa-times"></i></button>
+                            </div>
+                        </div>
+                        <!-- /.box-header -->
+                        <div class="box-body" style="">
+                            <div class="row">
+                                <div class="col-md-8">
+                                    <div id="containerone">
+
+                                    </div>
+                                    <!-- /.chart-responsive -->
+                                </div>
+                                <!-- /.col -->
+                                <div class="col-md-4">
+                                    <p class="text-center" >
+                                        <strong>Sales By Payment Modes</strong>
+                                    </p>
+
+                                    <div id="below-payment-modes">
+                            
+                                    </div>
+
+                                    <!-- /.progress-group -->
+                                </div>
+                                <!-- /.col -->
+                            </div>
+                            <!-- /.row -->
+                        </div>
+
+                        <!-- ./box-body -->
+                        <div class="box-footer">
+                            <div class="row" id="tanks-row">
+                                <div id="insert-after"></div>
+                               
+                            </div>
+                            <!-- /.row -->
+                        </div>
+                        <!-- /.box-footer -->
+                    </div>
+                    <!-- /.box -->
+                </div>
+                
+                
+
+                <!-- /.col -->
+            </div>
+            <div class="row" id="fuel-levels-row" style="display:none">
+                <div class="col-md-12">
+                    <div class="box box-info">
+                        <div class="box-header with-border">
+                            <h3 class="box-title">Tank Fuel Levels</h3>
+
+                            <div class="box-tools pull-right">
+                                <button type="button" class="btn btn-box-tool" data-widget="collapse">
+                                    <i class="fa fa-minus"></i>
+                                </button>
+                                <button type="button" class="btn btn-box-tool" data-widget="remove"><i class="fa fa-times"></i></button>
+                            </div>
+                        </div>
+                        <div class="box-body ">
+                            <div class="row">
+                                <div id="station-tank-levels" class="col-md-12">
+                                    <div class="row">
+                                        <div class="col-md-12">
+                                            <div class="form-group col-md-2">
+
+                                            </div>
+                                            
+                                        </div>
+                                        <div class="col-md-12" id="tank-levels-div">
+                                            
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="box-footer clearfix">
+                        </div>
+                    </div>
+                </div>
+            </div>
+        
+            <div class="row">
+                <div class="col-md-6">
+                    <div class="box box-info">
+                        <div class="box-header with-border">
+                            <h3 class="box-title">Best perfoming stations</h3>
+
+                            <div class="box-tools pull-right">
+                                <button type="button" class="btn btn-box-tool" data-widget="collapse"><i class="fa fa-minus"></i>
+                                </button>
+                                <button type="button" class="btn btn-box-tool" data-widget="remove"><i class="fa fa-times"></i></button>
+                            </div>
+                        </div>
+                        <div class="box-body ">
+                            <div class="row">
+                                <div id="" class="col-md-12">
+                                    <div class="row">
+                                        <div class="col-md-12">
+                                            <div class="form-group col-md-2">
+                                                <select name="" class="form-control" id="best-number">
+                                                    <option value="3">3</option>
+                                                    <option value="5">5</option>
+                                                    <option value="1000">All</option>
+                                                </select>
+                                            </div>
+                                            <div class="form-group col-md-10 ">
+                                                @*                                            <label class="col-md-4">Period:</label>*@
+
+                                                <div class="input-group pull-right">
+                                                    <select class="form-control" id="best-performing-range">
+                                                        <option value="month-to-date">Month to date</option>
+                                                        <option value="quater-to-date">Quater to date</option>
+                                                        <option value="year-to-date">Year to date</option>
+                                                    </select>
+                                                </div>
+                                            </div>
+                                        </div>
+                                        <div class="" id="after-best-perfoming"></div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="box-footer clearfix">
+                        </div>
+                    </div>
+                </div>
+                
+                <div class="col-md-6">
+                    <div class="box box-info">
+                        <div class="box-header with-border">
+                            <h3 class="box-title">Least perfoming stations</h3>
+
+                            <div class="box-tools pull-right">
+                                <button type="button" class="btn btn-box-tool" data-widget="collapse">
+                                    <i class="fa fa-minus"></i>
+                                </button>
+                                <button type="button" class="btn btn-box-tool" data-widget="remove"><i class="fa fa-times"></i></button>
+                            </div>
+                        </div>
+                        <div class="box-body">
+                            <div class="row">
+                                <div id="" class="col-md-12">
+                                    <div class="row">
+                                        <div class="col-md-12">
+                                            <div class="form-group col-md-2">
+                                                <select name="" class="form-control" id="least-number">
+                                                    <option value="3">3</option>
+                                                    <option value="5">5</option>
+                                                    <option value="1000">10</option>
+                                                </select>
+                                            </div>
+                                            <div class="form-group col-md-10 ">
+                                                <div class="input-group pull-right">
+                                                    <select class="form-control" id="least-performing-range">
+                                                        <option value="month-to-date">Month to date</option>
+                                                        <option value="quater-to-date">Quater to date</option>
+                                                        <option value="year-to-date">Year to date</option>
+                                                    </select>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div class="" id="after-worst-perfoming"></div>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="box-footer clearfix">
+                        </div>
+                    </div>
+                </div>
+            </div>
+        }
+    }
+    
+</section>
+@section Scripts{
+    <script src="@Url.Content("~/Scripts/dashboard/charts.js")"></script>
+
+}

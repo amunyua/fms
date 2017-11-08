@@ -1,0 +1,106 @@
+﻿
+@{
+    ViewBag.Title = "CreateSummary";
+    Layout = "~/Views/Shared/ReportViewStation.cshtml";
+}
+
+<section class="invoice">
+    <!-- title row -->
+    <div class="row">
+        <div class="col-xs-12">
+           @* <h2 class="page-header">
+$1$                <i class="fa fa-globe"></i> Station Liner.#1#
+                
+            </h2>*@
+        </div>
+        <!-- /.col -->
+    </div>
+    <!-- info row -->
+    <div class="row invoice-info">
+        <div class="col-md-12">
+            <small class="pull-right"> @DateTime.Now.ToShortTimeString()</small>
+            <p style="text-align: center">
+@*                <img src="" style="height: 150px; width: 200px"/>*@
+                <h3 style="text-align: center">Summary .</h3>
+            </p>
+            <hr/>
+        </div>
+    </div>
+    <!-- /.row -->
+    
+    <div class="row">
+        <div class="form-group has-success">
+            <div class="col-sm-8 col-md-offset-2 ">
+                <div class="col-xs-12 table-responsive">
+                    <table class="table table-striped">
+                        <thead>
+                        <tr>
+                            <th style="text-align: center" colspan="2">Before Reception</th>
+                        </tr>
+                        </thead>
+                        <tbody>
+                        <tr>
+                            <td >Liters (l)</td>
+                            <td style="text-align: center">@ViewBag.ReceipDetails.VolumeBefore</td>
+                        </tr>
+                        <tr>
+                            <td>Height (mm)</td>
+                            <td style="text-align: center">@ViewBag.ReceipDetails.HeightBefore</td>
+                        </tr>
+                        <tr>
+                            <th style="text-align: center" colspan="2">After Reception</th>
+                        </tr>
+                            
+                        <tr>
+                            <td >Liters (l)</td>
+                            <td style="text-align: center">@ViewBag.ReceipDetails.VolumeAfter</td>
+                        </tr>
+                        <tr>
+                            <td >Height (mm)</td>
+                            <td style="text-align: center">@ViewBag.ReceipDetails.HeightAfter</td>
+                        </tr>
+                            
+                        <tr>
+                            <th style="text-align: center" colspan="2">Variance Details</th>
+                        </tr>
+                            
+                        <tr>
+                            <td >Liters (l)</td>
+                            <td style="text-align: center">@ViewBag.ReceipDetails.VolumeAfter</td>
+                        </tr>
+                        <tr>
+                            <td >Height (mm)</td>
+                            <td style="text-align: center">@ViewBag.ReceipDetails.HeightAfter</td>
+                        </tr>
+                            
+                        <tr>
+                            <th style="text-align: center" colspan="2">Expected</th>
+                        </tr>
+                            
+                        <tr>
+                            <td >Liters (l)</td>
+                            <td style="text-align: center">@ViewBag.ReceipDetails.VolumeAfter</td>
+                        </tr>
+                        <tr>
+                            <td >Height (mm)</td>
+                            <td style="text-align: center">@ViewBag.ReceipDetails.HeightAfter</td>
+                        </tr>
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+        </div>
+    </div>
+  
+
+
+    <!-- this row will not appear when printing -->
+    <div class="row no-print">
+        <div class="col-xs-12">
+            <button onclick="window.print()" class="btn btn-success pull-right"><i class="fa fa-print"></i> Print</button>
+        </div>
+    </div>
+</section>
+<!-- /.content -->
+<div class="clearfix"></div>
+

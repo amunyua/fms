@@ -1,0 +1,101 @@
+﻿@model IEnumerable<StationLinerMVC.Models.FuelReceipt>
+@{
+    ViewBag.Title = "Fuel Reciepts";
+    Layout = "~/Views/Shared/_StationHomePageL.cshtml";
+}
+
+
+@section PageTitle{Fuel Reciepts}
+@section BreadCrumbs{
+}
+<div class="nav-tabs-custom">
+    <div class="tab-content">
+        <ul class="list-unstyled pull-right">
+            <li><a href="@Url.Action("RecieveFuelWizard")" class="btn btn-sm btn-primary">Recieve Fuel</a></li>
+        </ul>
+        <br/><br/>
+
+        <div class="box box-solid box-info">
+            <div class="box-header">
+                <h3 class="box-title">Fuel Reciepts</h3>
+            </div>
+            <!-- /.box-header -->
+            <div class="box-body">
+                @{Html.RenderPartial("partials/_message");}
+                <table class="table live-table table-bordered table-hover ">
+                    <thead>
+                    <tr>
+                        <th>
+                            Tank
+                        </th>
+                        <th>
+                            @Html.DisplayNameFor(model => model.DocumentNumber)
+                        </th>
+                        <th>
+                            @Html.DisplayNameFor(model => model.VehicleId)
+                        </th>
+                        <th>
+                            Driver Name
+                        </th>
+                        
+                        <th>
+                            View Details
+                        </th>
+                        <th>
+                            Status
+                        </th>
+                        <th>Action</th>
+                    </tr>
+                    </thead>
+                    <tbody>
+                    @foreach (var item in Model) {
+                        <tr>
+                             <td>
+                                @Html.DisplayFor(modelItem => item.Tank.TankName)
+                            </td>
+                            <td>
+                                @Html.DisplayFor(modelItem => item.DocumentNumber)
+                            </td>
+                            <td>
+                                @Html.DisplayFor(modelItem => item.Vehicle.RegNumber)
+                            </td>
+                            <td>
+                                @Html.DisplayFor(modelItem => item.Driver.DriverName)
+                            </td>
+                            <td>
+                                <a href="@Url.Action("CreateSummary",new{ id = item.Id})" class="btn btn-info btn-xs">View Details</a>
+
+                            </td>
+                            <td>
+                                @if (item.InvPurchase.IsCompleted)
+                                {
+                                    <label class="label label-success">Complete</label>
+                                }
+                                else
+                                {
+@*                                    <button class="btn btn-success btn-xs">Continue</button>*@
+                                    <label class="label label-warning">Incomplete</label>
+                                }
+                            </td>
+                            <td>
+                                @if (item.InvPurchase.IsCompleted)
+                                {
+                                    <a href="@Url.Action("RecieveFuelWizard",new{ id = item.InvPurchaseId})" class="btn btn-info btn-xs">Edit</a>
+                                }
+                                else
+                                {
+                                   <a href="@Url.Action("RecieveFuelWizard")" class="btn btn-success btn-xs">Continue</a>
+                                }
+                            </td>
+                        </tr>
+                    }
+
+                    </tbody>
+                </table>
+
+
+                </div>
+
+            </div>
+        </div>
+    </div>

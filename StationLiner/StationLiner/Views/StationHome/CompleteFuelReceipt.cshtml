@@ -1,0 +1,168 @@
+﻿@using StationLinerMVC.Models
+
+@{
+    ViewBag.Title = "Complete Fuel Receipt";
+    Layout = "~/Views/Shared/_StationHomePageL.cshtml";
+}
+
+<div class="row">
+    <div class="col-md-12">
+        <div class="box box-info ">
+            <div class="box-header with-border">
+                <h3 class="box-title">Complete Fuel Receipt </h3>
+            </div>
+            <!-- /.box-header -->
+            <!-- form start -->
+           
+            <div class="box-body">
+                <form class="form-horizontal" action="@Url.Action("CompleteFuelReceiptStore")" method="post">
+                    @Html.AntiForgeryToken()
+                    
+                    <input type="hidden" value="@ViewBag.FuelReceipt.Id" name="FuelReceiptId" />
+                    <div class="row">
+                        <div class="col-md-12">
+                            <h4 style="text-align: center">Supplier Details</h4>
+                        </div>
+                    </div>
+                    <div class="form-group has-success">
+                        <div class="col-sm-8 col-md-offset-2">
+                            <select name="SupplierId" class="form-control " id="supplier-id" required="required">
+                                <option value=""> Select Supplier/Vendor</option>
+                                @{
+                                    using (var db = new IMSDataEntities())
+                                    {
+                                        var suppliers = db.Supppliers;
+                                        if (suppliers.Any())
+                                        {
+                                            foreach (var supplier in suppliers)
+                                            {
+                                                <option value="@supplier.Id">@supplier.Name</option>
+                                            }
+                                        }
+                                    }
+                                }
+                            </select>
+                        </div>
+                    </div>
+                    <div class="form-group has-success">
+                        <div class="col-sm-8 col-md-offset-2">
+                            <select name="DriverId" class="form-control" id="supplier-drivers" required="required">
+                                <option value=""> Select Driver</option>
+                                <option value=""> Add a driver first</option>
+                            </select>
+                        </div>
+                    </div>
+                    <div class="form-group has-success">
+                        <div class="col-sm-8 col-md-offset-2">
+                            <select name="VehicleId" class="form-control" id="supplier-vehicles" required="required">
+                                <option value=""> Select Vehicle</option>
+                            </select>
+                        </div>
+                    </div>
+                    <div class="form-group has-success">
+                        <div class="col-sm-8 col-md-offset-2">
+                            <input type="text" name="DocumentNumber"class="form-control" placeholder="Document Number" required />
+                        </div>
+                    </div>
+
+                    <div class="row">
+                        <div class="col-md-12">
+                            <h4 style="text-align: center">Received Fuel</h4>
+                        </div>
+                    </div>
+                    <div class="form-group has-success">
+
+                        <div class="col-sm-8 col-md-offset-2 ">
+                            <input type="number" name="VolumeOnWeyBill" class="form-control" required="required" id="" placeholder="Volume on waybill">
+                        </div>
+                    </div>
+                    <div class="form-group has-success">
+
+                        <div class="col-sm-8 col-md-offset-2 ">
+                            <input type="number" name="TemperatureAfter" class="form-control" required="required" id="" placeholder="Temperature ( &deg;C )">
+                        </div>
+                    </div>
+                    <div class="form-group has-success">
+
+                        <div class="col-sm-8 col-md-offset-2 ">
+                            <input type="number" name="DensityAfter" class="form-control" required="required" id="" placeholder="Density Kg/l">
+                        </div>
+                    </div>
+                    <div class="row">
+                        <div class="col-md-12">
+                            <h4 style="text-align: center">Sample Parameters</h4>
+                        </div>
+                    </div>
+                    <div class="form-group has-success">
+
+                        <div class="col-sm-8 col-md-offset-2 ">
+                            <input type="number" name="SampleTemperature" class="form-control" required="required" id="" placeholder="Temperature ( &deg;C )">
+                        </div>
+                    </div>
+                    <div class="form-group has-success">
+
+                        <div class="col-sm-8 col-md-offset-2 ">
+                            <input type="number" name="SampleDensity" class="form-control" required="required" id="" placeholder="Density Kg/l">
+                        </div>
+                    </div>
+                    <div class="row">
+                        <div class="col-md-12">
+                            <h4 style="text-align: center">Fuel Dispensed During Reception</h4>
+                        </div>
+                    </div>
+                    <div class="form-group has-success">
+                        <div class="col-sm-8 col-md-offset-2 ">
+                            <input type="number" name="VolDispensedDuring" class="form-control" required="required" id="" placeholder="Liters">
+                        </div>
+                    </div>
+                    <div class="row">
+                        <div class="col-md-12">
+                            <h4 style="text-align: center">Tank Data After Reception</h4>
+                        </div>
+                    </div>
+                    <div class="form-group has-success">
+                        <div class="col-sm-8 col-md-offset-2 ">
+                            <input type="number" name="VolumeAfter" class="form-control" required="required" id="" placeholder="Liters (l)">
+                        </div>
+                    </div>
+                    <div class="form-group has-success">
+                        <div class="col-sm-8 col-md-offset-2 ">
+                            <input type="number" name="HeightAfter" class="form-control" required="required" id="" placeholder="Height (mm)">
+                        </div>
+                    </div>
+                    
+                    <div class="row">
+                        <div class="col-md-12">
+                            <h4 style="text-align: center">Price/Amount</h4>
+                        </div>
+                    </div>
+                    <div class="form-group has-success">
+                        <div class="col-sm-8 col-md-offset-2 ">
+                            <input type="number" name="PricePerLiter" class="form-control" required="required" id="" placeholder="Price">
+                        </div>
+                    </div>
+                    <div class="form-group has-success">
+                        <div class="col-sm-8 col-md-offset-2 ">
+                            <input type="number" name="TotalAmount" class="form-control" required="required" id="" placeholder="Amount">
+                        </div>
+                    </div>
+                    
+                  
+                      
+               
+                    <!-- /.box-body -->
+                    <div class="box-footer">
+                        <a href="@Url.Action("StationHome")" class="btn btn-default">Cancel</a>
+                        <button type="submit" class="btn btn-info pull-right">Ok</button>
+                    </div>
+                    <!-- /.box-footer -->
+                </form>
+            </div>
+        </div>
+    </div>
+</div>
+@section Scripts{
+    <script src="@Url.Content("~/Scripts/fuel/fuel-receipt.js")"></script>
+
+}
+

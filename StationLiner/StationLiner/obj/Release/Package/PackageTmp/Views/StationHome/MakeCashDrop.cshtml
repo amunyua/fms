@@ -1,0 +1,51 @@
+﻿@using StationLinerMVC.Models
+@model IEnumerable<StationLinerMVC.Models.CashDrop>
+
+@{
+    ViewBag.Title = "Cash Drops";
+    Layout = "~/Views/Shared/_StationHomePageL.cshtml";
+}
+@section PageTitle{Cash Drops}
+@section BreadCrumbs{
+@*    <a href="#cashdrop-modal" data-toggle="modal" class="btn btn-primary pull-right btn-sm">Make Drop</a>*@
+}
+
+@{
+    var tab1 = "";
+    var tab2 = "";
+    <div class="nav-tabs-custom">
+        <ul class="nav nav-tabs">
+
+            @if (Session["tab2"] != null)
+            {
+                tab2 = "active";
+                tab1 = "";
+                Session["tab2"] = null;
+            }
+            else
+            {
+                tab1 = "active";
+                tab2 = "";
+            }
+
+            <li class="@tab1"><a href="#activity" data-toggle="tab">Active Shift Cash Drops</a></li>
+            <li class="@tab2"><a href="#timeline" data-toggle="tab">All Shifts Cash Drops</a></li>
+            @*    <li><a href="#settings" data-toggle="tab">Settings</a></li>*@
+        </ul>
+        <div class="tab-content">
+            <div class="@tab1 tab-pane" id="activity">
+                @{ Html.RenderPartial("shift_active_drops"); }
+
+            </div>
+            <!-- /.tab-pane -->
+            <div class="@tab2 tab-pane" id="timeline">
+                @{ Html.RenderPartial("all_drops"); }
+            </div>
+            <!-- /.tab-pane -->
+
+            <!-- /.tab-pane -->
+        </div>
+        <!-- /.tab-content -->
+    </div>
+}
+@*bank cash modal*@

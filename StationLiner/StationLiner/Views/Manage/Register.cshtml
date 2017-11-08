@@ -1,0 +1,76 @@
+﻿@using StationLinerMVC.Models
+@model StationLinerMVC.Models.RegisterViewModel
+@{
+    ViewBag.Title = "Register";
+    Layout = "~/Views/Shared/_FormLayout.cshtml";
+}
+@section BreadCrumbs{
+    <li>
+        @*        @Html.ActionLink("Back to List", "Index")*@
+    </li>
+}
+@section PageTitle{
+    New User
+}
+@section Description{Register a new system user}
+@section FormTitle{ New User}
+
+@using (Html.BeginForm("Register", "Account", FormMethod.Post, new { @class = "form-horizontal", role = "form" }))
+{
+    @Html.AntiForgeryToken()
+    <div class="form-group">
+        @Html.ValidationSummary("", new { @class = "text-danger" })
+    </div>
+
+    <div class="form-group">
+        @Html.LabelFor(m => m.FullNames, new { @class = "col-md-2 control-label" })
+        <div class="col-md-10">
+            @Html.TextBoxFor(m => m.FullNames, new { @class = "form-control" })
+        </div>
+    </div>
+    <div class="form-group">
+        @Html.LabelFor(m => m.Email, new { @class = "col-md-2 control-label" })
+        <div class="col-md-10">
+            @Html.TextBoxFor(m => m.Email, new { @class = "form-control" })
+        </div>
+    </div>
+
+    <div class="form-group">
+        @Html.LabelFor(m => m.PhoneNumber, new { @class = "col-md-2 control-label" })
+        <div class="col-md-10">
+            <input type="number" class="form-control" data-val="true" data-val-number="The field Phone Number must be a number." data-val-required="The Phone Number field is required." id="PhoneNumber" name="PhoneNumber" value="">
+        </div>
+    </div>
+    <div class="form-group">
+        @Html.LabelFor(m => m.UserRole, new { @class = "col-md-2 control-label" })
+        <div class="col-md-10">
+            <select name="UserRole" class="select2 form-control" data-val="true" data-val-required="The User Role field is required." id="UserRole">
+                <option value="">Choose a Role</option>
+                @{
+
+    using (var db = new IMSDataEntities())
+    {
+        var roles = db.Roles;
+        if (roles.Any())
+        {
+            foreach (var role in roles)
+            {
+                <option value="@role.RoleId">@role.Name</option>
+            }
+        }
+    }
+                }
+            </select>
+        </div>
+    </div>
+    <br /><br /><hr />
+    <div class="form-group">
+        <div class="col-md-offset-10 col-md-10">
+            <input type="submit" class="btn btn-default" value="Register" />
+        </div>
+    </div>
+}
+
+@*@section Scripts {*@
+@*    @Scripts.Render("~/bundles/jqueryval")*@
+@*}*@
